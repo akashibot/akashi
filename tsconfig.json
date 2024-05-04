@@ -1,0 +1,3 @@
+{
+  "extends": "@akashi/typescript-config/base.json"
+}

@@ -1,0 +1,21 @@
+{
+	"name": "akashi",
+	"private": true,
+	"scripts": {
+		"build": "turbo build",
+		"dev": "turbo dev",
+		"lint": "turbo lint",
+		"check": "biome check --apply-unsafe --staged \"**/*.{ts,tsx,md}\"",
+		"apps:imgapi": "pnpm --filter image-api",
+		"apps:bot": "pnpm --filter bot"
+	},
+	"devDependencies": {
+		"@biomejs/biome": "1.7.2",
+		"@akashi/typescript-config": "workspace:*",
+		"turbo": "latest"
+	},
+	"packageManager": "pnpm@9.0.6",
+	"engines": {
+		"node": ">=20"
+	}
+}
