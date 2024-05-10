@@ -8,10 +8,11 @@ if (!process.env.BOT_TOKEN) {
 
 module.exports = config.bot({
 	token: process.env.BOT_TOKEN,
-	intents: ["Guilds"],
+	intents: ["Guilds", "MessageContent", "GuildMessages"],
 	locations: {
 		base: "src",
 		output: "dist",
 		commands: "commands",
+		events: "events",
 	},
 });

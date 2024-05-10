@@ -2,6 +2,7 @@ import {
 	CommandContext,
 	createAttachmentOption,
 	createStringOption,
+	createUserOption,
 } from "seyfert";
 
 export const imageCommandOptions = {
@@ -13,19 +14,28 @@ export const imageCommandOptions = {
 		description: "Image url",
 		required: false,
 		value({ value }, ok, fail) {
-			return value.startsWith("http")
-				? ok(value)
-				: fail("Image url must be a valid URL");
+			// if is a valid url return OK but if not return FAIL
+			if (/^https?:\/\//i.test(value)) return ok(value);
+			return fail("Invalid url");
 		},
+	}),
+	user: createUserOption({
+		description: "User to get avatar from",
+		required: false,
 	}),
 };
 
-export function getImageOption(
+export async function getImageOption(
 	ctx: CommandContext<typeof imageCommandOptions>,
-): string | undefined {
-	return (
+) {
+	const image =
+		(await ctx.storage.image.getItem(ctx.channelId)) ??
 		ctx.options.attachment?.proxyUrl ??
-		(ctx.options.url as string).split("?")[0] ??
-		undefined
-	);
+		(ctx.options.url?.split("?")[0] as string) ??
+		ctx.options.user?.avatarURL() ??
+		undefined;
+
+	if (!image) throw new Error("No image found");
+
+	return image;
 }

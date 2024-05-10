@@ -5,10 +5,10 @@ export const ipx = ofetch.create({
 	baseURL: "http://localhost:8000/ipx",
 	method: RequestMethod.Get,
 	responseType: "arrayBuffer",
-	onRequestError: () => {
-		throw new Error("ipx request error");
+	onRequestError: (ctx) => {
+		throw new Error(ctx.error.message);
 	},
-	onResponseError: () => {
-		throw new Error("ipx response error");
+	onResponseError: (ctx) => {
+		throw new Error(ctx.error?.message ?? "Nyooo~! Just wait until next time!");
 	},
 });
