@@ -13,6 +13,7 @@
 		"dotenv": "^16.4.5",
 		"h3": "^1.11.1",
 		"image-meta": "^0.2.0",
+		"ipx": "github:akashibot/ipx",
 		"mdbox": "^0.1.0",
 		"ofetch": "^1.3.4",
 		"seyfert": "1.3.3",

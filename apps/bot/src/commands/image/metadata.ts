@@ -18,7 +18,11 @@ export default class InvertImageCommand extends SubCommand {
 		const metadata = imageMeta(Buffer.from(image));
 
 		return ctx.editOrReply({
-			content: md.codeBlock(JSON.stringify(metadata, null, 2)),
+			content: md.codeBlock(
+				Object.entries(metadata)
+					.map(([field, value]) => `${field}: ${value}`)
+					.join("\n"),
+			),
 		});
 	}
 }

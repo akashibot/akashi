@@ -29,6 +29,9 @@ importers:
       image-meta:
         specifier: ^0.2.0
         version: 0.2.0
+      ipx:
+        specifier: github:akashibot/ipx
+        version: https://codeload.github.com/akashibot/ipx/tar.gz/314462eebd50e98c623fe367e6168e1bae54c623(ioredis@5.4.1)
       mdbox:
         specifier: ^0.1.0
         version: 0.1.0
@@ -64,8 +67,8 @@ importers:
         specifier: ^1.11.1
         version: 1.11.1
       ipx:
-        specifier: ^3.0.1
-        version: 3.0.1(ioredis@5.4.1)
+        specifier: github:akashibot/ipx
+        version: https://codeload.github.com/akashibot/ipx/tar.gz/314462eebd50e98c623fe367e6168e1bae54c623(ioredis@5.4.1)
       listhen:
         specifier: ^1.7.2
         version: 1.7.2
@@ -553,8 +556,9 @@ packages:
     resolution: {integrity: sha512-2YZsvl7jopIa1gaePkeMtd9rAcSjOOjPtpcLlOeusyO+XH2SK5ZcT+UCrElPP+WVIInh2TzeI4XW9ENaSLVVHA==}
     engines: {node: '>=12.22.0'}
 
-  ipx@3.0.1:
-    resolution: {integrity: sha512-OqbP9wLqpGXtI/le0sU4exCH5cb7kZS9jaV5xDDM8wZ62VJZBBhEjR0gXwK0agA/GfS4g/GGwY9fFSIFrTb4Gg==}
+  ipx@https://codeload.github.com/akashibot/ipx/tar.gz/314462eebd50e98c623fe367e6168e1bae54c623:
+    resolution: {tarball: https://codeload.github.com/akashibot/ipx/tar.gz/314462eebd50e98c623fe367e6168e1bae54c623}
+    version: 3.0.1
     hasBin: true
 
   iron-webcrypto@1.2.1:
@@ -1371,7 +1375,7 @@ snapshots:
       - supports-color
     optional: true
 
-  ipx@3.0.1(ioredis@5.4.1):
+  ipx@https://codeload.github.com/akashibot/ipx/tar.gz/314462eebd50e98c623fe367e6168e1bae54c623(ioredis@5.4.1):
     dependencies:
       '@fastify/accept-negotiator': 1.1.0
       citty: 0.1.6

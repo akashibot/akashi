@@ -11,7 +11,7 @@
 	"license": "ISC",
 	"dependencies": {
 		"h3": "^1.11.1",
-		"ipx": "^3.0.1",
+		"ipx": "github:akashibot/ipx",
 		"listhen": "^1.7.2"
 	},
 	"devDependencies": {
