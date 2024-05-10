@@ -1,9 +1,9 @@
 import { extendContext } from "seyfert";
-import { imageApiFetch } from "../structures/image-api";
+import { ipx } from "../structures/ipx";
 
 export const context = extendContext(() => {
 	return {
 		version: "idk",
-		imageApi: imageApiFetch,
+		ipx,
 	};
 });

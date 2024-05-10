@@ -1,0 +1,21 @@
+{
+	"name": "ipx",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"dev": "tsc-watch --onSuccess \"node ./dist/index.js\" --onFailure \"echo Couldn't start dev instance\""
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"h3": "^1.11.1",
+		"ipx": "^3.0.1",
+		"listhen": "^1.7.2"
+	},
+	"devDependencies": {
+		"@akashi/typescript-config": "workspace:*",
+		"tsc-watch": "^6.2.0"
+	}
+}

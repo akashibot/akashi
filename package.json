@@ -6,8 +6,8 @@
 		"dev": "turbo dev",
 		"lint": "turbo lint",
 		"check": "biome check --apply-unsafe --staged \"**/*.{ts,tsx,md}\"",
-		"apps:imgapi": "pnpm --filter image-api",
-		"apps:bot": "pnpm --filter bot"
+		"bot": "pnpm --filter bot",
+		"ipx": "pnpm --filter ipx"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.7.2",
