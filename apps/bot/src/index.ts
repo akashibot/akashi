@@ -1,11 +1,13 @@
 import { Client, type ParseClient } from "seyfert";
+import { context } from "./lib/constants/context";
 
-const client = new Client();
+const client = new Client({
+	context,
+});
 
-client.start();
+client.start().then(() => client.uploadCommands());
 
 declare module "seyfert" {
 	interface UsingClient extends ParseClient<Client<true>> {}
-	// interface UsingClient extends ParseClient<WorkerClient<true>> { }
-	// interface UsingClient extends ParseClient<HttpClient> {}
+	interface ExtendContext extends ReturnType<typeof context> {}
 }

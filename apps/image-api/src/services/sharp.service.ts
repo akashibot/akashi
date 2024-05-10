@@ -24,6 +24,8 @@ export class SharpService {
 	}
 
 	public async imagescriptDecodeWebp(buffer: Buffer) {
-		return decode(await (await this.resolveImageFromBuffer(buffer)).toBuffer());
+		return decode(
+			await (await this.resolveImageFromBuffer(buffer)).png().toBuffer(),
+		);
 	}
 }
