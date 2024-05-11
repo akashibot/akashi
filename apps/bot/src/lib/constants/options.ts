@@ -14,9 +14,10 @@ export const imageCommandOptions = {
 		description: "Image url",
 		required: false,
 		value({ value }, ok, fail) {
-			// if is a valid url return OK but if not return FAIL
-			if (/^https?:\/\//i.test(value)) return ok(value);
-			return fail("Invalid url");
+			const regex = /((https?:\/\/)?.*\.(?:png|gif|jpg|jpeg))/gi;
+
+			if (regex.test(value)) ok(value);
+			else fail("Invalid url");
 		},
 	}),
 	user: createUserOption({

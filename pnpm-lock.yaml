@@ -68,7 +68,7 @@ importers:
         version: 1.11.1
       ipx:
         specifier: github:akashibot/ipx
-        version: https://codeload.github.com/akashibot/ipx/tar.gz/314462eebd50e98c623fe367e6168e1bae54c623(ioredis@5.4.1)
+        version: https://codeload.github.com/akashibot/ipx/tar.gz/5cdda2f1095331f41abf52dde4148377d8044293(ioredis@5.4.1)
       listhen:
         specifier: ^1.7.2
         version: 1.7.2
@@ -558,6 +558,11 @@ packages:
 
   ipx@https://codeload.github.com/akashibot/ipx/tar.gz/314462eebd50e98c623fe367e6168e1bae54c623:
     resolution: {tarball: https://codeload.github.com/akashibot/ipx/tar.gz/314462eebd50e98c623fe367e6168e1bae54c623}
+    version: 3.0.1
+    hasBin: true
+
+  ipx@https://codeload.github.com/akashibot/ipx/tar.gz/5cdda2f1095331f41abf52dde4148377d8044293:
+    resolution: {tarball: https://codeload.github.com/akashibot/ipx/tar.gz/5cdda2f1095331f41abf52dde4148377d8044293}
     version: 3.0.1
     hasBin: true
 
@@ -1376,6 +1381,40 @@ snapshots:
     optional: true
 
   ipx@https://codeload.github.com/akashibot/ipx/tar.gz/314462eebd50e98c623fe367e6168e1bae54c623(ioredis@5.4.1):
+    dependencies:
+      '@fastify/accept-negotiator': 1.1.0
+      citty: 0.1.6
+      consola: 3.2.3
+      defu: 6.1.4
+      destr: 2.0.3
+      etag: 1.8.1
+      h3: 1.11.1
+      image-meta: 0.2.0
+      listhen: 1.7.2
+      ofetch: 1.3.4
+      pathe: 1.1.2
+      sharp: 0.33.3
+      svgo: 3.3.2
+      ufo: 1.5.3
+      unstorage: 1.10.2(ioredis@5.4.1)
+      xss: 1.0.15
+    transitivePeerDependencies:
+      - '@azure/app-configuration'
+      - '@azure/cosmos'
+      - '@azure/data-tables'
+      - '@azure/identity'
+      - '@azure/keyvault-secrets'
+      - '@azure/storage-blob'
+      - '@capacitor/preferences'
+      - '@netlify/blobs'
+      - '@planetscale/database'
+      - '@upstash/redis'
+      - '@vercel/kv'
+      - idb-keyval
+      - ioredis
+      - uWebSockets.js
+
+  ipx@https://codeload.github.com/akashibot/ipx/tar.gz/5cdda2f1095331f41abf52dde4148377d8044293(ioredis@5.4.1):
     dependencies:
       '@fastify/accept-negotiator': 1.1.0
       citty: 0.1.6
