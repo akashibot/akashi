@@ -1,9 +1,15 @@
 import { extendContext } from "seyfert";
-import { imageApiFetch } from "../structures/image-api";
+import { ipx } from "../structures/ipx";
+import { ofetch } from "ofetch";
+import { imageStorage } from "../storage/image";
 
 export const context = extendContext(() => {
 	return {
 		version: "idk",
-		imageApi: imageApiFetch,
+		ofetch,
+		ipx,
+		storage: {
+			image: imageStorage,
+		},
 	};
 });

@@ -1,5 +1,5 @@
 {
-	"name": "bot",
+	"name": "ipx",
 	"version": "1.0.0",
 	"description": "",
 	"main": "index.js",
@@ -7,23 +7,15 @@
 		"dev": "tsc-watch --onSuccess \"node ./dist/index.js\" --onFailure \"echo Couldn't start dev instance\""
 	},
 	"keywords": [],
-	"author": "@simxnet",
+	"author": "",
 	"license": "ISC",
 	"dependencies": {
-		"dotenv": "^16.4.5",
 		"h3": "^1.11.1",
-		"image-meta": "^0.2.0",
 		"ipx": "github:akashibot/ipx",
-		"mdbox": "^0.1.0",
-		"ofetch": "^1.3.4",
-		"seyfert": "1.3.3",
-		"ufo": "^1.5.3",
-		"unstorage": "^1.10.2"
+		"listhen": "^1.7.2"
 	},
 	"devDependencies": {
 		"@akashi/typescript-config": "workspace:*",
-		"@types/node": "^20.3.1",
-		"tsc-watch": "^6.2.0",
-		"typescript": "^5.1.3"
+		"tsc-watch": "^6.2.0"
 	}
 }

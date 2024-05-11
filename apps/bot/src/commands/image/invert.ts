@@ -17,15 +17,9 @@ import {
 @Options(imageCommandOptions)
 export default class InvertImageCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof imageCommandOptions>) {
-		const source = getImageOption(ctx);
+		const source = await getImageOption(ctx);
 
-		if (!source) return ctx.editOrReply({ content: "Please provide an image" });
-
-		const image = await ctx.imageApi<ArrayBuffer>("/invert", {
-			body: JSON.stringify({
-				image: source,
-			}),
-		});
+		const image = await ctx.ipx<ArrayBuffer>(`/negate/${source}`);
 
 		const response = new AttachmentBuilder()
 			.setFile("buffer", Buffer.from(image))

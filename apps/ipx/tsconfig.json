@@ -1,0 +1,10 @@
+{
+	"extends": ["@akashi/typescript-config/base.json"],
+	"compilerOptions": {
+		"outDir": "./dist",
+		"rootDir": "./src",
+		"baseUrl": "."
+	},
+	"exclude": ["node_modules"],
+	"include": ["src/**/*"]
+}
