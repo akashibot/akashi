@@ -7,7 +7,8 @@
 		"lint": "turbo lint",
 		"check": "biome check --apply-unsafe --staged \"**/*.{ts,tsx,md}\"",
 		"bot": "pnpm --filter bot",
-		"ipx": "pnpm --filter ipx"
+		"ipx": "pnpm --filter ipx",
+		"memge": "pnpm --filter memge"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.7.2",
