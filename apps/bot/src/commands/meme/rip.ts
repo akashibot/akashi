@@ -9,6 +9,7 @@ import {
 	getImageOption,
 	imageCommandOptions,
 } from "../../lib/constants/options";
+import { Stopwatch } from "@sapphire/stopwatch";
 
 @Declare({
 	name: "rip",
@@ -18,6 +19,7 @@ import {
 export default class RipMemeCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof imageCommandOptions>) {
 		const source = await getImageOption(ctx);
+		const stopwatch = new Stopwatch();
 
 		const image = await ctx.memge<ArrayBuffer, "arrayBuffer">("/custom", {
 			body: {
@@ -33,6 +35,9 @@ export default class RipMemeCommand extends SubCommand {
 					},
 				],
 			},
+			onResponse: () => {
+				stopwatch.stop();
+			},
 		});
 
 		const response = new AttachmentBuilder()
@@ -40,6 +45,7 @@ export default class RipMemeCommand extends SubCommand {
 			.setName(`${this.name}.png`);
 
 		return ctx.editOrReply({
+			content: `Took ${stopwatch.toString()} ⌛`,
 			files: [response],
 		});
 	}

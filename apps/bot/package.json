@@ -10,6 +10,7 @@
 	"author": "@simxnet",
 	"license": "ISC",
 	"dependencies": {
+		"@sapphire/stopwatch": "^1.5.2",
 		"dotenv": "^16.4.5",
 		"h3": "^1.11.1",
 		"image-meta": "^0.2.0",

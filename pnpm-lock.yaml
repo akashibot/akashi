@@ -20,6 +20,9 @@ importers:
 
   apps/bot:
     dependencies:
+      '@sapphire/stopwatch':
+        specifier: ^1.5.2
+        version: 1.5.2
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -803,6 +806,10 @@ packages:
     resolution: {integrity: sha512-TGGO7v7qOq4CYmSBVEYpI1Y5xDuCEnbVC5Vth8mOsW0gDSzxNrVERPc790IGHsrT2dQSimgMr9Ub3Y1Jci5/8w==}
     cpu: [x64]
     os: [win32]
+
+  '@sapphire/stopwatch@1.5.2':
+    resolution: {integrity: sha512-FrR1GnaEIuXpEfnaz7DjNgoN/Cp8dJ5XFgb8CxXTCAJi8LYk0YsyGSdmmcs9R3ZNZrA1vOSv0dFVLitgiVA36Q==}
+    engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
 
   '@sindresorhus/merge-streams@2.3.0':
     resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
@@ -2827,6 +2834,10 @@ snapshots:
   '@rollup/rollup-win32-x64-msvc@4.17.2':
     optional: true
 
+  '@sapphire/stopwatch@1.5.2':
+    dependencies:
+      tslib: 2.6.2
+
   '@sindresorhus/merge-streams@2.3.0': {}
 
   '@trysound/sax@0.2.0': {}
@@ -4279,8 +4290,7 @@ snapshots:
       string-argv: 0.3.2
       typescript: 5.4.5
 
-  tslib@2.6.2:
-    optional: true
+  tslib@2.6.2: {}
 
   turbo-darwin-64@1.13.3:
     optional: true

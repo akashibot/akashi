@@ -7,4 +7,7 @@ export default defineNitroConfig({
 			},
 		},
 	},
+	prerender: {
+		failOnError: true,
+	},
 });
