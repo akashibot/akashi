@@ -6,6 +6,7 @@ import {
 	CommandContext,
 	OnOptionsReturnObject,
 } from "seyfert";
+import { MemgeError } from "src/lib/types/errors";
 
 @Declare({
 	name: "meme",
@@ -13,21 +14,13 @@ import {
 })
 @AutoLoad()
 export default class MemeParent extends Command {
-	async onRunError(ctx: CommandContext, error: unknown) {
+	async onRunError(ctx: CommandContext, error: MemgeError) {
 		ctx.client.logger.fatal(error);
 
 		await ctx.editOrReply({
-			content: error instanceof Error ? error.message : `Meme error: ${error}`,
-		});
-	}
-
-	async onAfterRun(ctx: CommandContext) {
-		if (!this.ad) return;
-
-		return ctx.interaction.followup({
-			content:
-				"Commander~! You've got a new mission! Vote for Akashi on [Dbots.fun](https://dbots.fun) and earn **500** image tokens!",
-			flags: 64,
+			content: md.codeBlock(
+				`${error.url ?? ctx.command.name} threw an error: ${error.message}`,
+			),
 		});
 	}
 
@@ -43,6 +36,4 @@ export default class MemeParent extends Command {
 			content: md.codeBlock(errors),
 		});
 	}
-
-	private readonly ad: boolean = false;
 }

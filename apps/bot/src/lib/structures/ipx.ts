@@ -8,7 +8,4 @@ export const ipx = ofetch.create({
 	onRequestError: (ctx) => {
 		throw new Error(ctx.error.message);
 	},
-	onResponseError: (ctx) => {
-		throw new Error(ctx.error?.message ?? "Nyooo~! Just wait until next time!");
-	},
 });
