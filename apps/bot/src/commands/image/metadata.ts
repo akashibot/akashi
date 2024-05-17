@@ -11,7 +11,7 @@ import { md } from "mdbox";
 	description: "Display an image metadata",
 })
 @Options(imageCommandOptions)
-export default class InvertImageCommand extends SubCommand {
+export default class MetadataImageCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof imageCommandOptions>) {
 		const source = await getImageOption(ctx);
 		const image = await ctx.ipx<ArrayBuffer>(`/_/${source}`);

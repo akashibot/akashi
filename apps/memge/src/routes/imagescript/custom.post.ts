@@ -1,5 +1,12 @@
 import { Image, decode } from "imagescript";
 
+export interface ImageData {
+	img: Image;
+	x: number;
+	y: number;
+	resize?: { w?: number; h?: number };
+}
+
 export default eventHandler(async (event) => {
 	const body = await readBody(event);
 
@@ -19,12 +26,7 @@ export default eventHandler(async (event) => {
 				h: image?.resize?.h,
 			},
 		})),
-	)) as {
-		img: Image;
-		x: number;
-		y: number;
-		resize?: { w?: number; h?: number };
-	}[];
+	)) as ImageData[];
 
 	if (images?.length >= 1) {
 		images.map((image) =>

@@ -39,8 +39,8 @@ importers:
         specifier: ^1.3.4
         version: 1.3.4
       seyfert:
-        specifier: 1.3.3
-        version: 1.3.3
+        specifier: 1.4.0
+        version: 1.4.0
       ufo:
         specifier: ^1.5.3
         version: 1.5.3
@@ -1908,8 +1908,8 @@ packages:
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
 
-  seyfert@1.3.3:
-    resolution: {integrity: sha512-TgXur4CY+gQ2VXBQ0xMtu3iGBqPWGz16Un0cixSTreTNOxxpV5i33XXb3B2Q6KDVzY7rclS9bY7IK0TegYBoxA==}
+  seyfert@1.4.0:
+    resolution: {integrity: sha512-7cUbBx3ywx6zrq6aWHXu3F+OgIebbnQybDWLLRoHNUzxefFoOGkBwVa+AUQTZxhUv2lerIMwP1A+I2cDXmcjhA==}
 
   sharp@0.33.3:
     resolution: {integrity: sha512-vHUeXJU1UvlO/BNwTpT0x/r53WkLUVxrmb5JTgW92fdFCFk0ispLMAeu/jPO2vjkXM1fYUi3K7/qcLF47pwM1A==}
@@ -4089,7 +4089,7 @@ snapshots:
 
   setprototypeof@1.2.0: {}
 
-  seyfert@1.3.3:
+  seyfert@1.4.0:
     dependencies:
       chokidar: 3.6.0
       discord-api-types: 0.37.83

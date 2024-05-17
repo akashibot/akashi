@@ -26,7 +26,7 @@ export const imageRawCommandOptions = {
 	description: "Raw process an image",
 })
 @Options(imageRawCommandOptions)
-export default class InvertImageCommand extends SubCommand {
+export default class RawImageCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof imageRawCommandOptions>) {
 		const source = await getImageOption(ctx);
 

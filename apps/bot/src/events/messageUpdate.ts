@@ -2,9 +2,11 @@ import { createEvent } from "seyfert";
 import { imageStorage } from "../lib/storage/image";
 import { getMessageMedia } from "../lib/utils";
 
+// Event to get embed images
 export default createEvent({
 	data: { name: "messageUpdate" },
 	async run([_, newMessage], client) {
+		if (!newMessage) return;
 		if (newMessage.author?.system) return;
 
 		const messageMedia = await getMessageMedia(
