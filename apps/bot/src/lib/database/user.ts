@@ -36,3 +36,17 @@ export async function removeUserTokens(id: string, tokens = 1) {
 
 	return updateUser;
 }
+
+export async function addUserTokens(id: string, tokens: number) {
+	const user = await getUserOrCreate(id);
+
+	const [updateUser] = await db
+		.update(schemas.users)
+		.set({
+			tokens: user.tokens + tokens,
+		})
+		.where(drizzle.eq(schemas.users.id, user.id))
+		.returning();
+
+	return updateUser;
+}

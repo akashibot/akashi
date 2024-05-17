@@ -26,6 +26,7 @@
 	},
 	"devDependencies": {
 		"@akashi/typescript-config": "workspace:*",
+		"@swc/core": "^1.5.7",
 		"@types/node": "^20.3.1",
 		"tsc-watch": "^6.2.0",
 		"tsup": "^8.0.2",
