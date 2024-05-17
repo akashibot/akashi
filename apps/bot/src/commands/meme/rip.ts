@@ -32,14 +32,6 @@ export default class RipMemeCommand extends SubCommand {
 						},
 					},
 				],
-				texts: [
-					{
-						text: "OwO",
-						x: 167,
-						y: 383,
-						font: "codsafd",
-					},
-				],
 			},
 		});
 
