@@ -9,7 +9,8 @@
 		"bot": "pnpm --filter bot",
 		"ipx": "pnpm --filter ipx",
 		"memge": "pnpm --filter memge",
-		"db": "pnpm --filter @akashi/db"
+		"db": "pnpm --filter @akashi/db",
+		"porter": "pnpm --filter porter"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.7.2",

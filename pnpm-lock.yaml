@@ -126,6 +126,19 @@ importers:
         specifier: ^8.0.2
         version: 8.0.2(@swc/core@1.5.7)(typescript@5.4.5)
 
+  apps/porter:
+    dependencies:
+      microsoft-translate-api:
+        specifier: github:akashibot/microsoft-translate-api
+        version: https://codeload.github.com/akashibot/microsoft-translate-api/tar.gz/3582e6e5ddeabd6865681987d18f479b17f031e1
+    devDependencies:
+      '@akashi/typescript-config':
+        specifier: workspace:*
+        version: link:../../packages/typescript-config
+      nitropack:
+        specifier: latest
+        version: 2.9.6(@opentelemetry/api@1.8.0)
+
   packages/db:
     dependencies:
       db0:
@@ -2216,6 +2229,10 @@ packages:
   micromatch@4.0.5:
     resolution: {integrity: sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==}
     engines: {node: '>=8.6'}
+
+  microsoft-translate-api@https://codeload.github.com/akashibot/microsoft-translate-api/tar.gz/3582e6e5ddeabd6865681987d18f479b17f031e1:
+    resolution: {tarball: https://codeload.github.com/akashibot/microsoft-translate-api/tar.gz/3582e6e5ddeabd6865681987d18f479b17f031e1}
+    version: 0.0.6
 
   mime@1.6.0:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
@@ -4989,6 +5006,8 @@ snapshots:
     dependencies:
       braces: 3.0.2
       picomatch: 2.3.1
+
+  microsoft-translate-api@https://codeload.github.com/akashibot/microsoft-translate-api/tar.gz/3582e6e5ddeabd6865681987d18f479b17f031e1: {}
 
   mime@1.6.0: {}
 
