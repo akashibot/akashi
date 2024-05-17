@@ -11,6 +11,7 @@ import {
 	imageCommandOptions,
 } from "../../lib/constants/options";
 import { imageMeta } from "image-meta";
+import { Stopwatch } from "@sapphire/stopwatch";
 
 export const imageRawCommandOptions = {
 	operation: createStringOption({
@@ -26,13 +27,17 @@ export const imageRawCommandOptions = {
 	description: "Raw process an image",
 })
 @Options(imageRawCommandOptions)
-export default class InvertImageCommand extends SubCommand {
+export default class RawImageCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof imageRawCommandOptions>) {
 		const source = await getImageOption(ctx);
+		const stopwatch = new Stopwatch();
+		const operation = ctx.options.operation.split(/[ ,]/g).join(",");
 
-		const image = await ctx.ipx<ArrayBuffer>(
-			`/${ctx.options.operation}/${source}`,
-		);
+		const image = await ctx.ipx<ArrayBuffer>(`/${operation}/${source}`, {
+			onResponse: () => {
+				stopwatch.stop();
+			},
+		});
 
 		const metadata = imageMeta(Buffer.from(image));
 
@@ -41,8 +46,7 @@ export default class InvertImageCommand extends SubCommand {
 			.setName(`${this.name}.${metadata.type ?? "png"}`);
 
 		return ctx.editOrReply({
-			content:
-				"Interested in processing images by yourself using Akashi? Read [this](https://github.com/akashibot/ipx?tab=readme-ov-file#modifiers)",
+			content: `Took ${stopwatch.toString()} ⌛ | Want to make your own images? Read [this](https://github.com/akashibot/ipx?tab=readme-ov-file#modifiers)`,
 			files: [response],
 			flags: 4,
 		});

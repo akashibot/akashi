@@ -6,25 +6,30 @@ import {
 	CommandContext,
 	OnOptionsReturnObject,
 } from "seyfert";
+import { MemgeError } from "src/lib/types/errors";
 
 @Declare({
-	name: "image",
-	description: "Image commands parent",
+	name: "meme",
+	description: "Meme commands parent",
 })
 @AutoLoad()
-export default class ImageParent extends Command {
-	async onRunError(ctx: CommandContext, error: unknown) {
+export default class MemeParent extends Command {
+	async onRunError(ctx: CommandContext, error: MemgeError) {
 		ctx.client.logger.fatal(error);
 
 		await ctx.editOrReply({
-			content: error instanceof Error ? error.message : `Image error: ${error}`,
+			content: md.codeBlock(
+				`${error.url ?? ctx.command.name} threw an error: ${error.message}`,
+			),
 		});
 	}
 
 	async onOptionsError(ctx: CommandContext, returns: OnOptionsReturnObject) {
 		const errors = Object.entries(returns)
 			.filter(([_, err]) => err.failed)
-			.map(([key, err]) => `${key}: ${err.value}`)
+			.map(
+				([key, err]) => `${key}: ${err instanceof Error ? err.message : err}`,
+			)
 			.join("\n");
 
 		return ctx.editOrReply({

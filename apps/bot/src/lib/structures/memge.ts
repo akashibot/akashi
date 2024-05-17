@@ -1,9 +1,9 @@
 import { ofetch } from "ofetch";
 import { RequestMethod } from "seyfert";
 
-export const ipx = ofetch.create({
-	baseURL: "http://localhost:8000/ipx",
-	method: RequestMethod.Get,
+export const memge = ofetch.create({
+	baseURL: "http://localhost:9000/imagescript",
+	method: RequestMethod.Post,
 	responseType: "arrayBuffer",
 	onRequestError: (ctx) => {
 		throw new Error(ctx.error.message);

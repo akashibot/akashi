@@ -7,14 +7,15 @@
 		"lint": "turbo lint",
 		"check": "biome check --apply-unsafe --staged \"**/*.{ts,tsx,md}\"",
 		"bot": "pnpm --filter bot",
-		"ipx": "pnpm --filter ipx"
+		"ipx": "pnpm --filter ipx",
+		"memge": "pnpm --filter memge"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.7.2",
 		"@akashi/typescript-config": "workspace:*",
 		"turbo": "latest"
 	},
-	"packageManager": "pnpm@9.0.6",
+	"packageManager": "pnpm@9.1.1",
 	"engines": {
 		"node": ">=20"
 	}
