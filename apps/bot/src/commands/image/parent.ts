@@ -5,12 +5,14 @@ import {
 	AutoLoad,
 	CommandContext,
 	OnOptionsReturnObject,
+	Middlewares,
 } from "seyfert";
 
 @Declare({
 	name: "image",
 	description: "Image commands parent",
 })
+@Middlewares(["tokens"])
 @AutoLoad()
 export default class ImageParent extends Command {
 	async onRunError(ctx: CommandContext, error: unknown) {
@@ -29,6 +31,12 @@ export default class ImageParent extends Command {
 
 		return ctx.editOrReply({
 			content: md.codeBlock(errors),
+		});
+	}
+
+	async onMiddlewaresError(ctx: CommandContext, error: string) {
+		return ctx.editOrReply({
+			content: error,
 		});
 	}
 }
