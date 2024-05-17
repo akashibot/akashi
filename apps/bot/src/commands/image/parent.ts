@@ -21,28 +21,14 @@ export default class ImageParent extends Command {
 		});
 	}
 
-	async onAfterRun(ctx: CommandContext) {
-		if (!this.ad) return;
-
-		return ctx.interaction.followup({
-			content:
-				"Commander~! You've got a new mission! Vote for Akashi on [Dbots.fun](https://dbots.fun) and earn **500** image tokens!",
-			flags: 64,
-		});
-	}
-
 	async onOptionsError(ctx: CommandContext, returns: OnOptionsReturnObject) {
 		const errors = Object.entries(returns)
 			.filter(([_, err]) => err.failed)
-			.map(
-				([key, err]) => `${key}: ${err instanceof Error ? err.message : err}`,
-			)
+			.map(([key, err]) => `${key}: ${err.value}`)
 			.join("\n");
 
 		return ctx.editOrReply({
 			content: md.codeBlock(errors),
 		});
 	}
-
-	private readonly ad: boolean = false;
 }

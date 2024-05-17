@@ -4,6 +4,7 @@ import {
 	createStringOption,
 	createUserOption,
 } from "seyfert";
+import { httpsImageRegex } from "./regexes";
 
 export const imageCommandOptions = {
 	attachment: createAttachmentOption({
@@ -14,9 +15,7 @@ export const imageCommandOptions = {
 		description: "Image url",
 		required: false,
 		value({ value }, ok, fail) {
-			const regex = /((https?:\/\/)?.*\.(?:png|gif|jpg|jpeg))/gi;
-
-			if (regex.test(value)) ok(value);
+			if (httpsImageRegex.test(value)) ok(value);
 			else fail("Invalid url");
 		},
 	}),
@@ -31,7 +30,7 @@ export async function getImageOption(
 ) {
 	const image =
 		ctx.options.attachment?.proxyUrl ??
-		(ctx.options.url?.split("?")[0] as string) ??
+		ctx.options.url ??
 		ctx.options.user?.avatarURL() ??
 		(await ctx.storage.image.getItem(ctx.channelId)) ??
 		undefined;

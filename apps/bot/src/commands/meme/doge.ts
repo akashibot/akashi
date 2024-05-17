@@ -6,6 +6,7 @@ import {
 	Options,
 	createAttachmentOption,
 } from "seyfert";
+import { Stopwatch } from "@sapphire/stopwatch";
 
 const dogeOptions = {
 	doge: createAttachmentOption({
@@ -26,6 +27,7 @@ const dogeOptions = {
 export default class DogeMemeCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof dogeOptions>) {
 		const { doge, cheems } = ctx.options;
+		const stopwatch = new Stopwatch();
 
 		const image = await ctx.memge<ArrayBuffer, "arrayBuffer">("/custom", {
 			body: {
@@ -49,6 +51,9 @@ export default class DogeMemeCommand extends SubCommand {
 					},
 				],
 			},
+			onResponse: () => {
+				stopwatch.stop();
+			},
 		});
 
 		const response = new AttachmentBuilder()
@@ -56,6 +61,7 @@ export default class DogeMemeCommand extends SubCommand {
 			.setName(`${this.name}.png`);
 
 		return ctx.editOrReply({
+			content: `Took ${stopwatch.toString()} ⌛`,
 			files: [response],
 		});
 	}

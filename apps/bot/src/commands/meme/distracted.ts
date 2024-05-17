@@ -6,6 +6,7 @@ import {
 	Options,
 	createAttachmentOption,
 } from "seyfert";
+import { Stopwatch } from "@sapphire/stopwatch";
 
 const distractedOptions = {
 	boyfriend: createAttachmentOption({
@@ -16,10 +17,10 @@ const distractedOptions = {
 		description: "The girlfriend image",
 		required: true,
 	}),
-  girl: createAttachmentOption({
-    description: "The girl image",
-    required: true
-  })
+	girl: createAttachmentOption({
+		description: "The girl image",
+		required: true,
+	}),
 };
 
 @Declare({
@@ -29,7 +30,8 @@ const distractedOptions = {
 @Options(distractedOptions)
 export default class DistractedMemeCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof distractedOptions>) {
-		const { boyfriend, girlfriend, girl: _girl } = ctx.options;
+		const { boyfriend, girlfriend, girl } = ctx.options;
+		const stopwatch = new Stopwatch();
 
 		const image = await ctx.memge<ArrayBuffer, "arrayBuffer">("/custom", {
 			body: {
@@ -37,21 +39,32 @@ export default class DistractedMemeCommand extends SubCommand {
 				images: [
 					{
 						url: boyfriend.proxyUrl,
-						x: 190,
-						y: 50,
+						x: 662,
+						y: 351,
 						resize: {
-							w: 150,
+							w: 200,
 						},
 					},
 					{
 						url: girlfriend.proxyUrl,
-						x: 700,
-						y: 150,
+						x: 925,
+						y: 451,
 						resize: {
-							w: 150,
+							w: 200,
+						},
+					},
+					{
+						url: girl.proxyUrl,
+						x: 238,
+						y: 551,
+						resize: {
+							w: 200,
 						},
 					},
 				],
+			},
+			onResponse: () => {
+				stopwatch.stop();
 			},
 		});
 
@@ -60,8 +73,8 @@ export default class DistractedMemeCommand extends SubCommand {
 			.setName(`${this.name}.png`);
 
 		return ctx.editOrReply({
+			content: `Took ${stopwatch.toString()} ⌛`,
 			files: [response],
 		});
 	}
 }
-

@@ -3,6 +3,9 @@ import { context } from "./lib/constants/context";
 
 const client = new Client({
 	context,
+	commands: {
+		prefix: (msg) => [`<@${msg.client.botId}>`, "a!"],
+	},
 });
 
 client.start().then(() => client.uploadCommands());
