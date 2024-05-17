@@ -56,6 +56,9 @@ importers:
       unstorage:
         specifier: ^1.10.2
         version: 1.10.2(ioredis@5.4.1)
+      yunaforseyfert:
+        specifier: ^0.10.3
+        version: 0.10.3
     devDependencies:
       '@akashi/typescript-config':
         specifier: workspace:*
@@ -3143,6 +3146,9 @@ packages:
     resolution: {integrity: sha512-7dSzzRQ++CKnNI/krKnYRV7JKKPUXMEh61soaHKg9mrWEhzFWhFnxPxGl+69cD1Ou63C13NUPCnmIcrvqCuM6w==}
     engines: {node: '>=12'}
 
+  yunaforseyfert@0.10.3:
+    resolution: {integrity: sha512-W+5GgIv1my2biuyrijUzG0YhP1eXpS4vd3v1vJA2+xWv9Qh6ncGdd1YJ6nbSDZ+l1ZBvMxzaDO/al2diwqJEvg==}
+
   zip-stream@6.0.1:
     resolution: {integrity: sha512-zK7YHHz4ZXpW89AHXUPbQVGKI7uvkd3hzusTdotCg1UxyaVtg0zFJSTfW/Dq5f7OBBVnq6cZIaC8Ti4hb6dtCA==}
     engines: {node: '>= 14'}
@@ -5972,6 +5978,15 @@ snapshots:
       string-width: 4.2.3
       y18n: 5.0.8
       yargs-parser: 21.1.1
+
+  yunaforseyfert@0.10.3:
+    dependencies:
+      discord-api-types: 0.37.83
+      seyfert: 1.4.0
+    transitivePeerDependencies:
+      - bufferutil
+      - supports-color
+      - utf-8-validate
 
   zip-stream@6.0.1:
     dependencies:
