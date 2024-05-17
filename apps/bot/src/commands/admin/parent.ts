@@ -6,20 +6,26 @@ import {
 	CommandContext,
 	OnOptionsReturnObject,
 	Middlewares,
+	Groups,
 } from "seyfert";
 
 @Declare({
-	name: "image",
-	description: "Image commands parent",
+	name: "admin",
+	description: "Admin commands parent",
 })
-@Middlewares(["tokens"])
+@Middlewares(["admin"])
 @AutoLoad()
-export default class ImageParent extends Command {
+@Groups({
+	tokens: {
+		defaultDescription: "Admin tokens commands group",
+	},
+})
+export default class AdminParent extends Command {
 	async onRunError(ctx: CommandContext, error: unknown) {
 		ctx.client.logger.fatal(error);
 
 		await ctx.editOrReply({
-			content: error instanceof Error ? error.message : `Image error: ${error}`,
+			content: error instanceof Error ? error.message : `Admin error: ${error}`,
 		});
 	}
 

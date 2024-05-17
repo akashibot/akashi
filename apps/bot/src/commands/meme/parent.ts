@@ -6,7 +6,7 @@ import {
 	CommandContext,
 	OnOptionsReturnObject,
 } from "seyfert";
-import { MemgeError } from "src/lib/types/errors";
+import { MemgeError } from "../../lib/types/errors";
 
 @Declare({
 	name: "meme",

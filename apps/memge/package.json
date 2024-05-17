@@ -14,7 +14,8 @@
 	"devDependencies": {
 		"@akashi/typescript-config": "workspace:*",
 		"nitropack": "latest",
-		"tsc-watch": "^6.2.0"
+		"tsc-watch": "^6.2.0",
+		"tsup": "^8.0.2"
 	},
 	"dependencies": {
 		"imagescript": "^1.3.0",

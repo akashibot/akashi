@@ -8,7 +8,8 @@
 		"check": "biome check --apply-unsafe --staged \"**/*.{ts,tsx,md}\"",
 		"bot": "pnpm --filter bot",
 		"ipx": "pnpm --filter ipx",
-		"memge": "pnpm --filter memge"
+		"memge": "pnpm --filter memge",
+		"db": "pnpm --filter @akashi/db"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.7.2",
