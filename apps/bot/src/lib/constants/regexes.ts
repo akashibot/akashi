@@ -19,7 +19,8 @@ export const httpsRegex = createRegExp(
  * /(https?:\\/\\/)?.*\\.((?:(?:png|gif)|jpg)|jpeg)/
  */
 export const httpsImageRegex = createRegExp(
-	httpsRegex.source,
+	maybe(exactly("http", maybe("s"), "://").grouped()),
+	char.times.any(),
 	".",
 	exactly("png").or("gif", "jpg", "tiff", "jpeg").grouped(),
 );

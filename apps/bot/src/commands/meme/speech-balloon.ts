@@ -9,23 +9,37 @@ import {
 	getImageOption,
 	imageCommandOptions,
 } from "../../lib/constants/options";
+import { Stopwatch } from "@sapphire/stopwatch";
 
 @Declare({
-	name: "invert",
-	description: "Inverts an image",
+	name: "speech-balloon",
+	aliases: ["balloon", "speech", "sp"],
+	description: "Look at him lololol",
 })
 @Options(imageCommandOptions)
-export default class InvertImageCommand extends SubCommand {
+export default class SpeechBalloonMemeCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof imageCommandOptions>) {
 		const source = await getImageOption(ctx);
+		const stopwatch = new Stopwatch();
 
-		const image = await ctx.ipx<ArrayBuffer>(`/negate/${source}`);
+		const image = await ctx.memge<ArrayBuffer, "arrayBuffer">(
+			"/speech-balloon",
+			{
+				body: {
+					image: source,
+				},
+				onResponse: () => {
+					stopwatch.stop();
+				},
+			},
+		);
 
 		const response = new AttachmentBuilder()
 			.setFile("buffer", Buffer.from(image))
 			.setName(`${this.name}.png`);
 
 		return ctx.editOrReply({
+			content: `Took ${stopwatch.toString()} ⌛`,
 			files: [response],
 		});
 	}
