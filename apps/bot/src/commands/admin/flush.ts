@@ -6,10 +6,15 @@ import { type CommandContext, Declare, SubCommand } from "seyfert";
 })
 export default class AdminFlushCommand extends SubCommand {
 	public async run(ctx: CommandContext) {
-		ctx.client.cache.flush();
+		await this.flush(ctx);
 
 		return ctx.editOrReply({
 			content: "Flushed cache",
 		});
+	}
+
+	private async flush(ctx: CommandContext) {
+		ctx.client.cache.flush();
+		await ctx.storage.image.clear();
 	}
 }
