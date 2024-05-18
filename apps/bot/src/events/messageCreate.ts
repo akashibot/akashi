@@ -1,5 +1,5 @@
 import { createEvent } from "seyfert";
-import { imageStorage } from "../lib/structures/services/storage";
+import { image } from "../lib/structures/services/storage";
 import { getMessageMedia } from "../lib/utils";
 
 // Event to get images
@@ -14,7 +14,6 @@ export default createEvent({
 			message.channelId,
 		);
 
-		if (messageMedia)
-			await imageStorage.setItem(message.channelId, messageMedia);
+		if (messageMedia) await image.setItem(message.channelId, messageMedia);
 	},
 });

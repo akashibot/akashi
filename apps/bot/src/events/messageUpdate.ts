@@ -1,5 +1,5 @@
 import { createEvent } from "seyfert";
-import { imageStorage } from "../lib/structures/services/storage";
+import { image } from "../lib/structures/services/storage";
 import { getMessageMedia } from "../lib/utils";
 
 // Event to get embed images
@@ -15,7 +15,6 @@ export default createEvent({
 			newMessage.channelId,
 		);
 
-		if (messageMedia)
-			await imageStorage.setItem(newMessage.channelId, messageMedia);
+		if (messageMedia) await image.setItem(newMessage.channelId, messageMedia);
 	},
 });

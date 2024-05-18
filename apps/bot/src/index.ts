@@ -1,8 +1,15 @@
 import "dotenv/config";
-import { Client, type ParseMiddlewares, type ParseClient } from "seyfert";
+import {
+	Client,
+	type ParseMiddlewares,
+	type ParseClient,
+	config,
+} from "seyfert";
 import { context } from "./lib/structures/context";
 import { middlewares } from "./middlewares";
 import { YunaParser } from "yunaforseyfert";
+import { loadConfig } from "c12";
+import { InternalRuntimeConfig } from "seyfert/lib/client/base";
 
 const client = new Client({
 	context,
@@ -12,6 +19,13 @@ const client = new Client({
 	},
 	allowedMentions: {
 		parse: [],
+	},
+	async getRC() {
+		const { config: seyfertConfig } = await loadConfig({
+			configFile: "../seyfert.config.ts",
+		});
+
+		return config.bot(seyfertConfig as InternalRuntimeConfig);
 	},
 });
 
