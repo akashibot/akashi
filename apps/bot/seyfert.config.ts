@@ -1,4 +1,4 @@
-import { InternalRuntimeConfig } from "seyfert/lib/client/base";
+import { RuntimeConfig } from "seyfert/lib/client/base";
 
 export default {
 	token: process.env.BOT_TOKEN as string,
@@ -9,4 +9,4 @@ export default {
 		commands: "commands",
 		events: "events",
 	},
-} satisfies InternalRuntimeConfig;
+} satisfies RuntimeConfig;
