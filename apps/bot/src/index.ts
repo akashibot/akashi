@@ -1,6 +1,6 @@
 import "dotenv/config";
 import { Client, type ParseMiddlewares, type ParseClient } from "seyfert";
-import { context } from "./lib/constants/context";
+import { context } from "./lib/structures/context";
 import { middlewares } from "./middlewares";
 import { YunaParser } from "yunaforseyfert";
 

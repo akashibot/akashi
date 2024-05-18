@@ -7,7 +7,7 @@ import {
 	createNumberOption,
 	Group,
 } from "seyfert";
-import { addUserTokens } from "../../../lib/database/user";
+import { addUserTokens } from "../../../lib/structures/services/database/user";
 
 const adminTokensGiveOptions = {
 	user: createUserOption({

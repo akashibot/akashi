@@ -1,11 +1,8 @@
-import { ofetch } from "ofetch";
 import { RequestMethod } from "seyfert";
+import { baseService } from "./base";
 
-export const ipx = ofetch.create({
+export const ipx = baseService.create({
 	baseURL: "http://localhost:4000/ipx",
 	method: RequestMethod.Get,
 	responseType: "arrayBuffer",
-	onRequestError: (ctx) => {
-		throw new Error(ctx.error.message);
-	},
 });

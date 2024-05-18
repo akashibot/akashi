@@ -1,5 +1,8 @@
 import { createMiddleware } from "seyfert";
-import { getUserOrCreate, removeUserTokens } from "../lib/database/user";
+import {
+	getUserOrCreate,
+	removeUserTokens,
+} from "../lib/structures/services/database/user";
 
 export const tokensMiddleware = createMiddleware<void>(async (middle) => {
 	const user = await getUserOrCreate(middle.context.author.id);

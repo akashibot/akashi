@@ -1,11 +1,8 @@
-import { ofetch } from "ofetch";
 import { RequestMethod } from "seyfert";
+import { baseService } from "./base";
 
-export const memge = ofetch.create({
+export const memge = baseService.create({
 	baseURL: "http://localhost:1000/imagescript",
 	method: RequestMethod.Post,
 	responseType: "arrayBuffer",
-	onRequestError: (ctx) => {
-		throw new Error(ctx.error.message);
-	},
 });
