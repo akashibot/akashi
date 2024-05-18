@@ -1,4 +1,5 @@
 import { type CommandContext, Declare, SubCommand } from "seyfert";
+import { send } from "../../lib/utils";
 
 @Declare({
 	name: "flush",
@@ -6,15 +7,23 @@ import { type CommandContext, Declare, SubCommand } from "seyfert";
 })
 export default class AdminFlushCommand extends SubCommand {
 	public async run(ctx: CommandContext) {
-		await this.flush(ctx);
+		const flushed = await this.flush(ctx);
 
-		return ctx.editOrReply({
-			content: "Flushed cache",
+		return send(ctx, {
+			content: Object.entries(flushed)
+				.map(([name, isFlushed]) => `${isFlushed ? "✅" : "❌"} ${name}`)
+				.join("\n"),
 		});
 	}
 
 	private async flush(ctx: CommandContext) {
-		ctx.client.cache.flush();
-		await ctx.storages.storage.clear();
+		await ctx.client.cache.adapter.flush();
+		return {
+			storage: await ctx.storages.storage
+				.clear()
+				.then(() => true)
+				.catch(() => false),
+			client: true,
+		};
 	}
 }

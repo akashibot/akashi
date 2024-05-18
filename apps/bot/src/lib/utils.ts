@@ -1,4 +1,12 @@
-import { Message, UsingClient } from "seyfert";
+import {
+	CommandContext,
+	Message,
+	OptionsRecord,
+	UsingClient,
+	WebhookMessage,
+} from "seyfert";
+import { SendResolverProps, When } from "seyfert/lib/common";
+import { APIInteractionResponseCallbackData } from "seyfert/lib/types";
 
 export function getMediaUrl(message: Message): string | undefined {
 	if (message.attachments[0]?.proxyUrl) {
@@ -28,4 +36,28 @@ export async function getMessageMedia(
 	const media = getMediaUrl(message);
 
 	return media;
+}
+
+export async function send<T extends OptionsRecord>(
+	ctx: CommandContext<T>,
+	body: Omit<
+		APIInteractionResponseCallbackData,
+		"embeds" | "components" | "poll"
+	> &
+		SendResolverProps & { variant?: "ok" | "err" | "info" },
+): Promise<
+	// biome-ignore lint/suspicious/noConfusingVoidType: eh
+	When<false, WebhookMessage | Message, void | WebhookMessage | Message>
+> {
+	const match = {
+		ok: "✅",
+		err: "❌",
+		info: "U+2139",
+		default: "",
+	};
+
+	return ctx.editOrReply({
+		content: `${match[body.variant ?? "default"]} ${body.content}`,
+		...body,
+	});
 }
