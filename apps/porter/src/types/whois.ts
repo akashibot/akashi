@@ -1,27 +1,4 @@
-export interface TranslationResult {
-	langs: {
-		[key: string]: string;
-	};
-	translations: {
-		text: string;
-		to: string;
-		sentLen?: {
-			srcSentLen: number[];
-			transSentLen: number[];
-		};
-		transliteration?: {
-			script: string;
-			text: string;
-		};
-		alignment?: object;
-	}[];
-	detectedLanguage?: {
-		language: string;
-		score: number;
-	};
-}
-
-export interface WhoisResult {
+export interface Whois {
 	status: boolean;
 	domain_name: string;
 	query_time: string;

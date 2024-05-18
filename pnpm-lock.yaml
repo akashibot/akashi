@@ -130,7 +130,7 @@ importers:
     dependencies:
       microsoft-translate-api:
         specifier: github:akashibot/microsoft-translate-api
-        version: https://codeload.github.com/akashibot/microsoft-translate-api/tar.gz/3582e6e5ddeabd6865681987d18f479b17f031e1
+        version: https://codeload.github.com/akashibot/microsoft-translate-api/tar.gz/71a5256a9f82877a58fb3b8febb4a8cddd3591e8
     devDependencies:
       '@akashi/typescript-config':
         specifier: workspace:*
@@ -2230,9 +2230,9 @@ packages:
     resolution: {integrity: sha512-DMy+ERcEW2q8Z2Po+WNXuw3c5YaUSFjAO5GsJqfEl7UjvtIuFKO6ZrKvcItdy98dwFI2N1tg3zNIdKaQT+aNdA==}
     engines: {node: '>=8.6'}
 
-  microsoft-translate-api@https://codeload.github.com/akashibot/microsoft-translate-api/tar.gz/3582e6e5ddeabd6865681987d18f479b17f031e1:
-    resolution: {tarball: https://codeload.github.com/akashibot/microsoft-translate-api/tar.gz/3582e6e5ddeabd6865681987d18f479b17f031e1}
-    version: 0.0.6
+  microsoft-translate-api@https://codeload.github.com/akashibot/microsoft-translate-api/tar.gz/71a5256a9f82877a58fb3b8febb4a8cddd3591e8:
+    resolution: {tarball: https://codeload.github.com/akashibot/microsoft-translate-api/tar.gz/71a5256a9f82877a58fb3b8febb4a8cddd3591e8}
+    version: 1.0.0
 
   mime@1.6.0:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
@@ -5007,7 +5007,7 @@ snapshots:
       braces: 3.0.2
       picomatch: 2.3.1
 
-  microsoft-translate-api@https://codeload.github.com/akashibot/microsoft-translate-api/tar.gz/3582e6e5ddeabd6865681987d18f479b17f031e1: {}
+  microsoft-translate-api@https://codeload.github.com/akashibot/microsoft-translate-api/tar.gz/71a5256a9f82877a58fb3b8febb4a8cddd3591e8: {}
 
   mime@1.6.0: {}
 

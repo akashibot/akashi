@@ -1,4 +1,4 @@
-import { translate } from "microsoft-translate-api";
+import { translate, langs } from "microsoft-translate-api";
 
 interface TranslateBody {
 	text: string;
@@ -11,5 +11,8 @@ export default eventHandler(async (event) => {
 
 	const result = await translate(text, from, to);
 
-	return result[0];
+	return {
+		langs: langs.default,
+		...result[0],
+	};
 });

@@ -34,7 +34,7 @@ export default class UtilTranslateCommand extends SubCommand {
 		const { text, to, from } = ctx.options;
 		const formattedTarget = to.trim().split(/[\s,]+/g);
 
-		const { translations, detectedLanguage } =
+		const { translations, detectedLanguage, langs } =
 			await ctx.porter<TranslationResult>("/translate", {
 				body: {
 					text,
@@ -53,7 +53,7 @@ export default class UtilTranslateCommand extends SubCommand {
 					value: md.codeBlock(text),
 				},
 				...translations.map((t) => ({
-					name: t.to,
+					name: langs[t.to],
 					value: md.codeBlock(t.text),
 				})),
 			);
