@@ -8,6 +8,7 @@ import {
 } from "seyfert";
 import { TranslationResult } from "../../lib/types/common";
 import { md } from "mdbox";
+import { spacesAndCommasRegex } from "../../lib/constants/regexes";
 
 const translateOptions = {
 	text: createStringOption({
@@ -32,7 +33,7 @@ const translateOptions = {
 export default class UtilTranslateCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof translateOptions>) {
 		const { text, to, from } = ctx.options;
-		const formattedTarget = to.trim().split(/[\s,]+/g);
+		const formattedTarget = to.trim().split(spacesAndCommasRegex);
 
 		const { translations, detectedLanguage, langs } =
 			await ctx.porter<TranslationResult>("/translate", {

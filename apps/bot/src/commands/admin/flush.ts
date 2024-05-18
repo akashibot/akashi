@@ -15,6 +15,6 @@ export default class AdminFlushCommand extends SubCommand {
 
 	private async flush(ctx: CommandContext) {
 		ctx.client.cache.flush();
-		await ctx.storage.image.clear();
+		await ctx.storages.image.clear();
 	}
 }

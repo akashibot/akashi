@@ -12,6 +12,7 @@ import {
 } from "../../lib/constants/options";
 import { imageMeta } from "image-meta";
 import { Stopwatch } from "@sapphire/stopwatch";
+import { spacesAndCommasRegex } from "../../lib/constants/regexes";
 
 export const imageRawCommandOptions = {
 	operation: createStringOption({
@@ -31,7 +32,9 @@ export default class RawImageCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof imageRawCommandOptions>) {
 		const source = await getImageOption(ctx);
 		const stopwatch = new Stopwatch();
-		const operation = ctx.options.operation.split(/[ ,]/g).join(",");
+		const operation = ctx.options.operation
+			.split(spacesAndCommasRegex)
+			.join(",");
 
 		const image = await ctx.ipx<ArrayBuffer>(`/${operation}/${source}`, {
 			onResponse: () => {

@@ -1,6 +1,6 @@
 import { extendContext } from "seyfert";
 import { ipx } from "./services/ipx";
-import { imageStorage } from "./services/storage/image";
+import * as storages from "./services/storage";
 import { memge } from "./services/memge";
 import { porter } from "./services/porter";
 
@@ -13,8 +13,6 @@ export const context = extendContext(() => {
 		ipx,
 		memge,
 		porter,
-		storage: {
-			image: imageStorage,
-		},
+		storages,
 	};
 });

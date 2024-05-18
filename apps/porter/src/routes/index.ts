@@ -1,6 +1,11 @@
-export default eventHandler((event) => {
+import { readPackageJSON } from "pkg-types";
+
+export default eventHandler(async () => {
+	const localPackageJson = await readPackageJSON();
 	return {
-		name: "porter",
-		version: "1.0.0",
+		name: localPackageJson.name,
+		version: localPackageJson.version,
+		description: localPackageJson.description,
+		author: localPackageJson.author,
 	};
 });

@@ -12,7 +12,7 @@
 		"generate": "pnpm drizzle-kit generate --name"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "@simxnet",
 	"license": "ISC",
 	"devDependencies": {
 		"@akashi/typescript-config": "workspace:*",

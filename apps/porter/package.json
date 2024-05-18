@@ -9,13 +9,14 @@
 		"preview": "node .output/server/index.mjs"
 	},
 	"keywords": [],
-	"author": "",
+	"author": "@simxnet",
 	"license": "ISC",
 	"devDependencies": {
 		"@akashi/typescript-config": "workspace:*",
 		"nitropack": "latest"
 	},
 	"dependencies": {
-		"microsoft-translate-api": "github:akashibot/microsoft-translate-api"
+		"microsoft-translate-api": "github:akashibot/microsoft-translate-api",
+		"pkg-types": "^1.1.1"
 	}
 }

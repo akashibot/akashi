@@ -1,5 +1,5 @@
 import { createEvent } from "seyfert";
-import { imageStorage } from "../lib/structures/services/storage/image";
+import { imageStorage } from "../lib/structures/services/storage";
 import { getMessageMedia } from "../lib/utils";
 
 // Event to get images
