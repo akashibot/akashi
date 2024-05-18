@@ -1,4 +1,4 @@
-import jimp from "jimp-compact";
+import Jimp from "jimp-compact";
 
 interface CustomBody {
 	base: string;
@@ -21,7 +21,7 @@ interface CustomBody {
 export default eventHandler(async (event) => {
 	const body = await readBody<CustomBody>(event);
 
-	const baseBuffer = await jimp.read(body.base).catch(() => {
+	const baseBuffer = await Jimp.read(body.base).catch(() => {
 		throw createError({
 			status: 400,
 			statusMessage: "Bad request",
@@ -29,18 +29,18 @@ export default eventHandler(async (event) => {
 		});
 	});
 
-	const font = await jimp.loadFont(jimp.FONT_SANS_32_BLACK);
+	const font = await Jimp.loadFont(Jimp.FONT_SANS_32_BLACK);
 
 	const images = body.images
 		? await Promise.all(
 				body.images.map(async (img) => ({
-					src: await jimp.read(img.url),
+					src: await Jimp.read(img.url),
 					...img,
 				})),
 			)
 		: [];
 
-	const base = await jimp.read(baseBuffer);
+	const base = await Jimp.read(baseBuffer);
 
 	for (const image of images) {
 		base.blit(
@@ -57,5 +57,5 @@ export default eventHandler(async (event) => {
 		base.print(font, text.x, text.y, { text: text.text }, text.w);
 	}
 
-	return base.getBufferAsync(jimp.MIME_PNG);
+	return base.getBufferAsync(Jimp.MIME_PNG);
 });

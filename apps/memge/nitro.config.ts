@@ -9,10 +9,10 @@ export default defineNitroConfig({
 	},
 	devStorage: {
 		cache: {
-		  driver: 'http',
-		  base: "http://localhost:5000"
-		}
-	  },
+			driver: "http",
+			base: "http://localhost:5000",
+		},
+	},
 	prerender: {
 		failOnError: true,
 	},
