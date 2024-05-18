@@ -1,2 +1,2 @@
-# Akashi Vault
-> Cache proxy
+# 📦 Vault
+## A cache proxy

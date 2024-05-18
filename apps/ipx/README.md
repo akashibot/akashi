@@ -1,2 +1,2 @@
-# Akashi IPX
-> Image optimization proxy
+# 🖼️ IPX
+## A image optimization proxy

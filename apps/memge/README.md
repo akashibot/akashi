@@ -1,2 +1,2 @@
-# Akashi Memge
-> Image generation proxy
+# 🎨 Memge
+## A image generation proxy
