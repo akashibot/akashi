@@ -1,10 +1,10 @@
 import { ofetch } from "ofetch";
 import { RequestMethod } from "seyfert";
 
-export const ipx = ofetch.create({
-	baseURL: "http://localhost:4000/ipx",
-	method: RequestMethod.Get,
-	responseType: "arrayBuffer",
+export const porter = ofetch.create({
+	baseURL: "http://localhost:2000",
+	method: RequestMethod.Post,
+	responseType: "json",
 	onRequestError: (ctx) => {
 		throw new Error(ctx.error.message);
 	},

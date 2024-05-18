@@ -9,10 +9,11 @@ export default createEvent({
 			.connect()
 			.then(() => client.logger.info("Connected database"));
 
-		await postDlistGuildCount(
-			user.id,
-			(await client.cache.guilds?.count()) ?? 0,
-		).then(() => client.logger.info("Posted guild count to dlist.gg"));
+		if (process.env.NODE_ENV === "production")
+			await postDlistGuildCount(
+				user.id,
+				(await client.cache.guilds?.count()) ?? 0,
+			).then(() => client.logger.info("Posted guild count to dlist.gg"));
 
 		client.logger.info(`${user.username} is ready`);
 	},
