@@ -19,4 +19,4 @@ const app = createApp();
 
 app.use("/ipx", createIPXH3Handler(ipx));
 
-listen(toNodeListener(app), { port: 8000 });
+listen(toNodeListener(app), { port: 4000 });

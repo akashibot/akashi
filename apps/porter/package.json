@@ -1,0 +1,21 @@
+{
+	"name": "porter",
+	"version": "1.0.0",
+	"description": "",
+	"main": "index.js",
+	"scripts": {
+		"build": "nitro build",
+		"dev": "nitro dev",
+		"preview": "node .output/server/index.mjs"
+	},
+	"keywords": [],
+	"author": "",
+	"license": "ISC",
+	"devDependencies": {
+		"@akashi/typescript-config": "workspace:*",
+		"nitropack": "latest"
+	},
+	"dependencies": {
+		"microsoft-translate-api": "github:akashibot/microsoft-translate-api"
+	}
+}

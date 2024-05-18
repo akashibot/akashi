@@ -2,6 +2,7 @@ import { extendContext } from "seyfert";
 import { ipx } from "../structures/ipx";
 import { imageStorage } from "../storage/image";
 import { memge } from "../structures/memge";
+import { porter } from "../structures/porter";
 
 export const context = extendContext(() => {
 	return {
@@ -11,6 +12,7 @@ export const context = extendContext(() => {
 		],
 		ipx,
 		memge,
+		porter,
 		storage: {
 			image: imageStorage,
 		},
