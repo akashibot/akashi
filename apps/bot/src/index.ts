@@ -14,8 +14,10 @@ import { InternalRuntimeConfig } from "seyfert/lib/client/base";
 const client = new Client({
 	context,
 	commands: {
-		prefix: (msg) => [`<@${msg.client.botId}>`, "a!"],
-		argsParser: YunaParser(),
+		prefix: () => ["*"],
+		argsParser: YunaParser({
+			logResult: process.env.NODE_ENV === "development",
+		}),
 	},
 	allowedMentions: {
 		parse: [],

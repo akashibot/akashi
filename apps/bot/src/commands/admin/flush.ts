@@ -19,7 +19,7 @@ export default class AdminFlushCommand extends SubCommand {
 	private async flush(ctx: CommandContext) {
 		await ctx.client.cache.adapter.flush();
 		return {
-			storage: await ctx.storages.storage
+			storage: await ctx.services.storages.storage
 				.clear()
 				.then(() => true)
 				.catch(() => false),

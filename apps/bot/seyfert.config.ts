@@ -2,7 +2,7 @@ import { RuntimeConfig } from "seyfert/lib/client/base";
 
 export default {
 	token: process.env.BOT_TOKEN as string,
-	intents: 513,
+	intents: ["GuildMembers", "Guilds", "MessageContent", "GuildMessages"],
 	locations: {
 		base: "src",
 		output: "dist",

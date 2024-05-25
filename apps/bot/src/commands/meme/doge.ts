@@ -29,32 +29,35 @@ export default class DogeMemeCommand extends SubCommand {
 		const { doge, cheems } = ctx.options;
 		const stopwatch = new Stopwatch();
 
-		const image = await ctx.memge<ArrayBuffer, "arrayBuffer">("/custom", {
-			body: {
-				base: "https://github.com/akashibot/.github/blob/main/assets/templates/Buff-Doge-vs-Cheems.png?raw=true",
-				images: [
-					{
-						url: doge.proxyUrl,
-						x: 190,
-						y: 50,
-						resize: {
-							w: 150,
+		const image = await ctx.services.memge<ArrayBuffer, "arrayBuffer">(
+			"/custom",
+			{
+				body: {
+					base: "https://github.com/akashibot/.github/blob/main/assets/templates/Buff-Doge-vs-Cheems.png?raw=true",
+					images: [
+						{
+							url: doge.proxyUrl,
+							x: 190,
+							y: 50,
+							resize: {
+								w: 150,
+							},
 						},
-					},
-					{
-						url: cheems.proxyUrl,
-						x: 700,
-						y: 150,
-						resize: {
-							w: 150,
+						{
+							url: cheems.proxyUrl,
+							x: 700,
+							y: 150,
+							resize: {
+								w: 150,
+							},
 						},
-					},
-				],
+					],
+				},
+				onResponse: () => {
+					stopwatch.stop();
+				},
 			},
-			onResponse: () => {
-				stopwatch.stop();
-			},
-		});
+		);
 
 		const response = new AttachmentBuilder()
 			.setFile("buffer", Buffer.from(image))

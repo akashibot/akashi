@@ -19,7 +19,7 @@ export default class InvertImageCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof imageCommandOptions>) {
 		const source = await getImageOption(ctx);
 
-		const image = await ctx.ipx<ArrayBuffer>(`/negate/${source}`);
+		const image = await ctx.services.ipx<ArrayBuffer>(`/negate/${source}`);
 
 		const response = new AttachmentBuilder()
 			.setFile("buffer", Buffer.from(image))

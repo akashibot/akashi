@@ -1,7 +1,7 @@
 import { db, schema } from "@akashi/db";
 import { getMemberOrCreate } from "./member";
 
-export async function getTag(name: string, guildId: string, emit?: boolean) {
+export async function getTag(name: string, guildId: string, emit = true) {
 	const tag = await db.query.tags
 		.findFirst({
 			where: (table, { eq, and }) =>
@@ -14,7 +14,7 @@ export async function getTag(name: string, guildId: string, emit?: boolean) {
 
 	if (!tag && emit) throw new Error("Couldn't find this tag");
 
-	return tag;
+	return tag!;
 }
 
 export async function createTag(

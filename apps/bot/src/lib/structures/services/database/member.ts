@@ -21,7 +21,6 @@ export async function createMember(id: string, guildId: string) {
 		.values({
 			id,
 			guildId,
-			userId: id,
 		})
 		.returning();
 

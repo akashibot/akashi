@@ -56,6 +56,9 @@ importers:
       seyfert:
         specifier: github:tiramisulabs/seyfert
         version: https://codeload.github.com/tiramisulabs/seyfert/tar.gz/5a53883905c0e2a01c0d4464c425c867cb2a2c70
+      tagscript:
+        specifier: ^1.1.0
+        version: 1.1.0
       ufo:
         specifier: ^1.5.3
         version: 1.5.3
@@ -3697,6 +3700,10 @@ packages:
   system-architecture@0.1.0:
     resolution: {integrity: sha512-ulAk51I9UVUyJgxlv9M6lFot2WP3e7t8Kz9+IS6D4rVba1tR9kON+Ey69f+1R4Q8cd45Lod6a4IcJIxnzGc/zA==}
     engines: {node: '>=18'}
+
+  tagscript@1.1.0:
+    resolution: {integrity: sha512-kCaqLM1RhKrultiRe4TGg6SsXunP1/VGVZEeVEmIQ/sdwGnv9WbQt1V2K7wMisFz8XyzMhk62sFjPWHXPeREjA==}
+    engines: {node: '>=v14.0.0'}
 
   tar-stream@2.2.0:
     resolution: {integrity: sha512-ujeqbceABgwMZxEJnk2HDY2DlnUZ+9oEcb1KzTVfYHio0UE6dG71n60d8D2I4qNvleWrrXpmjpt7vZeF1LnMZQ==}
@@ -7644,6 +7651,8 @@ snapshots:
       picocolors: 1.0.0
 
   system-architecture@0.1.0: {}
+
+  tagscript@1.1.0: {}
 
   tar-stream@2.2.0:
     dependencies:

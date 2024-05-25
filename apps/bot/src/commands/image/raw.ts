@@ -36,11 +36,14 @@ export default class RawImageCommand extends SubCommand {
 			.split(spacesAndCommasRegex)
 			.join(",");
 
-		const image = await ctx.ipx<ArrayBuffer>(`/${operation}/${source}`, {
-			onResponse: () => {
-				stopwatch.stop();
+		const image = await ctx.services.ipx<ArrayBuffer>(
+			`/${operation}/${source}`,
+			{
+				onResponse: () => {
+					stopwatch.stop();
+				},
 			},
-		});
+		);
 
 		const metadata = imageMeta(Buffer.from(image));
 

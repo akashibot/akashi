@@ -33,40 +33,43 @@ export default class DistractedMemeCommand extends SubCommand {
 		const { boyfriend, girlfriend, girl } = ctx.options;
 		const stopwatch = new Stopwatch();
 
-		const image = await ctx.memge<ArrayBuffer, "arrayBuffer">("/custom", {
-			body: {
-				base: "https://github.com/akashibot/.github/blob/main/assets/templates/Distracted-Boyfriend.jpg?raw=true",
-				images: [
-					{
-						url: boyfriend.proxyUrl,
-						x: 662,
-						y: 351,
-						resize: {
-							w: 200,
+		const image = await ctx.services.memge<ArrayBuffer, "arrayBuffer">(
+			"/custom",
+			{
+				body: {
+					base: "https://github.com/akashibot/.github/blob/main/assets/templates/Distracted-Boyfriend.jpg?raw=true",
+					images: [
+						{
+							url: boyfriend.proxyUrl,
+							x: 662,
+							y: 351,
+							resize: {
+								w: 200,
+							},
 						},
-					},
-					{
-						url: girlfriend.proxyUrl,
-						x: 925,
-						y: 451,
-						resize: {
-							w: 200,
+						{
+							url: girlfriend.proxyUrl,
+							x: 925,
+							y: 451,
+							resize: {
+								w: 200,
+							},
 						},
-					},
-					{
-						url: girl.proxyUrl,
-						x: 238,
-						y: 551,
-						resize: {
-							w: 200,
+						{
+							url: girl.proxyUrl,
+							x: 238,
+							y: 551,
+							resize: {
+								w: 200,
+							},
 						},
-					},
-				],
+					],
+				},
+				onResponse: () => {
+					stopwatch.stop();
+				},
 			},
-			onResponse: () => {
-				stopwatch.stop();
-			},
-		});
+		);
 
 		const response = new AttachmentBuilder()
 			.setFile("buffer", Buffer.from(image))

@@ -40,7 +40,7 @@ export default class ImageReformatCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof reformatImageOptions>) {
 		const source = await getImageOption(ctx);
 
-		const image = await ctx.ipx<ArrayBuffer>(
+		const image = await ctx.services.ipx<ArrayBuffer>(
 			`/f_${ctx.options.format}/${source}`,
 		);
 

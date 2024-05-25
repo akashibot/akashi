@@ -28,7 +28,7 @@ export const imageCommandOptions = {
 export async function getImageOption(
 	ctx: CommandContext<typeof imageCommandOptions>,
 ) {
-	const cache = await ctx.storages.image.getItem(ctx.channelId);
+	const cache = await ctx.services.storages.image.getItem(ctx.channelId);
 	const image =
 		ctx.options.attachment?.proxyUrl ??
 		ctx.options.url ??

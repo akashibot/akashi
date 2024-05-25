@@ -43,7 +43,7 @@ export default class UtilWhoisCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof whoisOptions>) {
 		const { domain, whois } = ctx.options;
 
-		const data = await ctx.porter<WhoisResult>("/whois", {
+		const data = await ctx.services.porter<WhoisResult>("/whois", {
 			body: {
 				domainName: domain,
 				whois,

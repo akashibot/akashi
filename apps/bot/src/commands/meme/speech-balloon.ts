@@ -22,7 +22,7 @@ export default class SpeechBalloonMemeCommand extends SubCommand {
 		const source = await getImageOption(ctx);
 		const stopwatch = new Stopwatch();
 
-		const image = await ctx.memge<ArrayBuffer, "arrayBuffer">(
+		const image = await ctx.services.memge<ArrayBuffer, "arrayBuffer">(
 			"/speech-balloon",
 			{
 				body: {

@@ -36,7 +36,7 @@ export default class UtilTranslateCommand extends SubCommand {
 		const formattedTarget = to.trim().split(spacesAndCommasRegex);
 
 		const { translations, detectedLanguage, langs } =
-			await ctx.porter<TranslationResult>("/translate", {
+			await ctx.services.porter<TranslationResult>("/translate", {
 				body: {
 					text,
 					to: formattedTarget,
