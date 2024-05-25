@@ -1,4 +1,4 @@
-import Jimp from "jimp-compact";
+import sharp from "sharp";
 
 interface SpeechBalloonBody {
 	image: string;
@@ -7,30 +7,44 @@ interface SpeechBalloonBody {
 export default eventHandler(async (event) => {
 	const body = await readBody<SpeechBalloonBody>(event);
 
-	const image = await Jimp.read(body.image);
-	const balloon = await Jimp.read(
-		"https://raw.githubusercontent.com/akashibot/.github/main/assets/templates/z0nqjst12ih61.jpg",
+	const image = sharp(await loadImage(body.image));
+	const imageMetadata = await image.metadata();
+	const balloon = sharp(
+		await loadImage(
+			"https://raw.githubusercontent.com/akashibot/.github/main/assets/templates/z0nqjst12ih61.jpg",
+		),
 	);
 
-	balloon.resize(image.getWidth(), image.getHeight());
+	balloon
+		.resize({
+			fit: "fill",
+			width: imageMetadata.width,
+			height: imageMetadata.height,
+		})
+		.extend({
+			top: imageMetadata.height,
+			extendWith: "repeat",
+		})
+		.composite([
+			{
+				input: await balloon.png().toBuffer(),
+				top: 0,
+				left: 0,
+				animated: true,
+			},
+			{
+				input: await image.png().toBuffer(),
+				top: imageMetadata.height,
+				left: 0,
+				animated: true,
+			},
+		]);
 
-	const base = new Jimp(
-		image.getWidth(),
-		balloon.getHeight() + image.getHeight(),
-		0x000000ff,
-	);
+	if (imageMetadata.format === "gif") {
+		setResponseHeader(event, "content-type", "image/gif");
 
-	base.composite(balloon, 0, 0);
-	base.composite(image, 0, balloon.getHeight());
+		return balloon.gif().toBuffer();
+	}
 
-	// const used = process.memoryUsage();
-	// console.log("------- JIMP COMPACT -------");
-	// for (const key in used) {
-	// 	console.log(
-	// 		`Memory: ${key} ${Math.round((used[key] / 1024 / 1024) * 100) / 100} MB`,
-	// 	);
-	// }
-	// console.log("------- JIMP COMPACT -------");
-
-	return base.getBufferAsync(Jimp.MIME_PNG);
+	return balloon.png().toBuffer();
 });

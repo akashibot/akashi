@@ -1,6 +1,6 @@
-import { createEvent } from "seyfert";
 import { client as dbClient } from "@akashi/db";
 import { ofetch } from "ofetch";
+import { createEvent } from "seyfert";
 
 export default createEvent({
 	data: { once: true, name: "botReady" },

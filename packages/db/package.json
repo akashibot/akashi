@@ -7,9 +7,11 @@
 	"files": ["dist/**"],
 	"scripts": {
 		"build": "tsup",
-		"push": "pnpm drizzle-kit migrate",
 		"drop": "pnpm drizzle-kit drop",
-		"generate": "pnpm drizzle-kit generate --name"
+		"migrate": "pnpm drizzle-kit migrate",
+		"generate": "pnpm drizzle-kit generate",
+		"prisma": "prisma generate",
+		"prisma:format": "prisma format"
 	},
 	"keywords": [],
 	"author": "@simxnet",
@@ -19,6 +21,8 @@
 		"@types/node": "^20.3.1",
 		"@types/pg": "^8.11.6",
 		"drizzle-kit": "^0.21.2",
+		"prisma": "^5.14.0",
+		"prisma-generator-drizzle": "^0.7.1",
 		"tsup": "^8.0.2"
 	},
 	"dependencies": {

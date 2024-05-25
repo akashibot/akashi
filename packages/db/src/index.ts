@@ -1,12 +1,13 @@
-import { Client } from "pg";
+import "dotenv/config";
 import { drizzle } from "drizzle-orm/node-postgres";
-import * as schema from "./schema";
+import { Client } from "pg";
+import { schema } from "./tables/schema.ts";
 
 export const client = new Client({
 	connectionString:
-		"postgres://postgres.ftgannrlwwuexzsanrxb:xL5K48sDrT0J1bh4@aws-0-eu-central-1.pooler.supabase.com:5432/postgres",
+		"postgres://postgres.ftgannrlwwuexzsanrxb:oFKDE1mGl11ovRaH@aws-0-eu-central-1.pooler.supabase.com:5432/postgres",
 });
 
 export * as drizzle from "drizzle-orm";
-export * as schemas from "./schema";
+export { schema } from "./tables/schema.ts";
 export const db = drizzle(client, { schema });

@@ -33,9 +33,13 @@ export async function getMessageMedia(
 
 	if (!message) return undefined;
 
-	const media = getMediaUrl(message);
+	return getMediaUrl(message);
+}
 
-	return media;
+export function formatError(error: unknown, message?: string) {
+	return error instanceof Error
+		? error.message
+		: `${message ?? "Error"}: ${error}`;
 }
 
 export async function send<T extends OptionsRecord>(

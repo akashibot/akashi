@@ -1,4 +1,4 @@
-import { db, schemas, drizzle } from "@akashi/db";
+import { db, drizzle, schema } from "@akashi/db";
 
 export async function getUserOrCreate(id: string) {
 	const user = await db.query.users
@@ -14,7 +14,7 @@ export async function getUserOrCreate(id: string) {
 
 export async function createUser(id: string) {
 	const [user] = await db
-		.insert(schemas.users)
+		.insert(schema.users)
 		.values({
 			id,
 		})
@@ -27,11 +27,11 @@ export async function removeUserTokens(id: string, tokens = 1) {
 	const user = await getUserOrCreate(id);
 
 	const [updateUser] = await db
-		.update(schemas.users)
+		.update(schema.users)
 		.set({
 			tokens: user.tokens - tokens,
 		})
-		.where(drizzle.eq(schemas.users.id, user.id))
+		.where(drizzle.eq(schema.users.id, user.id))
 		.returning();
 
 	return updateUser;
@@ -41,11 +41,11 @@ export async function addUserTokens(id: string, tokens: number) {
 	const user = await getUserOrCreate(id);
 
 	const [updateUser] = await db
-		.update(schemas.users)
+		.update(schema.users)
 		.set({
 			tokens: user.tokens + tokens,
 		})
-		.where(drizzle.eq(schemas.users.id, user.id))
+		.where(drizzle.eq(schema.users.id, user.id))
 		.returning();
 
 	return updateUser;

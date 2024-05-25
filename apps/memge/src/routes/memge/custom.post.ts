@@ -1,6 +1,7 @@
-import Jimp from "jimp-compact";
+import sharp from "sharp";
 
 interface CustomBody {
+	animated?: boolean;
 	base: string;
 	images?: {
 		url: string;
@@ -8,54 +9,66 @@ interface CustomBody {
 		h?: number;
 		x?: number;
 		y?: number;
-	}[];
-	texts?: {
-		text: string;
-		w?: number;
-		h?: number;
-		x?: number;
-		y?: number;
+		text?: {
+			text: string;
+			w?: number;
+			h?: number;
+			x?: number;
+			y?: number;
+		};
 	}[];
 }
 
 export default eventHandler(async (event) => {
 	const body = await readBody<CustomBody>(event);
 
-	const baseBuffer = await Jimp.read(body.base).catch(() => {
-		throw createError({
-			status: 400,
-			statusMessage: "Bad request",
-			message: "Invalid base image",
-		});
+	const base = sharp(await loadImage(body.base), {
+		animated: body.animated ?? false,
 	});
-
-	const font = await Jimp.loadFont(Jimp.FONT_SANS_32_BLACK);
 
 	const images = body.images
 		? await Promise.all(
 				body.images.map(async (img) => ({
-					src: await Jimp.read(img.url),
+					src: await sharp(await loadImage(img.url)).toBuffer(),
 					...img,
 				})),
 			)
 		: [];
 
-	const base = await Jimp.read(baseBuffer);
+	// for (const image of images) {
+	// 	base.composite(
+	// 		image.src.resize(
+	// 			image.w ?? image.src.getWidth(),
+	// 			image.h ?? image.src.getHeight(),
+	// 		),
+	// 		image.x,
+	// 		image.y,
+	// 	);
+	// }
 
-	for (const image of images) {
-		base.blit(
-			image.src.resize(
-				image.w ?? image.src.getWidth(),
-				image.h ?? image.src.getHeight(),
-			),
-			image.x,
-			image.y,
-		);
+	base.composite(
+		images.map((image) => ({
+			input: image.src,
+			left: image.x,
+			top: image.y,
+			width: image.w,
+			height: image.h,
+			text: {
+				text: image.text?.text,
+				left: image.text?.x,
+				top: image.text?.y,
+				width: image.text?.w,
+				height: image.text?.h,
+			},
+			animated: true,
+		})),
+	);
+
+	if (body.animated) {
+		setResponseHeader(event, "content-type", "image/gif");
+
+		return base.gif().toBuffer();
 	}
 
-	for (const text of body.texts) {
-		base.print(font, text.x, text.y, { text: text.text }, text.w);
-	}
-
-	return base.getBufferAsync(Jimp.MIME_PNG);
+	return base.png().toBuffer();
 });

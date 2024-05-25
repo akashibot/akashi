@@ -1,0 +1,52 @@
+generator drizzle {
+  provider = "prisma-generator-drizzle"
+  output   = "../src/tables"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id     String   @id
+  tokens Int      @default(100)
+  member Member[]
+
+  @@map("users")
+}
+
+model Member {
+  id      String @id
+  guildId String
+  userId  String
+
+  user User  @relation(fields: [userId], references: [id])
+  tags Tag[]
+
+  @@map("members")
+}
+
+model Guild {
+  id   String @unique
+  tags Tag[]
+
+  @@map("guilds")
+}
+
+model Tag {
+  id       String  @id @default(cuid())
+  guildId  String?
+  memberId String
+
+  name    String
+  content String
+  nsfw    Boolean @default(false)
+
+  guild  Guild? @relation(fields: [guildId], references: [id])
+  author Member @relation(fields: [memberId], references: [id])
+
+  @@index([guildId])
+  @@index([memberId])
+  @@map("tags")
+}
