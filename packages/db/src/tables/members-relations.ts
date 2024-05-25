@@ -6,7 +6,7 @@ import { tags } from "./tags";
 export const membersRelations = relations(members, (helpers) => ({
 	user: helpers.one(users, {
 		relationName: "MemberToUser",
-		fields: [members.userId],
+		fields: [members.id],
 		references: [users.id],
 	}),
 	tags: helpers.many(tags, { relationName: "MemberToTag" }),

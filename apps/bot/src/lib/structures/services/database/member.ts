@@ -1,6 +1,8 @@
 import { db, schema } from "@akashi/db";
+import { getGuildOrCreate } from "./guild";
 
 export async function getMemberOrCreate(id: string, guildId: string) {
+	await getGuildOrCreate(guildId);
 	const member = await db.query.members
 		.findFirst({
 			where: (table, { eq, and }) =>

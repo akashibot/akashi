@@ -1,4 +1,5 @@
 import { db, schema } from "@akashi/db";
+import { getMemberOrCreate } from "./member";
 
 export async function getTag(name: string, guildId: string, emit?: boolean) {
 	const tag = await db.query.tags
@@ -27,16 +28,21 @@ export async function createTag(
 
 	if (exists) throw new Error("This tag already exists on this guild");
 
-	const [tag] = await db
-		.insert(schema.tags)
-		.values({
-			name,
-			content,
-			nsfw,
-			memberId,
-			guildId,
-		})
-		.returning();
+	const [tag] = await db.transaction(async (tx) => {
+		await getMemberOrCreate(memberId, guildId);
+		const [tag] = await tx
+			.insert(schema.tags)
+			.values({
+				name,
+				content,
+				nsfw,
+				memberId,
+				guildId,
+			})
+			.returning();
+
+		return [tag];
+	});
 
 	return tag;
 }
