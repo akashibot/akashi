@@ -6,7 +6,7 @@ import {
 	createStringOption,
 	Embed,
 } from "seyfert";
-import { WhoisResult } from "../../lib/types/common";
+import { WhoisResult } from "../../lib/types/api";
 import { md } from "mdbox";
 
 const whoisOptions = {

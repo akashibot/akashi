@@ -36,12 +36,6 @@ export async function getMessageMedia(
 	return getMediaUrl(message);
 }
 
-export function formatError(error: unknown, message?: string) {
-	return error instanceof Error
-		? error.message
-		: `${message ?? "Error"}: ${error}`;
-}
-
 export async function send<T extends OptionsRecord>(
 	ctx: CommandContext<T>,
 	body: Omit<

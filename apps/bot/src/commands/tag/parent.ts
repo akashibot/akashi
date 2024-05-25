@@ -6,7 +6,7 @@ import {
 	Declare,
 	OnOptionsReturnObject,
 } from "seyfert";
-import { formatError } from "../../lib/utils.ts";
+import { formatError } from "../../lib/utils/format";
 
 @Declare({
 	name: "tag",
@@ -25,7 +25,7 @@ export default class TagParent extends Command {
 	async onOptionsError(ctx: CommandContext, returns: OnOptionsReturnObject) {
 		const errors = Object.entries(returns)
 			.filter(([_, err]) => err.failed)
-			.map(([key, err]) => `${key}: ${err.value}`)
+			.map(([key]) => `${key} is required!`)
 			.join("\n");
 
 		return ctx.editOrReply({

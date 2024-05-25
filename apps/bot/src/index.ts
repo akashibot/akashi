@@ -4,12 +4,13 @@ import {
 	type ParseMiddlewares,
 	type ParseClient,
 	config,
+	type RuntimeConfig,
 } from "seyfert";
 import { context } from "./lib/structures/context";
 import { middlewares } from "./middlewares";
 import { YunaParser } from "yunaforseyfert";
 import { loadConfig } from "c12";
-import { InternalRuntimeConfig } from "seyfert/lib/client/base";
+import { UnstoreAdapter } from "./lib/cache";
 
 const client = new Client({
 	context,
@@ -27,12 +28,15 @@ const client = new Client({
 			configFile: "../seyfert.config.ts",
 		});
 
-		return config.bot(seyfertConfig as InternalRuntimeConfig);
+		return config.bot(seyfertConfig as RuntimeConfig);
 	},
 });
 
 client.setServices({
 	middlewares,
+	cache: {
+		adapter: new UnstoreAdapter(),
+	},
 });
 client.start().then(() => client.uploadCommands());
 

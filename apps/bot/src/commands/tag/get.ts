@@ -9,7 +9,7 @@ import {
 import { getTag } from "../../lib/structures/services/database";
 import { md } from "mdbox";
 import { StringTransformer } from "tagscript";
-import { send } from "../../lib/utils";
+import { send } from "../../lib/utils/discord";
 
 const getOptions = {
 	name: createStringOption({

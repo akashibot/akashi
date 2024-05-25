@@ -6,7 +6,7 @@ import {
 	createStringOption,
 	Embed,
 } from "seyfert";
-import { TranslationResult } from "../../lib/types/common";
+import { TranslationResult } from "../../lib/types/api";
 import { md } from "mdbox";
 import { spacesAndCommasRegex } from "../../lib/constants/regexes";
 

@@ -7,7 +7,7 @@ import {
 	createStringOption,
 } from "seyfert";
 import { createTag } from "../../lib/structures/services/database";
-import { send } from "../../lib/utils.ts";
+import { send } from "../../lib/utils/discord.ts";
 
 const createOptions = {
 	name: createStringOption({

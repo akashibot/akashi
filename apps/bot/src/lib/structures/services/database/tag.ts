@@ -1,4 +1,4 @@
-import { db, schema } from "@akashi/db";
+import { db, drizzle, schema } from "@akashi/db";
 import { getMemberOrCreate } from "./member";
 
 export async function getTag(name: string, guildId: string, emit = true) {
@@ -15,6 +15,22 @@ export async function getTag(name: string, guildId: string, emit = true) {
 	if (!tag && emit) throw new Error("Couldn't find this tag");
 
 	return tag!;
+}
+
+export async function removeTag(name: string, guildId: string) {
+	await getTag(name, guildId);
+
+	const [tag] = await db
+		.delete(schema.tags)
+		.where(
+			drizzle.and(
+				drizzle.eq(schema.tags.name, name),
+				drizzle.eq(schema.tags.guildId, guildId),
+			),
+		)
+		.returning();
+
+	return tag;
 }
 
 export async function createTag(

@@ -7,4 +7,4 @@ export const storage = createStorage({
 	}),
 });
 
-export const image = prefixStorage(storage, "cache:images");
+export const image = prefixStorage(storage, "internal:images");

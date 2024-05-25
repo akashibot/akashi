@@ -1,4 +1,4 @@
-import { RuntimeConfig } from "seyfert/lib/client/base";
+import type { RuntimeConfig } from "seyfert/lib/client/base";
 
 export default {
 	token: process.env.BOT_TOKEN as string,

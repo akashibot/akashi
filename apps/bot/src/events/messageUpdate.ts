@@ -1,6 +1,6 @@
 import { createEvent } from "seyfert";
 import { image } from "../lib/structures/services/storage";
-import { getMessageMedia } from "../lib/utils";
+import { getMessageMedia } from "../lib/utils/discord";
 
 // Event to get embed images
 export default createEvent({

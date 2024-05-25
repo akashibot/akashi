@@ -11,11 +11,13 @@ import {
  * Custom parser to fetch data from a URL.
  *
  * @example
- * {afetch(json):https://example.com/data}
+ * ```yaml
+ * {afetch(json,data):https://example.com/data}
+ * ```
  */
 export class AFetchParser extends BaseParser implements IParser {
 	public constructor() {
-		super(["afetch", "fetch"], true, true);
+		super(["afetch", "fetch", "http"], true, true);
 	}
 
 	public async parse(ctx: Context) {
