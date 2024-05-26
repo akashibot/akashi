@@ -7,7 +7,7 @@ import {
 	type RuntimeConfig,
 } from "seyfert";
 import { context } from "./lib/structures/context";
-import { middlewares } from "./middlewares";
+import middlewares from "./middlewares";
 import { YunaParser } from "yunaforseyfert";
 import { loadConfig } from "c12";
 import { UnstoreAdapter } from "./lib/cache";
