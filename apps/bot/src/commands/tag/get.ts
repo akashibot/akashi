@@ -53,7 +53,7 @@ export default class TagGetCommand extends SubCommand {
 			});
 		}
 
-		if (parsedTag.body) {
+		if (parsedTag.body || parsedTag.actions.files) {
 			const files: AttachmentBuilder[] = [];
 
 			for (const file of parsedTag.actions.files ?? []) {
@@ -61,7 +61,7 @@ export default class TagGetCommand extends SubCommand {
 			}
 
 			return ctx.editOrReply({
-				content: parsedTag.body,
+				content: parsedTag.body ?? null,
 				files,
 			});
 		}

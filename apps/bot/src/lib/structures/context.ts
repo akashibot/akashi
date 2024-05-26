@@ -1,7 +1,5 @@
 import { extendContext } from "seyfert";
-import { ipx } from "./services/ipx";
-import * as storages from "./services/storage";
-import { illumi } from "./services/illumi";
+import * as services from "./services";
 import { interpreter } from "./services/tag-parsers";
 
 export const context = extendContext(() => {
@@ -10,11 +8,7 @@ export const context = extendContext(() => {
 			"1076700780175831100", // @simxnet
 			"462780441594822687", // @chikof
 		],
-		services: {
-			ipx,
-			illumi,
-			storages,
-		},
+		services,
 		tags: {
 			interpreter,
 		},

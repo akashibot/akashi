@@ -12,6 +12,7 @@ import { formatError } from "@/lib/utils/format";
 @Declare({
 	name: "image",
 	description: "Image commands parent",
+	aliases: ["img", "i"],
 })
 @Middlewares(["tokens"])
 @AutoLoad()

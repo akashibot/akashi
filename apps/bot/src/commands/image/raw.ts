@@ -23,6 +23,7 @@ export const imageRawCommandOptions = {
 @Declare({
 	name: "raw",
 	description: "Raw process an image",
+	aliases: ["pipe", "custom"],
 })
 @Options(imageRawCommandOptions)
 export default class RawImageCommand extends SubCommand {

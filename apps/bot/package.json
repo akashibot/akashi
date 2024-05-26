@@ -17,6 +17,7 @@
 		"dotenv": "^16.4.5",
 		"gar": "^1.0.4",
 		"h3": "^1.11.1",
+		"hookable": "^5.5.3",
 		"image-meta": "^0.2.0",
 		"ipx": "github:akashibot/ipx",
 		"magic-regexp": "^0.8.0",

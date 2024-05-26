@@ -7,6 +7,7 @@ import {
 	createStringOption,
 } from "seyfert";
 import { getImageOption, imageCommandOptions } from "@/lib/constants/options";
+import { cn } from "@/lib/utils/format";
 
 const reformatImageOptions = {
 	format: createStringOption({
@@ -43,9 +44,10 @@ export default class ImageReformatCommand extends SubCommand {
 
 		const response = new AttachmentBuilder()
 			.setFile("buffer", Buffer.from(image))
-			.setName(`${this.name}.${ctx.options.format ?? "png"}`);
+			.setName(`${this.name}.${ctx.options.format}`);
 
 		return ctx.editOrReply({
+			content: cn("Reformatted to", ctx.options.format),
 			files: [response],
 		});
 	}
