@@ -26,7 +26,7 @@ export default class TagParent extends Command {
 	async onOptionsError(ctx: CommandContext, returns: OnOptionsReturnObject) {
 		const errors = Object.entries(returns)
 			.filter(([_, err]) => err.failed)
-			.map(([key, err]) => md.codeBlock(`${key}: ${err}`))
+			.map(([key, err]) => md.codeBlock(`${key}: ${err.value}`))
 			.join("\n\n");
 
 		return ctx.editOrReply({
