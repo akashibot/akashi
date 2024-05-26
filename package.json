@@ -10,7 +10,8 @@
 		"ipx": "pnpm --filter ipx",
 		"memge": "pnpm --filter memge",
 		"db": "pnpm --filter @akashi/db",
-		"porter": "pnpm --filter porter"
+		"porter": "pnpm --filter porter",
+		"zeyr": "pnpm --filter zeyr"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.7.2",

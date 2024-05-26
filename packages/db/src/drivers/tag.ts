@@ -1,4 +1,4 @@
-import { db, drizzle, schema } from "@akashi/db";
+import { db, drizzle, schema } from "../";
 import { getMemberOrCreate } from "./member";
 
 export async function getTag(name: string, guildId: string, emit = true) {

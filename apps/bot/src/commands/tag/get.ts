@@ -5,11 +5,12 @@ import {
 	SubCommand,
 	createStringOption,
 	createBooleanOption,
+	AttachmentBuilder,
 } from "seyfert";
-import { getTag } from "../../lib/structures/services/database";
 import { md } from "mdbox";
-import { StringTransformer } from "tagscript";
+import { IntegerTransformer, StringTransformer } from "tagscript";
 import { send } from "../../lib/utils/discord";
+import { getTag } from "@akashi/db";
 
 const getOptions = {
 	name: createStringOption({
@@ -40,6 +41,7 @@ export default class TagGetCommand extends SubCommand {
 
 		const parsedTag = await ctx.tags.interpreter.run(tag.content, {
 			args: new StringTransformer(args ?? ""),
+			argslen: new IntegerTransformer(`${args?.length ?? 0}`),
 		});
 
 		if (raw) {
@@ -51,10 +53,18 @@ export default class TagGetCommand extends SubCommand {
 			});
 		}
 
-		if (parsedTag.body)
+		if (parsedTag.body) {
+			const files: AttachmentBuilder[] = [];
+
+			for (const file of parsedTag.actions.files ?? []) {
+				files.push(new AttachmentBuilder().setFile("url", file));
+			}
+
 			return ctx.editOrReply({
 				content: parsedTag.body,
+				files,
 			});
+		}
 
 		return send(ctx, {
 			content: "Tag had no content to show",

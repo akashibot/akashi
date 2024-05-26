@@ -6,8 +6,8 @@ import {
 	createBooleanOption,
 	createStringOption,
 } from "seyfert";
-import { createTag } from "../../lib/structures/services/database";
 import { send } from "../../lib/utils/discord.ts";
+import { createTag } from "@akashi/db";
 
 const createOptions = {
 	name: createStringOption({

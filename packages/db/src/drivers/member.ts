@@ -1,4 +1,4 @@
-import { db, schema } from "@akashi/db";
+import { db, schema } from "../";
 import { getGuildOrCreate } from "./guild";
 
 export async function getMemberOrCreate(id: string, guildId: string) {

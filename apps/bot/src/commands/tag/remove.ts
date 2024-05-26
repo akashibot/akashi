@@ -1,3 +1,4 @@
+import { removeTag } from "@akashi/db";
 import {
 	type CommandContext,
 	Declare,
@@ -5,7 +6,6 @@ import {
 	SubCommand,
 	createStringOption,
 } from "seyfert";
-import { removeTag } from "../../lib/structures/services/database";
 
 const removeOptions = {
 	name: createStringOption({

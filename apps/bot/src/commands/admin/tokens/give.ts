@@ -1,3 +1,4 @@
+import { addUserTokens } from "@akashi/db";
 import {
 	type CommandContext,
 	Declare,
@@ -7,7 +8,6 @@ import {
 	createNumberOption,
 	Group,
 } from "seyfert";
-import { addUserTokens } from "../../../lib/structures/services/database/user";
 
 const adminTokensGiveOptions = {
 	user: createUserOption({

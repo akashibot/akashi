@@ -46,3 +46,9 @@ declare module "seyfert" {
 	interface RegisteredMiddlewares
 		extends ParseMiddlewares<typeof middlewares> {}
 }
+
+declare module "tagscript" {
+	interface IActions {
+		files?: string[];
+	}
+}

@@ -1,4 +1,4 @@
-import { db, drizzle, schema } from "@akashi/db";
+import { db, drizzle, schema } from "../";
 
 export async function getUserOrCreate(id: string) {
 	const user = await db.query.users
