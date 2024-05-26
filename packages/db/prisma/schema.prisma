@@ -30,11 +30,13 @@ model Guild {
   id   String @id
   tags Tag[]
 
+  owsChannel String? @map("ows_channel")
+
   @@map("guilds")
 }
 
 model Tag {
-  name    String @unique
+  name    String @id
   guildId  String?
   memberId String
 

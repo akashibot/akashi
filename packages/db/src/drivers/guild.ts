@@ -1,3 +1,4 @@
+import { eq } from "drizzle-orm";
 import { db, schema } from "../";
 
 export async function getGuildOrThrow(id: string) {
@@ -30,6 +31,21 @@ export async function createGuild(id: string) {
 		.values({
 			id,
 		})
+		.returning();
+
+	return guild;
+}
+
+export async function setOWSChannel(
+	guildId: string,
+	owsChannelId: string | null,
+) {
+	const [guild] = await db
+		.update(schema.guilds)
+		.set({
+			owsChannel: owsChannelId,
+		})
+		.where(eq(schema.guilds.id, guildId))
 		.returning();
 
 	return guild;

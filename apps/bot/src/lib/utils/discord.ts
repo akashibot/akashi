@@ -7,6 +7,7 @@ import {
 } from "seyfert";
 import { SendResolverProps, When } from "seyfert/lib/common";
 import { APIInteractionResponseCallbackData } from "seyfert/lib/types";
+import { discordEmojiRegex } from "../constants/regexes";
 
 export function getMediaUrl(message: Message): string | undefined {
 	if (message.attachments[0]?.proxyUrl) {
@@ -58,4 +59,8 @@ export async function send<T extends OptionsRecord>(
 		content: `${match[body.variant ?? "default"]} ${body.content}`,
 		...body,
 	});
+}
+
+export function containsDiscordEmoji(content: string): boolean {
+	return discordEmojiRegex.test(content);
 }
