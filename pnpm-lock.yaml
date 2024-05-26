@@ -150,24 +150,24 @@ importers:
         specifier: ^8.0.2
         version: 8.0.2(@swc/core@1.5.7)(typescript@5.4.5)
 
-  apps/kalluto:
+  apps/sato:
     dependencies:
       '@akashi/db':
         specifier: workspace:*
         version: link:../../packages/db
-      '@elysiajs/node':
-        specifier: latest
-        version: 0.0.0-alpha.0(elysia@1.0.22(@sinclair/typebox@0.29.6)(typescript@5.4.5))
-      elysia:
-        specifier: ^1.0.22
-        version: 1.0.22(@sinclair/typebox@0.29.6)(typescript@5.4.5)
+      pkg-types:
+        specifier: ^1.1.1
+        version: 1.1.1
     devDependencies:
       '@akashi/typescript-config':
         specifier: workspace:*
         version: link:../../packages/typescript-config
-      '@types/node':
-        specifier: ^20.3.1
-        version: 20.12.8
+      nitropack:
+        specifier: latest
+        version: 2.9.6(@opentelemetry/api@1.8.0)
+      tsc-watch:
+        specifier: ^6.2.0
+        version: 6.2.0(typescript@5.4.5)
       tsup:
         specifier: ^8.0.2
         version: 8.0.2(@swc/core@1.5.7)(typescript@5.4.5)
@@ -196,9 +196,6 @@ importers:
 
   packages/db:
     dependencies:
-      db0:
-        specifier: ^0.1.4
-        version: 0.1.4(drizzle-orm@0.30.10(@opentelemetry/api@1.8.0)(@types/pg@8.11.6)(bun-types@1.1.10)(pg@8.11.5))
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -306,11 +303,6 @@ packages:
   '@cloudflare/kv-asset-handler@0.3.2':
     resolution: {integrity: sha512-EeEjMobfuJrwoctj7FA1y1KEbM0+Q1xSjobIEyie9k4haVEBB7vkDvsasw1pM3rO39mL2akxIAzLMUAtrMHZhA==}
     engines: {node: '>=16.13'}
-
-  '@elysiajs/node@0.0.0-alpha.0':
-    resolution: {integrity: sha512-aPkcaPHl1oi9U1asm9dFq9lKAF9Wma4YzFJ5a2MLsv4LeZJuDtrZu/VO+cVMw32jaZWsuJ6ur2lUKIqgwv0xvw==}
-    peerDependencies:
-      elysia: '>= 0.6.0-alpha.1'
 
   '@emnapi/runtime@1.1.1':
     resolution: {integrity: sha512-3bfqkzuR1KLx57nZfjr2NLnFOobvyS0aTszaEGCGqmYMVDRaGvgIZbjGSV/MHSSmLgQ/b9JFHQ5xm5WRZYd+XQ==}
@@ -1294,9 +1286,6 @@ packages:
     resolution: {integrity: sha512-FrR1GnaEIuXpEfnaz7DjNgoN/Cp8dJ5XFgb8CxXTCAJi8LYk0YsyGSdmmcs9R3ZNZrA1vOSv0dFVLitgiVA36Q==}
     engines: {node: '>=v14.0.0', npm: '>=7.0.0'}
 
-  '@sinclair/typebox@0.29.6':
-    resolution: {integrity: sha512-aX5IFYWlMa7tQ8xZr3b2gtVReCvg7f3LEhjir/JAjX2bJCMVJA5tIPv30wTD4KDfcwMd7DDYY3hFDeGmOgtrZQ==}
-
   '@sindresorhus/merge-streams@2.3.0':
     resolution: {integrity: sha512-LtoMMhxAlorcGhmFYI+LhPgbPZCkgP6ra1YL604EeF6U98pLlQ3iWIGMdWSC+vWmPBWBNgmDBAhnAobLROJmwg==}
     engines: {node: '>=18'}
@@ -1742,10 +1731,6 @@ packages:
   cookie-es@1.1.0:
     resolution: {integrity: sha512-L2rLOcK0wzWSfSDA33YR+PUHDG10a8px7rUHKWbGLP4YfbsMed2KFUw5fczvDPbT98DDe3LEzviswl810apTEw==}
 
-  cookie@0.6.0:
-    resolution: {integrity: sha512-U71cyTamuh1CRNCfpGY6to28lxvNwPG4Guz/EVjgf3Jmzv0vlDp1atT9eS5dDjMYHucpHbWns6Lwf3BKz6svdw==}
-    engines: {node: '>= 0.6'}
-
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
 
@@ -2019,18 +2004,6 @@ packages:
   ee-first@1.1.1:
     resolution: {integrity: sha512-WMwm9LhRUo+WUaRN+vRuETqG89IgZphVSNkdFgeb6sS/E4OrDIN7t48CAewSHXc6C8lefD8KKfr5vY61brQlow==}
 
-  elysia@1.0.22:
-    resolution: {integrity: sha512-bEdO6glElFciGvtYGzZoQ4mZyfTCNGm63jpCvPYIs+cC65i37qP93DFT+ZasB3s4m5HnavklCuXHKtuo5X2o8A==}
-    peerDependencies:
-      '@sinclair/typebox': '>= 0.31.0'
-      openapi-types: '>= 12.0.0'
-      typescript: '>= 5.0.0'
-    peerDependenciesMeta:
-      openapi-types:
-        optional: true
-      typescript:
-        optional: true
-
   emoji-regex@8.0.0:
     resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
 
@@ -2136,9 +2109,6 @@ packages:
     resolution: {integrity: sha512-i/2XbnSz/uxRCU6+NdVJgKWDTM427+MqYbkQzD321DuCQJUqOuJKIA0IM2+W2xtYHdKOmZ4dR6fExsd4SXL+WQ==}
     engines: {node: '>=6'}
 
-  eventemitter3@5.0.1:
-    resolution: {integrity: sha512-GWkBvjiSZK87ELrYOSESUYeVIc9mvLLf/nXalMOS5dYrgZq9o5OVkbZAVM06CVxYsCwH9BDZFPlQTlPA1j4ahA==}
-
   events@3.3.0:
     resolution: {integrity: sha512-mQw+2fkQbALzQ7V0MY0IqdnXNOeTtP4r0lN9z7AAawCXgqea7bDii20AYrIBrFd/Hx0M2Ocz6S111CaFkUcb0Q==}
     engines: {node: '>=0.8.x'}
@@ -2154,18 +2124,12 @@ packages:
   ext@1.7.0:
     resolution: {integrity: sha512-6hxeJYaL110a9b5TEJSj0gojyHQAmA2ch5Os+ySCiA1QGdS697XWY1pzsrSjqA9LDEEgdB/KypIlR59RcLuHYw==}
 
-  fast-decode-uri-component@1.0.1:
-    resolution: {integrity: sha512-WKgKWg5eUxvRZGwW8FvfbaH7AXSh2cL+3j5fMGzUMCxWBJ3dV3a7Wz8y2f/uQ0e3B6WmodD3oS54jTQ9HVTIIg==}
-
   fast-fifo@1.3.2:
     resolution: {integrity: sha512-/d9sfos4yxzpwkDkuN7k2SqFKtYNmCTzgfEpz82x34IM9/zc8KGxQoXg1liNC/izpRM/MBdt44Nmx41ZWqk+FQ==}
 
   fast-glob@3.3.2:
     resolution: {integrity: sha512-oX2ruAFQwf/Orj8m737Y5adxDQO0LAB7/S5MnxCdTNDd4p6BsyIVsv9JQsATbTSq8KHRpLwIHbVlUNatxd+1Ow==}
     engines: {node: '>=8.6.0'}
-
-  fast-querystring@1.1.2:
-    resolution: {integrity: sha512-g6KuKWmFXc0fID8WWH0jit4g0AGBoJhCkJMb1RmbsSEUNvQ+ZC8D6CUZ+GtF8nMzSPXnhiePyyqqipzNNEnHjg==}
 
   fast-write-atomic@0.2.1:
     resolution: {integrity: sha512-WvJe06IfNYlr+6cO3uQkdKdy3Cb1LlCJSF8zRs2eT8yuhdbSlR9nIt+TgQ92RUxiRrQm+/S7RARnMfCs5iuAjw==}
@@ -3657,10 +3621,6 @@ packages:
     engines: {node: '>=14.17'}
     hasBin: true
 
-  uWebSockets.js@https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/d39d4181daf5b670d44cbc1b18f8c28c85fd4142:
-    resolution: {tarball: https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/d39d4181daf5b670d44cbc1b18f8c28c85fd4142}
-    version: 20.30.0
-
   uWebSockets.js@https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/f40213ec0a97d0d8721d9d32d92d6eb6ddcd22e7:
     resolution: {tarball: https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/f40213ec0a97d0d8721d9d32d92d6eb6ddcd22e7}
     version: 20.42.0
@@ -3939,13 +3899,6 @@ snapshots:
   '@cloudflare/kv-asset-handler@0.3.2':
     dependencies:
       mime: 3.0.0
-
-  '@elysiajs/node@0.0.0-alpha.0(elysia@1.0.22(@sinclair/typebox@0.29.6)(typescript@5.4.5))':
-    dependencies:
-      '@sinclair/typebox': 0.29.6
-      elysia: 1.0.22(@sinclair/typebox@0.29.6)(typescript@5.4.5)
-      fast-querystring: 1.1.2
-      uWebSockets.js: https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/d39d4181daf5b670d44cbc1b18f8c28c85fd4142
 
   '@emnapi/runtime@1.1.1':
     dependencies:
@@ -4756,8 +4709,6 @@ snapshots:
     dependencies:
       tslib: 2.6.2
 
-  '@sinclair/typebox@0.29.6': {}
-
   '@sindresorhus/merge-streams@2.3.0': {}
 
   '@swc/core-darwin-arm64@1.5.7':
@@ -5230,8 +5181,6 @@ snapshots:
 
   cookie-es@1.1.0: {}
 
-  cookie@0.6.0: {}
-
   core-util-is@1.0.3: {}
 
   crc-32@1.2.2: {}
@@ -5289,9 +5238,7 @@ snapshots:
       es5-ext: 0.10.64
       type: 2.7.2
 
-  db0@0.1.4(drizzle-orm@0.30.10(@opentelemetry/api@1.8.0)(@types/pg@8.11.6)(bun-types@1.1.10)(pg@8.11.5)):
-    optionalDependencies:
-      drizzle-orm: 0.30.10(@opentelemetry/api@1.8.0)(@types/pg@8.11.6)(bun-types@1.1.10)(pg@8.11.5)
+  db0@0.1.4: {}
 
   debug@2.6.9:
     dependencies:
@@ -5404,16 +5351,6 @@ snapshots:
   eastasianwidth@0.2.0: {}
 
   ee-first@1.1.1: {}
-
-  elysia@1.0.22(@sinclair/typebox@0.29.6)(typescript@5.4.5):
-    dependencies:
-      '@sinclair/typebox': 0.29.6
-      cookie: 0.6.0
-      eventemitter3: 5.0.1
-      fast-decode-uri-component: 1.0.1
-      fast-querystring: 1.1.2
-    optionalDependencies:
-      typescript: 5.4.5
 
   emoji-regex@8.0.0: {}
 
@@ -5586,8 +5523,6 @@ snapshots:
 
   event-target-shim@5.0.1: {}
 
-  eventemitter3@5.0.1: {}
-
   events@3.3.0: {}
 
   execa@5.1.1:
@@ -5618,8 +5553,6 @@ snapshots:
     dependencies:
       type: 2.7.2
 
-  fast-decode-uri-component@1.0.1: {}
-
   fast-fifo@1.3.2: {}
 
   fast-glob@3.3.2:
@@ -5629,10 +5562,6 @@ snapshots:
       glob-parent: 5.1.2
       merge2: 1.4.1
       micromatch: 4.0.5
-
-  fast-querystring@1.1.2:
-    dependencies:
-      fast-decode-uri-component: 1.0.1
 
   fast-write-atomic@0.2.1: {}
 
@@ -6306,7 +6235,7 @@ snapshots:
       cookie-es: 1.1.0
       croner: 8.0.2
       crossws: 0.2.4
-      db0: 0.1.4(drizzle-orm@0.30.10(@opentelemetry/api@1.8.0)(@types/pg@8.11.6)(bun-types@1.1.10)(pg@8.11.5))
+      db0: 0.1.4
       defu: 6.1.4
       destr: 2.0.3
       dot-prop: 8.0.2
@@ -7296,8 +7225,6 @@ snapshots:
   type@2.7.2: {}
 
   typescript@5.4.5: {}
-
-  uWebSockets.js@https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/d39d4181daf5b670d44cbc1b18f8c28c85fd4142: {}
 
   uWebSockets.js@https://codeload.github.com/uNetworking/uWebSockets.js/tar.gz/f40213ec0a97d0d8721d9d32d92d6eb6ddcd22e7:
     optional: true

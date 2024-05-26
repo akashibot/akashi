@@ -10,7 +10,7 @@
 		"ipx": "pnpm --filter ipx",
 		"db": "pnpm --filter @akashi/db",
 		"illumi": "pnpm --filter illumi",
-		"kalluto": "pnpm --filter kalluto",
+		"sato": "pnpm --filter sato",
 		"vault": "pnpm --filter vault"
 	},
 	"devDependencies": {

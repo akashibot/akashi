@@ -1,7 +1,7 @@
 export default defineNitroConfig({
 	srcDir: "src",
 	routeRules: {
-		"/memge/**": {
+		"/meme/**": {
 			headers: {
 				"Content-Type": "image/png",
 			},
@@ -12,8 +12,5 @@ export default defineNitroConfig({
 			driver: "http",
 			base: "http://localhost:5000",
 		},
-	},
-	prerender: {
-		failOnError: true,
 	},
 });
