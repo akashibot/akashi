@@ -9,7 +9,9 @@
 		"bot": "pnpm --filter bot",
 		"ipx": "pnpm --filter ipx",
 		"db": "pnpm --filter @akashi/db",
-		"illumi": "pnpm --filter illumi"
+		"illumi": "pnpm --filter illumi",
+		"kalluto": "pnpm --filter kalluto",
+		"vault": "pnpm --filter vault"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.7.2",

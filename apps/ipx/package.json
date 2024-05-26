@@ -14,7 +14,8 @@
 		"h3": "^1.11.1",
 		"ipx": "github:akashibot/ipx",
 		"listhen": "^1.7.2",
-		"pkg-types": "^1.1.1"
+		"pkg-types": "^1.1.1",
+		"sharp": "^0.33.3"
 	},
 	"devDependencies": {
 		"@akashi/typescript-config": "workspace:*",
