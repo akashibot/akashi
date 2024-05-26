@@ -29,7 +29,7 @@ export default class DogeMemeCommand extends SubCommand {
 		const { doge, cheems } = ctx.options;
 		const stopwatch = new Stopwatch();
 
-		const image = await ctx.services.memge<ArrayBuffer, "arrayBuffer">(
+		const image = await ctx.services.illumi.meme<ArrayBuffer, "arrayBuffer">(
 			"/custom",
 			{
 				body: {

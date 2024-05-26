@@ -6,10 +6,7 @@ import {
 	Options,
 	createStringOption,
 } from "seyfert";
-import {
-	getImageOption,
-	imageCommandOptions,
-} from "../../lib/constants/options";
+import { getImageOption, imageCommandOptions } from "@/lib/constants/options";
 
 const reformatImageOptions = {
 	format: createStringOption({

@@ -12,7 +12,11 @@ export function formatBytes(bytes: number): string {
 }
 
 export function formatError(error: unknown, message?: string) {
-	return error instanceof Error
-		? error.message
-		: `${message ?? "Error"}: ${error}`;
+	return `❌ ${
+		error instanceof Error ? error.message : `${message ?? "Error"}: ${error}`
+	}`;
+}
+
+export function cn(...args: (string | number | boolean | unknown)[]): string {
+	return args.filter(Boolean).join(" ");
 }

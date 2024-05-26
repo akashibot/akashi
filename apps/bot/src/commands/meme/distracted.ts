@@ -33,7 +33,7 @@ export default class DistractedMemeCommand extends SubCommand {
 		const { boyfriend, girlfriend, girl } = ctx.options;
 		const stopwatch = new Stopwatch();
 
-		const image = await ctx.services.memge<ArrayBuffer, "arrayBuffer">(
+		const image = await ctx.services.illumi.meme<ArrayBuffer, "arrayBuffer">(
 			"/custom",
 			{
 				body: {

@@ -3,7 +3,11 @@
 	"compilerOptions": {
 		"lib": ["ES2015"],
 		"outDir": "./dist",
-		"types": ["node"]
+		"baseUrl": "src",
+		"types": ["node"],
+		"paths": {
+			"@/*": ["*"]
+		}
 	},
 	"include": ["src/**/*"],
 	"exclude": ["node_modules", "dist"]

@@ -6,11 +6,12 @@ import {
 	Declare,
 	OnOptionsReturnObject,
 } from "seyfert";
-import { formatError } from "../../lib/utils/format";
+import { formatError } from "@/lib/utils/format";
 
 @Declare({
 	name: "tag",
 	description: "Tag commands parent",
+	aliases: ["t", "cc"], // "cc" stands for custom commands btw
 })
 @AutoLoad()
 export default class TagParent extends Command {
@@ -25,11 +26,11 @@ export default class TagParent extends Command {
 	async onOptionsError(ctx: CommandContext, returns: OnOptionsReturnObject) {
 		const errors = Object.entries(returns)
 			.filter(([_, err]) => err.failed)
-			.map(([key]) => `${key} is required!`)
-			.join("\n");
+			.map(([key, err]) => md.codeBlock(`${key}: ${err}`))
+			.join("\n\n");
 
 		return ctx.editOrReply({
-			content: md.codeBlock(errors),
+			content: errors,
 		});
 	}
 

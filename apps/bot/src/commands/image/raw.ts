@@ -6,13 +6,10 @@ import {
 	Options,
 	createStringOption,
 } from "seyfert";
-import {
-	getImageOption,
-	imageCommandOptions,
-} from "../../lib/constants/options";
+import { getImageOption, imageCommandOptions } from "@/lib/constants/options";
 import { imageMeta } from "image-meta";
 import { Stopwatch } from "@sapphire/stopwatch";
-import { spacesAndCommasRegex } from "../../lib/constants/regexes";
+import { spacesAndCommasRegex } from "@/lib/constants/regexes";
 
 export const imageRawCommandOptions = {
 	operation: createStringOption({

@@ -1,8 +1,5 @@
 import { type CommandContext, Declare, SubCommand, Options } from "seyfert";
-import {
-	getImageOption,
-	imageCommandOptions,
-} from "../../lib/constants/options";
+import { getImageOption, imageCommandOptions } from "@/lib/constants/options";
 import { imageMeta } from "image-meta";
 import { md } from "mdbox";
 

@@ -1,5 +1,5 @@
 import { type CommandContext, Declare, SubCommand } from "seyfert";
-import { send } from "../../lib/utils/discord";
+import { send } from "@/lib/utils/discord";
 
 @Declare({
 	name: "flush",

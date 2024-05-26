@@ -5,10 +5,7 @@ import {
 	AttachmentBuilder,
 	Options,
 } from "seyfert";
-import {
-	getImageOption,
-	imageCommandOptions,
-} from "../../lib/constants/options";
+import { getImageOption, imageCommandOptions } from "@/lib/constants/options";
 
 @Declare({
 	name: "invert",

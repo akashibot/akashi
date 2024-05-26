@@ -5,10 +5,7 @@ import {
 	AttachmentBuilder,
 	Options,
 } from "seyfert";
-import {
-	getImageOption,
-	imageCommandOptions,
-} from "../../lib/constants/options";
+import { getImageOption, imageCommandOptions } from "@/lib/constants/options";
 import { Stopwatch } from "@sapphire/stopwatch";
 
 @Declare({
@@ -22,7 +19,7 @@ export default class SpeechBalloonMemeCommand extends SubCommand {
 		const source = await getImageOption(ctx);
 		const stopwatch = new Stopwatch();
 
-		const image = await ctx.services.memge<ArrayBuffer, "arrayBuffer">(
+		const image = await ctx.services.illumi.meme<ArrayBuffer, "arrayBuffer">(
 			"/speech-balloon",
 			{
 				body: {

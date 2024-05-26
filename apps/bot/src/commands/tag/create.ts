@@ -6,7 +6,7 @@ import {
 	createBooleanOption,
 	createStringOption,
 } from "seyfert";
-import { send } from "../../lib/utils/discord.ts";
+import { send } from "@/lib/utils/discord.ts";
 import { createTag } from "@akashi/db";
 
 const createOptions = {

@@ -6,9 +6,8 @@ import {
 	createStringOption,
 	Embed,
 } from "seyfert";
-import { TranslationResult } from "../../lib/types/api";
 import { md } from "mdbox";
-import { spacesAndCommasRegex } from "../../lib/constants/regexes";
+import { spacesAndCommasRegex } from "@/lib/constants/regexes";
 
 const translateOptions = {
 	text: createStringOption({
@@ -36,7 +35,7 @@ export default class UtilTranslateCommand extends SubCommand {
 		const formattedTarget = to.trim().split(spacesAndCommasRegex);
 
 		const { translations, detectedLanguage, langs } =
-			await ctx.services.porter<TranslationResult>("/translate", {
+			await ctx.services.illumi.util<TranslationResult>("/translate", {
 				body: {
 					text,
 					to: formattedTarget,
@@ -64,4 +63,27 @@ export default class UtilTranslateCommand extends SubCommand {
 			embeds: [translationEmbed],
 		});
 	}
+}
+
+interface TranslationResult {
+	langs: {
+		[key: string]: string;
+	};
+	translations: {
+		text: string;
+		to: string;
+		sentLen?: {
+			srcSentLen: number[];
+			transSentLen: number[];
+		};
+		transliteration?: {
+			script: string;
+			text: string;
+		};
+		alignment?: object;
+	}[];
+	detectedLanguage?: {
+		language: string;
+		score: number;
+	};
 }

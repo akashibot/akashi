@@ -8,6 +8,7 @@ import {
 	Middlewares,
 	Groups,
 } from "seyfert";
+import { formatError } from "@/lib/utils/format";
 
 @Declare({
 	name: "admin",
@@ -25,18 +26,18 @@ export default class AdminParent extends Command {
 		ctx.client.logger.fatal(error);
 
 		await ctx.editOrReply({
-			content: error instanceof Error ? error.message : `Admin error: ${error}`,
+			content: formatError(error, this.name.toUpperCase()),
 		});
 	}
 
 	async onOptionsError(ctx: CommandContext, returns: OnOptionsReturnObject) {
 		const errors = Object.entries(returns)
 			.filter(([_, err]) => err.failed)
-			.map(([key, err]) => `${key}: ${err.value}`)
-			.join("\n");
+			.map(([key, err]) => md.codeBlock(`${key}: ${err}`))
+			.join("\n\n");
 
 		return ctx.editOrReply({
-			content: md.codeBlock(errors),
+			content: errors,
 		});
 	}
 

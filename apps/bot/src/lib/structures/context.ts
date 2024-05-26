@@ -1,8 +1,7 @@
 import { extendContext } from "seyfert";
 import { ipx } from "./services/ipx";
 import * as storages from "./services/storage";
-import { memge } from "./services/memge";
-import { porter } from "./services/porter";
+import { illumi } from "./services/illumi";
 import { interpreter } from "./services/tag-parsers";
 
 export const context = extendContext(() => {
@@ -13,8 +12,7 @@ export const context = extendContext(() => {
 		],
 		services: {
 			ipx,
-			memge,
-			porter,
+			illumi,
 			storages,
 		},
 		tags: {

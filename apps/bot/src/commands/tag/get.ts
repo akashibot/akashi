@@ -9,7 +9,7 @@ import {
 } from "seyfert";
 import { md } from "mdbox";
 import { IntegerTransformer, StringTransformer } from "tagscript";
-import { send } from "../../lib/utils/discord";
+import { send } from "@/lib/utils/discord";
 import { getTag } from "@akashi/db";
 
 const getOptions = {

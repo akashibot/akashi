@@ -1,7 +1,7 @@
 {
-	"name": "memge",
+	"name": "illumi",
 	"version": "1.0.0",
-	"description": "",
+	"description": "Multipurpose proxy for Akashi",
 	"main": "index.js",
 	"scripts": {
 		"build": "nitro build",
@@ -13,15 +13,14 @@
 	"license": "ISC",
 	"devDependencies": {
 		"@akashi/typescript-config": "workspace:*",
-		"jimp": "^0.22.12",
 		"nitropack": "latest",
 		"tsc-watch": "^6.2.0",
 		"tsup": "^8.0.2"
 	},
 	"dependencies": {
-		"imagescript": "^1.3.0",
-		"jimp-compact": "0.16.1-2",
+		"microsoft-translate-api": "github:akashibot/microsoft-translate-api",
 		"pkg-types": "^1.1.1",
-		"sharp": "^0.33.3"
+		"sharp": "^0.33.3",
+		"uqr": "^0.1.2"
 	}
 }
