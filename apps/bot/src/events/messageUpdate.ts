@@ -21,6 +21,6 @@ export default createEvent({
 		if (messageMedia) await image.setItem(message.channelId, messageMedia);
 
 		// One Word Story stuff
-		await runOwsChecks(message as unknown as Message);
+		await runOwsChecks(message as unknown as Message, true);
 	},
 });

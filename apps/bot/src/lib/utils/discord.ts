@@ -68,7 +68,7 @@ export function containsDiscordEmoji(content: string): boolean {
 	return discordEmojiRegex.test(content);
 }
 
-export async function runOwsChecks(message: Message) {
+export async function runOwsChecks(message: Message, edit = false) {
 	const owsChannel =
 		(await custom.getItem<string>(guildOwsChannel(message.guildId!))) ??
 		(await getGuildOrCreate(message.guildId!)).owsChannel;
@@ -82,7 +82,7 @@ export async function runOwsChecks(message: Message) {
 			containsDiscordEmoji(words.join(""))
 		)
 			await message.delete();
-		else await message.react("✅");
+		else await message.react(edit ? "✅" : "✏️");
 
 		await custom.setItem<string>(guildOwsChannel(message.guildId!), owsChannel);
 	}
