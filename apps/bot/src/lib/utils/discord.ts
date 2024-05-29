@@ -82,7 +82,9 @@ export async function runOwsChecks(message: Message, edit = false) {
 			containsDiscordEmoji(words.join(""))
 		)
 			await message.delete();
-		else await message.react(edit ? "✏️" : "✅");
+		else await message.react("✅");
+
+		if (edit) await message.react("✏️")
 
 		await custom.setItem<string>(guildOwsChannel(message.guildId!), owsChannel);
 	}
