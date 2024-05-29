@@ -66,9 +66,6 @@ export default class TagGetCommand extends SubCommand {
 			});
 		}
 
-		return send(ctx, {
-			content: "Tag had no content to show",
-			variant: "err",
-		});
+		return new Error("Tag had no content to show");
 	}
 }

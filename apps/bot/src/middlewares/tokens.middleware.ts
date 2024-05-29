@@ -1,4 +1,4 @@
-import { getUserOrCreate, removeUserTokens } from "@akashi/db";
+import { getUserOrCreate, updateUserOrCreate } from "@akashi/db";
 import { createMiddleware } from "seyfert";
 
 export const tokensMiddleware = createMiddleware<void>(async (middle) => {
@@ -11,6 +11,8 @@ export const tokensMiddleware = createMiddleware<void>(async (middle) => {
 		);
 	}
 
-	await removeUserTokens(user.id, 5);
+	await updateUserOrCreate(user.id, {
+		tokens: user.tokens - 5,
+	});
 	return middle.next();
 });

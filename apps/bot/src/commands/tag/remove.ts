@@ -5,6 +5,7 @@ import {
 	Options,
 	SubCommand,
 	createStringOption,
+	Middlewares,
 } from "seyfert";
 
 const removeOptions = {
@@ -20,6 +21,7 @@ const removeOptions = {
 	aliases: ["delete", "rem"],
 })
 @Options(removeOptions)
+@Middlewares(["tagOwner"])
 export default class TagRemoveCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof removeOptions>) {
 		const { name } = ctx.options;

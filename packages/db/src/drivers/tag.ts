@@ -1,5 +1,4 @@
 import { db, drizzle, schema } from "../";
-import { getMemberOrCreate } from "./member";
 
 export async function getTag(name: string, guildId: string, emit = true) {
 	const tag = await db.query.tags
@@ -37,7 +36,7 @@ export async function createTag(
 	name: string,
 	content: string,
 	nsfw: boolean,
-	memberId: string,
+	userId: string,
 	guildId: string,
 ) {
 	const exists = await getTag(name, guildId, false);
@@ -45,14 +44,13 @@ export async function createTag(
 	if (exists) throw new Error("This tag already exists on this guild");
 
 	const [tag] = await db.transaction(async (tx) => {
-		await getMemberOrCreate(memberId, guildId);
 		const [tag] = await tx
 			.insert(schema.tags)
 			.values({
 				name,
 				content,
 				nsfw,
-				memberId,
+				userId,
 				guildId,
 			})
 			.returning();

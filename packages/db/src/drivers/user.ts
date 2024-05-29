@@ -1,13 +1,31 @@
+import { PgUpdateSetSource } from "drizzle-orm/pg-core";
 import { db, drizzle, schema } from "../";
 
-export async function getUserOrCreate(id: string) {
+export async function getUser(userId: string) {
 	const user = await db.query.users
 		.findFirst({
-			where: (table, { eq }) => eq(table.id, id),
+			where: (table, { eq }) => eq(table.id, userId),
+			with: {
+				tags: true,
+			},
 		})
 		.execute();
 
-	if (!user) return createUser(id);
+	return user;
+}
+
+export async function getUserOrThrow(userId: string, cb: () => void) {
+	const user = await getUser(userId);
+
+	if (!user) return cb();
+
+	return user;
+}
+
+export async function getUserOrCreate(userId: string) {
+	const user = await getUser(userId);
+
+	if (!user) return createUser(userId);
 
 	return user;
 }
@@ -23,28 +41,15 @@ export async function createUser(id: string) {
 	return user;
 }
 
-export async function removeUserTokens(id: string, tokens = 1) {
-	const user = await getUserOrCreate(id);
+export async function updateUserOrCreate(
+	userId: string,
+	values: PgUpdateSetSource<typeof schema.users>,
+) {
+	const user = await getUserOrCreate(userId);
 
 	const [updateUser] = await db
 		.update(schema.users)
-		.set({
-			tokens: user.tokens - tokens,
-		})
-		.where(drizzle.eq(schema.users.id, user.id))
-		.returning();
-
-	return updateUser;
-}
-
-export async function addUserTokens(id: string, tokens: number) {
-	const user = await getUserOrCreate(id);
-
-	const [updateUser] = await db
-		.update(schema.users)
-		.set({
-			tokens: user.tokens + tokens,
-		})
+		.set(values)
 		.where(drizzle.eq(schema.users.id, user.id))
 		.returning();
 

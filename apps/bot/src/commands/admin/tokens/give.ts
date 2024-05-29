@@ -1,4 +1,4 @@
-import { addUserTokens } from "@akashi/db";
+import { getUserOrCreate, updateUserOrCreate } from "@akashi/db";
 import {
 	type CommandContext,
 	Declare,
@@ -30,12 +30,16 @@ export default class AdminTokensGiveCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof adminTokensGiveOptions>) {
 		const { user, amount } = ctx.options;
 
+		const databaseUser = await getUserOrCreate(user.id);
+
 		if (user.bot)
 			return ctx.editOrReply({
 				content: "User can't be a bot",
 			});
 
-		await addUserTokens(user.id, amount);
+		await updateUserOrCreate(user.id, {
+			tokens: databaseUser.tokens + amount,
+		});
 
 		return ctx.editOrReply({
 			content: `Gave ${amount} tokens to ${user.toString()}`,

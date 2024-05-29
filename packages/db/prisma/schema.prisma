@@ -11,21 +11,13 @@ datasource db {
 
 model User {
   id     String   @id 
-  tokens Int      @default(100)
-  member Member[]
+  tokens Int      @default(200)
+
+  tags Tag[]
 
   @@map("users")
 }
 
-model Member {
-  id      String @id
-  guildId String
-
-  user User  @relation(fields: [id], references: [id])
-  tags Tag[]
-
-  @@map("members")
-}
 
 model Guild {
   id   String @id
@@ -39,15 +31,15 @@ model Guild {
 model Tag {
   name    String @id
   guildId  String?
-  memberId String
+  userId String
 
   content String
   nsfw    Boolean @default(false)
 
   guild  Guild? @relation(fields: [guildId], references: [id])
-  author Member @relation(fields: [memberId], references: [id])
+  author User @relation(fields: [userId], references: [id])
 
   @@index([guildId])
-  @@index([memberId])
+  @@index([userId])
   @@map("tags")
 }

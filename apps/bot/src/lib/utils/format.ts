@@ -11,6 +11,18 @@ export function formatBytes(bytes: number): string {
 	return `${value.toFixed(2)} ${units[i]}`;
 }
 
+export function formatUptime(seconds: number): string {
+	let secs = seconds;
+	const days = Math.floor(seconds / (24 * 60 * 60));
+	secs %= 24 * 60 * 60;
+	const hours = Math.floor(seconds / (60 * 60));
+	secs %= 60 * 60;
+	const minutes = Math.floor(seconds / 60);
+	secs %= 60;
+
+	return `${days}d ${hours}h ${minutes}m ${seconds}s`;
+}
+
 export function formatError(error: unknown, message?: string) {
 	return `❌ ${
 		error instanceof Error ? error.message : `${message ?? "Error"}: ${error}`
@@ -19,4 +31,8 @@ export function formatError(error: unknown, message?: string) {
 
 export function cn(...args: (string | number | boolean | unknown)[]): string {
 	return args.filter(Boolean).join(" ");
+}
+
+export function cnl(...args: (string | number | boolean | unknown)[]): string {
+	return args.filter(Boolean).join("\n");
 }

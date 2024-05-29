@@ -1,7 +1,7 @@
 import { relations } from "drizzle-orm";
 import { users } from "./users";
-import { members } from "./members";
+import { tags } from "./tags";
 
 export const usersRelations = relations(users, (helpers) => ({
-	member: helpers.many(members, { relationName: "MemberToUser" }),
+	tags: helpers.many(tags, { relationName: "TagToUser" }),
 }));

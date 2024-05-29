@@ -1,26 +1,37 @@
 import { eq } from "drizzle-orm";
 import { db, schema } from "../";
+import { PgUpdateSetSource } from "drizzle-orm/pg-core";
 
-export async function getGuildOrThrow(id: string) {
+export async function getGuild(guildId: string) {
 	const guild = await db.query.guilds
 		.findFirst({
-			where: (table, { eq }) => eq(table.id, id),
+			where: (table, { eq }) => eq(table.id, guildId),
 		})
 		.execute();
-
-	if (!guild) throw new Error("No guild found");
 
 	return guild;
 }
 
-export async function getGuildOrCreate(id: string) {
+export async function getGuildOrThrow(guildId: string, cb: () => void) {
 	const guild = await db.query.guilds
 		.findFirst({
-			where: (table, { eq }) => eq(table.id, id),
+			where: (table, { eq }) => eq(table.id, guildId),
 		})
 		.execute();
 
-	if (!guild) return createGuild(id);
+	if (!guild) return cb();
+
+	return guild;
+}
+
+export async function getGuildOrCreate(guildId: string) {
+	const guild = await db.query.guilds
+		.findFirst({
+			where: (table, { eq }) => eq(table.id, guildId),
+		})
+		.execute();
+
+	if (!guild) return createGuild(guildId);
 
 	return guild;
 }
@@ -36,17 +47,21 @@ export async function createGuild(id: string) {
 	return guild;
 }
 
-export async function setOWSChannel(
+export async function updateGuildOrCreate(
 	guildId: string,
-	owsChannelId: string | null,
+	values: PgUpdateSetSource<typeof schema.guilds>,
 ) {
-	const [guild] = await db
-		.update(schema.guilds)
-		.set({
-			owsChannel: owsChannelId,
-		})
-		.where(eq(schema.guilds.id, guildId))
-		.returning();
+	const [updateGuild] = await db.transaction(async (tx) => {
+		const guild = await getGuildOrCreate(guildId);
 
-	return guild;
+		const [updateGuild] = await tx
+			.update(schema.guilds)
+			.set(values)
+			.where(eq(schema.guilds.id, guild.id))
+			.returning();
+
+		return [updateGuild];
+	});
+
+	return updateGuild;
 }
