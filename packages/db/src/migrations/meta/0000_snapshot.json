@@ -1,5 +1,5 @@
 {
-  "id": "58043564-6ad4-4e13-978e-b16a21a3d19f",
+  "id": "b231aed7-f84f-4ec2-897d-1c7a981bd2ea",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "6",
   "dialect": "postgresql",
@@ -13,6 +13,12 @@
           "type": "text",
           "primaryKey": true,
           "notNull": true
+        },
+        "ows_channel": {
+          "name": "ows_channel",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {},

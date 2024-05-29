@@ -1,5 +1,6 @@
 import { type CommandContext, Declare, SubCommand, Group } from "seyfert";
 import { getGuildOrCreate, setOWSChannel } from "@akashi/db";
+import { guildOwsChannel } from "@/lib/constants/storage-keys";
 
 @Declare({
 	name: "remove",
@@ -13,6 +14,10 @@ export default class ConfigOwsSetCommand extends SubCommand {
 		if (!owsChannel) throw new Error("You don't have a OWS channel set");
 
 		await setOWSChannel(ctx.guildId!, null);
+		await ctx.services.storages.custom.setItem<null>(
+			guildOwsChannel(ctx.guildId!),
+			null,
+		);
 
 		return ctx.editOrReply({
 			content: "I have removed the current OWS channel",

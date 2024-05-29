@@ -7,7 +7,10 @@ import {
 } from "seyfert";
 import { SendResolverProps, When } from "seyfert/lib/common";
 import { APIInteractionResponseCallbackData } from "seyfert/lib/types";
-import { discordEmojiRegex } from "../constants/regexes";
+import { discordEmojiRegex, spacesAndStuffRegex } from "../constants/regexes";
+import { getGuildOrCreate } from "@akashi/db";
+import { custom } from "../structures/services/storage";
+import { guildOwsChannel } from "../constants/storage-keys";
 
 export function getMediaUrl(message: Message): string | undefined {
 	if (message.attachments[0]?.proxyUrl) {
@@ -63,4 +66,24 @@ export async function send<T extends OptionsRecord>(
 
 export function containsDiscordEmoji(content: string): boolean {
 	return discordEmojiRegex.test(content);
+}
+
+export async function runOwsChecks(message: Message) {
+	const owsChannel =
+		(await custom.getItem<string>(guildOwsChannel(message.guildId!))) ??
+		(await getGuildOrCreate(message.guildId!)).owsChannel;
+
+	if (owsChannel === message.channelId) {
+		const words = message.content.split(spacesAndStuffRegex);
+
+		if (
+			words.length !== 1 ||
+			message.content.endsWith(".") ||
+			containsDiscordEmoji(words.join(""))
+		)
+			await message.delete();
+		else await message.react("✅");
+
+		await custom.setItem<string>(guildOwsChannel(message.guildId!), owsChannel);
+	}
 }

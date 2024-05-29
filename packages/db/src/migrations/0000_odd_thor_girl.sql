@@ -1,5 +1,6 @@
 CREATE TABLE IF NOT EXISTS "guilds" (
-	"id" text PRIMARY KEY NOT NULL
+	"id" text PRIMARY KEY NOT NULL,
+	"ows_channel" text
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "members" (

@@ -9,6 +9,7 @@ import {
 } from "seyfert";
 import { getGuildOrCreate, setOWSChannel } from "@akashi/db";
 import { cn } from "@/lib/utils/format";
+import { guildOwsChannel } from "@/lib/constants/storage-keys";
 
 const configOwsSetOptions = {
 	channel: createChannelOption({
@@ -38,6 +39,10 @@ export default class ConfigOwsSetCommand extends SubCommand {
 				"This is a One-Word-Story channel, you can only send one word per message.",
 			rate_limit_per_user: 30,
 		});
+		await ctx.services.storages.custom.setItem<string>(
+			guildOwsChannel(ctx.guildId!),
+			channel.id,
+		);
 
 		return ctx.editOrReply({
 			content: cn("I have changed the OWS channel to ", channel.toString()),
