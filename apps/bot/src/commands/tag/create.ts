@@ -38,7 +38,6 @@ export default class TagCreateCommand extends SubCommand {
 		const tag = await createTag(
 			name,
 			content,
-			nsfw as boolean,
 			ctx.author.id,
 			ctx.guildId as string,
 		);

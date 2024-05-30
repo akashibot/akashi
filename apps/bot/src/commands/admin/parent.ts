@@ -14,7 +14,7 @@ import { formatError } from "@/lib/utils/format";
 	name: "admin",
 	description: "Admin commands parent",
 })
-@Middlewares(["admin"])
+@Middlewares(["Admin"])
 @AutoLoad()
 @Groups({
 	tokens: {

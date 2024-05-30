@@ -1,7 +1,7 @@
-import { getTagOrThrow } from "@akashi/db";
+import { getTagOrThrow, updateTag } from "@akashi/db";
 import { createMiddleware } from "seyfert";
 
-export const tagOwnerMiddleware = createMiddleware<void>(async (middle) => {
+export const tagUsageMiddleware = createMiddleware<void>(async (middle) => {
 	if (!middle.context.isChat()) return;
 	const tagName = middle.context.resolver.getString("name", true);
 
@@ -11,7 +11,9 @@ export const tagOwnerMiddleware = createMiddleware<void>(async (middle) => {
 		() => new Error("Tag not found"),
 	);
 
-	if (middle.context.author.id === tag.userId) return middle.next();
+	await updateTag(tag.name, tag.guildId, {
+		uses: tag.uses + 1,
+	});
 
-	middle.stop("You do not own this tag");
+	middle.next();
 });

@@ -1,7 +1,9 @@
-import { db, drizzle, schema } from "../";
+import { PgUpdateSetSource } from "drizzle-orm/pg-core";
+import { db, drizzle, getGuildOrCreate, getUserOrCreate, schema } from "../";
+import { and, eq } from "drizzle-orm";
 
-export async function getTag(name: string, guildId: string, emit = true) {
-	const tag = await db.query.tags
+export async function getTag(name: string, guildId: string) {
+	return db.query.tags
 		.findFirst({
 			where: (table, { eq, and }) =>
 				and(eq(table.name, name), eq(table.guildId, guildId)),
@@ -10,8 +12,16 @@ export async function getTag(name: string, guildId: string, emit = true) {
 			},
 		})
 		.execute();
+}
 
-	if (!tag && emit) throw new Error("Couldn't find this tag");
+export async function getTagOrThrow(
+	name: string,
+	guildId: string,
+	cb: () => void,
+) {
+	const tag = await getTag(name, guildId);
+
+	if (!tag) throw cb();
 
 	return tag!;
 }
@@ -35,11 +45,13 @@ export async function removeTag(name: string, guildId: string) {
 export async function createTag(
 	name: string,
 	content: string,
-	nsfw: boolean,
 	userId: string,
 	guildId: string,
 ) {
-	const exists = await getTag(name, guildId, false);
+	await getUserOrCreate(userId);
+	await getGuildOrCreate(guildId);
+
+	const exists = await getTag(name, guildId);
 
 	if (exists) throw new Error("This tag already exists on this guild");
 
@@ -49,7 +61,6 @@ export async function createTag(
 			.values({
 				name,
 				content,
-				nsfw,
 				userId,
 				guildId,
 			})
@@ -59,4 +70,22 @@ export async function createTag(
 	});
 
 	return tag;
+}
+
+export async function updateTag(
+	name: string,
+	guildId: string,
+	values: PgUpdateSetSource<typeof schema.tags>,
+) {
+	const [updateTag] = await db.transaction(async (tx) => {
+		const [updateGuild] = await tx
+			.update(schema.tags)
+			.set(values)
+			.where(and(eq(schema.tags.name, name), eq(schema.tags.guildId, guildId)))
+			.returning();
+
+		return [updateGuild];
+	});
+
+	return updateTag;
 }

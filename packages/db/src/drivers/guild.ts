@@ -6,6 +6,9 @@ export async function getGuild(guildId: string) {
 	const guild = await db.query.guilds
 		.findFirst({
 			where: (table, { eq }) => eq(table.id, guildId),
+			with: {
+				tags: true,
+			},
 		})
 		.execute();
 
@@ -13,23 +16,15 @@ export async function getGuild(guildId: string) {
 }
 
 export async function getGuildOrThrow(guildId: string, cb: () => void) {
-	const guild = await db.query.guilds
-		.findFirst({
-			where: (table, { eq }) => eq(table.id, guildId),
-		})
-		.execute();
+	const guild = await getGuild(guildId);
 
-	if (!guild) return cb();
+	if (!guild) throw cb();
 
 	return guild;
 }
 
 export async function getGuildOrCreate(guildId: string) {
-	const guild = await db.query.guilds
-		.findFirst({
-			where: (table, { eq }) => eq(table.id, guildId),
-		})
-		.execute();
+	const guild = await getGuild(guildId);
 
 	if (!guild) return createGuild(guildId);
 

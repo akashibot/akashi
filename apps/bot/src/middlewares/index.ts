@@ -1,9 +1,11 @@
 import { adminMiddleware } from "./admin.middleware";
 import { tagOwnerMiddleware } from "./tag-owner.middleware";
+import { tagUsageMiddleware } from "./tag-usage.middleware";
 import { tokensMiddleware } from "./tokens.middleware";
 
 export default {
-	tokens: tokensMiddleware,
-	admin: adminMiddleware,
-	tagOwner: tagOwnerMiddleware,
+	Tokens: tokensMiddleware,
+	Admin: adminMiddleware,
+	TagOwner: tagOwnerMiddleware,
+	TagUsage: tagUsageMiddleware,
 };

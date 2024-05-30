@@ -14,7 +14,7 @@ import { formatError } from "@/lib/utils/format";
 	description: "Image commands parent",
 	aliases: ["img", "i"],
 })
-@Middlewares(["tokens"])
+@Middlewares(["Tokens"])
 @AutoLoad()
 export default class ImageParent extends Command {
 	async onRunError(ctx: CommandContext, error: unknown) {

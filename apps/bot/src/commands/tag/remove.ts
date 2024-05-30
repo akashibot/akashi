@@ -21,7 +21,7 @@ const removeOptions = {
 	aliases: ["delete", "rem"],
 })
 @Options(removeOptions)
-@Middlewares(["tagOwner"])
+@Middlewares(["TagOwner"])
 export default class TagRemoveCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof removeOptions>) {
 		const { name } = ctx.options;

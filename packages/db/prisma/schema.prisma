@@ -30,11 +30,11 @@ model Guild {
 
 model Tag {
   name    String @id
-  guildId  String?
+  guildId  String
   userId String
 
   content String
-  nsfw    Boolean @default(false)
+  uses    Int @default(0)
 
   guild  Guild? @relation(fields: [guildId], references: [id])
   author User @relation(fields: [userId], references: [id])
