@@ -3,7 +3,6 @@ import {
 	Declare,
 	SubCommand,
 	Options,
-	Group,
 	createChannelOption,
 	TextGuildChannel,
 } from "seyfert";
@@ -23,7 +22,6 @@ const configOwsSetOptions = {
 	description: "Configure One Word Story channel",
 })
 @Options(configOwsSetOptions)
-@Group("ows")
 export default class ConfigOwsSetCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof configOwsSetOptions>) {
 		const { channel } = ctx.options as { channel: TextGuildChannel };

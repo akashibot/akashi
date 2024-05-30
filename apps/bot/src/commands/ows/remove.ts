@@ -1,4 +1,4 @@
-import { type CommandContext, Declare, SubCommand, Group } from "seyfert";
+import { type CommandContext, Declare, SubCommand } from "seyfert";
 import { getGuildOrCreate, updateGuildOrCreate } from "@akashi/db";
 import { guildOwsChannel } from "@/lib/constants/storage-keys";
 
@@ -6,7 +6,6 @@ import { guildOwsChannel } from "@/lib/constants/storage-keys";
 	name: "remove",
 	description: "Remove the current OWS channel",
 })
-@Group("ows")
 export default class ConfigOwsSetCommand extends SubCommand {
 	public async run(ctx: CommandContext) {
 		const { owsChannel } = await getGuildOrCreate(ctx.guildId!);
