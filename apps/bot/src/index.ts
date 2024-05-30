@@ -11,6 +11,7 @@ import middlewares from "./middlewares";
 import { YunaParser } from "yunaforseyfert";
 import { loadConfig } from "c12";
 import { UnstoreAdapter } from "./lib/cache";
+import { APIEmbed } from "seyfert/lib/types";
 
 const client = new Client({
 	context,
@@ -50,5 +51,6 @@ declare module "seyfert" {
 declare module "tagscript" {
 	interface IActions {
 		files?: string[];
+		embed?: APIEmbed;
 	}
 }

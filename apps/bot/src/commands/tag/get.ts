@@ -78,7 +78,11 @@ export default class TagGetCommand extends SubCommand {
 			});
 		}
 
-		if (parsedTag.body || parsedTag.actions.files) {
+		if (
+			(parsedTag.body && parsedTag.body.length > 0) ||
+			parsedTag.actions.files ||
+			parsedTag.actions.embed
+		) {
 			const files: AttachmentBuilder[] = [];
 
 			for (const file of parsedTag.actions.files ?? []) {
@@ -88,9 +92,10 @@ export default class TagGetCommand extends SubCommand {
 			return ctx.editOrReply({
 				content: parsedTag.body ?? null,
 				files,
+				embeds: parsedTag.actions.embed ? [parsedTag.actions.embed] : undefined,
 			});
 		}
 
-		return new Error("Tag had no content to show");
+		throw new Error("Tag had no content to show");
 	}
 }

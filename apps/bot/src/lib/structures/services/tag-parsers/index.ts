@@ -11,10 +11,12 @@ import {
 	LooseVarsParser,
 	DefineParser,
 } from "tagscript";
+
 import { AFetchParser } from "./parsers/afetch";
 import { NoteParser } from "./parsers/note";
 import { AttachParser } from "./parsers/attach";
 import { IPXParser } from "./parsers/ipx";
+import { EmbedParser } from "./parsers/embed";
 
 export const interpreter = new Interpreter(
 	new RandomParser(),
@@ -30,5 +32,6 @@ export const interpreter = new Interpreter(
 	new DefineParser(),
 	new AttachParser(),
 	new IPXParser(),
+	new EmbedParser(),
 	new StrictVarsParser(), // Mandatory for custom vars yk
 );
