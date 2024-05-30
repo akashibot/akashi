@@ -1,5 +1,5 @@
 import { type CommandContext, Declare, SubCommand, Group } from "seyfert";
-import { getGuildOrCreate, setOWSChannel } from "@akashi/db";
+import { getGuildOrCreate, updateGuildOrCreate } from "@akashi/db";
 import { guildOwsChannel } from "@/lib/constants/storage-keys";
 
 @Declare({
@@ -13,7 +13,9 @@ export default class ConfigOwsSetCommand extends SubCommand {
 
 		if (!owsChannel) throw new Error("You don't have a OWS channel set");
 
-		await setOWSChannel(ctx.guildId!, null);
+		await updateGuildOrCreate(ctx.guildId!, {
+			owsChannel: null,
+		});
 		await ctx.services.storages.custom.setItem<null>(
 			guildOwsChannel(ctx.guildId!),
 			null,

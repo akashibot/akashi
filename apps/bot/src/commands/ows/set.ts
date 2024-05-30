@@ -7,7 +7,7 @@ import {
 	createChannelOption,
 	TextGuildChannel,
 } from "seyfert";
-import { getGuildOrCreate, setOWSChannel } from "@akashi/db";
+import { getGuildOrCreate, updateGuildOrCreate } from "@akashi/db";
 import { cn } from "@/lib/utils/format";
 import { guildOwsChannel } from "@/lib/constants/storage-keys";
 
@@ -33,7 +33,9 @@ export default class ConfigOwsSetCommand extends SubCommand {
 		if (oldChannel === channel.id)
 			throw new Error("That's the current channel");
 
-		await setOWSChannel(ctx.guildId!, channel.id);
+		await updateGuildOrCreate(ctx.guildId!, {
+			owsChannel: channel.id,
+		});
 		await channel.edit({
 			topic:
 				"This is a One-Word-Story channel, you can only send one word per message.",

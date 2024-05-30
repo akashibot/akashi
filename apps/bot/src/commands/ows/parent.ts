@@ -5,20 +5,14 @@ import {
 	AutoLoad,
 	CommandContext,
 	OnOptionsReturnObject,
-	Groups,
 } from "seyfert";
 import { formatError } from "@/lib/utils/format";
 
 @Declare({
-	name: "config",
-	description: "Config commands parent",
+	name: "ows",
+	description: "OWS commands parent",
 	botPermissions: ["ViewChannel", "ManageChannels", "ManageMessages"],
 	defaultMemberPermissions: ["ManageGuild"],
-})
-@Groups({
-	ows: {
-		defaultDescription: "Config ows commands group",
-	},
 })
 @AutoLoad()
 export default class ConfigParent extends Command {
