@@ -11,12 +11,15 @@ export default class UtilStatsCommand extends SubCommand {
 
 		return await ctx.editOrReply({
 			content: cnl(
+				"# Os info",
 				`RSS: ${memoryUsageStats.rss}`,
 				`Heap Total: ${memoryUsageStats.heapTotal}`,
 				`Heap Used: ${memoryUsageStats.heapUsed}`,
 				`External: ${memoryUsageStats.external}`,
 				`ArrayBuffers: ${memoryUsageStats.arrayBuffers}`,
+				"# Bot info",
 				`Uptime: ${formatUptime(Math.floor(process.uptime()))}`,
+				`Guilds: ${ctx.client.cache.guilds?.count()} (cached)`,
 			),
 		});
 	}
