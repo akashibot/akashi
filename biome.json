@@ -17,7 +17,8 @@
 			"recommended": true,
 			"style": {
 				"useImportType": "off",
-				"noNonNullAssertion": "off"
+				"noNonNullAssertion": "off",
+				"noParameterAssign": "off"
 			}
 		}
 	}
