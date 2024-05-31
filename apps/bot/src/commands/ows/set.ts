@@ -20,8 +20,6 @@ const configOwsSetOptions = {
 @Declare({
 	name: "set",
 	description: "Configure One Word Story channel",
-	botPermissions: ["ViewChannel", "ManageChannels", "ManageMessages"],
-	defaultMemberPermissions: ["ManageGuild"],
 })
 @Options(configOwsSetOptions)
 export default class ConfigOwsSetCommand extends SubCommand {

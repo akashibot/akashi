@@ -12,6 +12,8 @@ import { cn, formatError } from "@/lib/utils/format";
 @Declare({
 	name: "ows",
 	description: "OWS commands parent",
+	botPermissions: ["ViewChannel", "ManageChannels", "ManageMessages"],
+	defaultMemberPermissions: ["ManageGuild"],
 })
 @AutoLoad()
 export default class ConfigParent extends Command {
