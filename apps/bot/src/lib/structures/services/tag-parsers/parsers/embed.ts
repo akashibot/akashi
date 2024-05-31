@@ -66,6 +66,7 @@ export class EmbedParser extends BaseParser implements IParser {
 		if (ctx.tag.parameter === "field") {
 			const [name, value, inline] = split(ctx.tag.payload!);
 			if (!name || !value) return "";
+
 			return this.returnEmbed(ctx, {
 				fields: [
 					{
@@ -79,8 +80,13 @@ export class EmbedParser extends BaseParser implements IParser {
 
 		if (ctx.tag.parameter === "color") {
 			return this.returnEmbed(ctx, {
-				// This can return number but it should be handled by the dev
 				color: resolveColor(ctx.tag.payload! as ColorResolvable) as number,
+			});
+		}
+
+		if (ctx.tag.parameter === "image") {
+			return this.returnEmbed(ctx, {
+				image: { url: ctx.tag.payload! },
 			});
 		}
 
@@ -97,12 +103,14 @@ export class EmbedParser extends BaseParser implements IParser {
 		const parsedResult = JSON.parse(payload);
 		if (parsedResult.color)
 			parsedResult.color = resolveColor(parsedResult.color);
+
 		return parsedResult;
 	}
 
 	private returnEmbed(ctx: Context, data: APIEmbed): string {
 		ctx.response.actions.embed ??= {} as APIEmbed;
 		const { fields, ...rest } = data;
+
 		if (fields)
 			ctx.response.actions.embed!.fields = [
 				...(ctx.response.actions.embed.fields ?? []),
@@ -110,6 +118,7 @@ export class EmbedParser extends BaseParser implements IParser {
 			];
 
 		ctx.response.actions.embed = { ...ctx.response.actions.embed, ...rest };
+
 		return "";
 	}
 }

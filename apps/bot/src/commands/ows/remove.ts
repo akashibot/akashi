@@ -4,13 +4,14 @@ import { guildOwsChannel } from "@/lib/constants/storage-keys";
 
 @Declare({
 	name: "remove",
-	description: "Remove the current OWS channel",
+	description: "Remove the current One Word Story channel",
 })
 export default class ConfigOwsSetCommand extends SubCommand {
 	public async run(ctx: CommandContext) {
 		const { owsChannel } = await getGuildOrCreate(ctx.guildId!);
 
-		if (!owsChannel) throw new Error("You don't have a OWS channel set");
+		if (!owsChannel)
+			throw new Error("This guild doesn't have a One Word Story channel");
 
 		await updateGuildOrCreate(ctx.guildId!, {
 			owsChannel: null,
@@ -21,7 +22,7 @@ export default class ConfigOwsSetCommand extends SubCommand {
 		);
 
 		return ctx.editOrReply({
-			content: "I have removed the current OWS channel",
+			content: "Removed One Word Story channel",
 		});
 	}
 }

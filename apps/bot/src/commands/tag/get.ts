@@ -66,6 +66,11 @@ export default class TagGetCommand extends SubCommand {
 			argslen: new IntegerTransformer(`${args?.length ?? 0}`),
 		});
 
+		const hasContent =
+			(parsedTag.body && parsedTag.body.length > 0) ||
+			!!parsedTag.actions.files ||
+			!!parsedTag.actions.embed;
+
 		if (raw) {
 			const author = await ctx.client.users.fetch(tag.author.id);
 
@@ -78,11 +83,7 @@ export default class TagGetCommand extends SubCommand {
 			});
 		}
 
-		if (
-			(parsedTag.body && parsedTag.body.length > 0) ||
-			parsedTag.actions.files ||
-			parsedTag.actions.embed
-		) {
+		if (hasContent) {
 			const files: AttachmentBuilder[] = [];
 
 			for (const file of parsedTag.actions.files ?? []) {

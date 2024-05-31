@@ -29,14 +29,14 @@ export default class ConfigOwsSetCommand extends SubCommand {
 		const { owsChannel: oldChannel } = await getGuildOrCreate(ctx.guildId!);
 
 		if (oldChannel === channel.id)
-			throw new Error("That's the current channel");
+			throw new Error("That's the current One Word Story channel");
 
 		await updateGuildOrCreate(ctx.guildId!, {
 			owsChannel: channel.id,
 		});
 		await channel.edit({
 			topic:
-				"This is a One-Word-Story channel, you can only send one word per message.",
+				"This is a One Word Story channel, you can only send one word per message.",
 			rate_limit_per_user: 30,
 		});
 		await ctx.services.storages.custom.setItem<string>(
@@ -45,7 +45,7 @@ export default class ConfigOwsSetCommand extends SubCommand {
 		);
 
 		return ctx.editOrReply({
-			content: cn("I have changed the OWS channel to ", channel.toString()),
+			content: cn("One Word Story is now", channel.toString()),
 		});
 	}
 }

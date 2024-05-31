@@ -1,3 +1,4 @@
+import { cn } from "@/lib/utils/format";
 import { createTag, getGuildOrThrow, getTag, updateTag } from "@akashi/db";
 import {
 	type CommandContext,
@@ -63,7 +64,7 @@ export default class TagEditCommand extends SubCommand {
 		}
 
 		return ctx.editOrReply({
-			content: `Edited tag ${name}`,
+			content: cn("Edited tag", name),
 		});
 	}
 }

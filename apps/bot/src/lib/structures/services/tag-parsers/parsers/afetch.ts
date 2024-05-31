@@ -1,18 +1,14 @@
-import { ResponseType, ofetch } from "ofetch";
-import {
-	BaseParser,
-	IParser,
-	Context,
-	SafeObjectTransformer,
-	StringTransformer,
-} from "tagscript";
+import { ofetch } from "ofetch";
+import { BaseParser, IParser, Context, SafeObjectTransformer } from "tagscript";
 
 /**
  * Custom parser to fetch data from a URL.
  *
+ * @todo Support plain texts
+ *
  * @example
  * ```yaml
- * {afetch(json,data):https://example.com/data}
+ * {afetch(data):https://example.com/data}
  * ```
  */
 export class AFetchParser extends BaseParser implements IParser {
@@ -21,20 +17,12 @@ export class AFetchParser extends BaseParser implements IParser {
 	}
 
 	public async parse(ctx: Context) {
-		const [responseType, varName] = ctx.tag.parameter!.split(",");
-
-		console.log(responseType, varName);
-
 		const data = await ofetch(ctx.tag.payload, {
-			responseType: (responseType as ResponseType) ?? "json",
+			responseType: "json",
 		});
 
-		if (["json"].includes(responseType))
-			ctx.response.variables[varName ?? "data"] = new SafeObjectTransformer(
-				JSON.stringify(data),
-			);
-		else
-			ctx.response.variables[varName ?? "data"] = new StringTransformer(data);
+		ctx.response.variables[ctx.tag.parameter! ?? "data"] =
+			new SafeObjectTransformer(data);
 
 		return "";
 	}

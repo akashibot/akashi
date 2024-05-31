@@ -14,6 +14,7 @@ export class IPXParser extends BaseParser implements IParser {
 	}
 
 	public async parse(ctx: Context) {
+		// TODO: Push to files instead of overwriting them
 		ctx.response.actions.files = [
 			`http://localhost:4000/ipx/${ctx.tag.payload}/${ctx.tag.parameter}`,
 		];
