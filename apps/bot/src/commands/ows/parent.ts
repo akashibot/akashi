@@ -5,8 +5,9 @@ import {
 	AutoLoad,
 	CommandContext,
 	OnOptionsReturnObject,
+	PermissionStrings,
 } from "seyfert";
-import { formatError } from "@/lib/utils/format";
+import { cn, formatError } from "@/lib/utils/format";
 
 @Declare({
 	name: "ows",
@@ -16,15 +17,20 @@ import { formatError } from "@/lib/utils/format";
 })
 @AutoLoad()
 export default class ConfigParent extends Command {
-	async onRunError(ctx: CommandContext, error: unknown) {
+	onRunError(ctx: CommandContext, error: unknown) {
 		ctx.client.logger.fatal(error);
 
-		await ctx.editOrReply({
+		// HOT FIX; DELETE THIS ASAP
+		// if ((error as Error).message.includes("Permissions"))
+		// https://github.com/tiramisulabs/seyfert/issues/198
+		// 	this.onBotPermissionsFail(ctx, []);
+
+		return ctx.editOrReply({
 			content: formatError(error, this.name.toUpperCase()),
 		});
 	}
 
-	async onOptionsError(ctx: CommandContext, returns: OnOptionsReturnObject) {
+	onOptionsError(ctx: CommandContext, returns: OnOptionsReturnObject) {
 		const errors = Object.entries(returns)
 			.filter(([_, err]) => err.failed)
 			.map(([key, err]) => md.codeBlock(`${key}: ${err.value}`))
@@ -35,10 +41,28 @@ export default class ConfigParent extends Command {
 		});
 	}
 
-	async onMiddlewaresError(ctx: CommandContext, error: string) {
+	onMiddlewaresError(ctx: CommandContext, error: string) {
 		return ctx.editOrReply({
 			content: error,
 			flags: 4,
+		});
+	}
+
+	onBotPermissionsFail(ctx: CommandContext, permissions: PermissionStrings) {
+		return ctx.editOrReply({
+			content: cn(
+				"I need the following permissions to run this command:",
+				permissions.join(", "),
+			),
+		});
+	}
+
+	onPermissionsFail(ctx: CommandContext, permissions: PermissionStrings) {
+		return ctx.editOrReply({
+			content: cn(
+				"You need the following permissions to run this command:",
+				permissions.join(", "),
+			),
 		});
 	}
 }

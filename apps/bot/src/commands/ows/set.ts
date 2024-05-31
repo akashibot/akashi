@@ -45,7 +45,7 @@ export default class ConfigOwsSetCommand extends SubCommand {
 		);
 
 		return ctx.editOrReply({
-			content: cn("One Word Story is now", channel.toString()),
+			content: cn("One Word Story channel is now", channel.toString()),
 		});
 	}
 }
