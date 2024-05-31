@@ -5,6 +5,8 @@ import { guildOwsChannel } from "@/lib/constants/storage-keys";
 @Declare({
 	name: "remove",
 	description: "Remove the current One Word Story channel",
+	botPermissions: ["ViewChannel", "ManageChannels", "ManageMessages"],
+	defaultMemberPermissions: ["ManageGuild"],
 })
 export default class ConfigOwsSetCommand extends SubCommand {
 	public async run(ctx: CommandContext) {

@@ -3,27 +3,20 @@ import {
 	Declare,
 	Command,
 	AutoLoad,
-	CommandContext,
-	OnOptionsReturnObject,
-	PermissionStrings,
+	type CommandContext,
+	type OnOptionsReturnObject,
+	type PermissionStrings,
 } from "seyfert";
 import { cn, formatError } from "@/lib/utils/format";
 
 @Declare({
 	name: "ows",
 	description: "OWS commands parent",
-	botPermissions: ["ViewChannel", "ManageChannels", "ManageMessages"],
-	defaultMemberPermissions: ["ManageGuild"],
 })
 @AutoLoad()
 export default class ConfigParent extends Command {
 	onRunError(ctx: CommandContext, error: unknown) {
 		ctx.client.logger.fatal(error);
-
-		// HOT FIX; DELETE THIS ASAP
-		// if ((error as Error).message.includes("Permissions"))
-		// https://github.com/tiramisulabs/seyfert/issues/198
-		// 	this.onBotPermissionsFail(ctx, []);
 
 		return ctx.editOrReply({
 			content: formatError(error, this.name.toUpperCase()),
