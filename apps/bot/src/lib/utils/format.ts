@@ -1,3 +1,6 @@
+import { ImageMeta } from "image-meta";
+import { CommandContext } from "seyfert";
+
 export function formatBytes(bytes: number): string {
 	const units = ["B", "KB", "MB", "GB", "TB"];
 	let i = 0;
@@ -34,4 +37,15 @@ export function cn(...args: (string | number | boolean | unknown)[]): string {
 
 export function cnl(...args: (string | number | boolean | unknown)[]): string {
 	return args.filter(Boolean).join("\n");
+}
+
+export function cnc(
+	separator: string,
+	...args: (string | number | boolean | unknown)[]
+): string {
+	return args.filter(Boolean).join(separator);
+}
+
+export function fileName(ctx: CommandContext, type?: ImageMeta["type"]) {
+	return cnc(".", ctx.command.name, type ?? "png");
 }

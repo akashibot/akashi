@@ -7,7 +7,7 @@ import {
 	Embed,
 } from "seyfert";
 import { md } from "mdbox";
-import { spacesAndCommasRegex } from "@/lib/constants/regexes";
+import { separationRegex } from "@/lib/constants/regexes";
 
 const translateOptions = {
 	text: createStringOption({
@@ -32,7 +32,11 @@ const translateOptions = {
 export default class UtilTranslateCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof translateOptions>) {
 		const { text, to, from } = ctx.options;
-		const formattedTarget = to.trim().split(spacesAndCommasRegex);
+		const formattedTarget = to
+			.trim()
+			.toLowerCase()
+			.replace(`"`, "")
+			.split(separationRegex);
 
 		const { translations, detectedLanguage, langs } =
 			await ctx.services.illumi.util<TranslationResult>("/translate", {

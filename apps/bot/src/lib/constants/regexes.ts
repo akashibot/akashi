@@ -26,19 +26,14 @@ export const httpsImageRegex = createRegExp(
 );
 
 /**
+ * \/.*[\s,;:.].*\/
+ */
+export const separationRegex = /.*[\s,;:.-_].*/g;
+
+/**
  * /(?:\\s|,)+/g
  */
 export const spacesAndCommasRegex = createRegExp(
 	oneOrMore(whitespace.or(",")),
 	["g"],
 );
-
-/**
- * /(?:\\s|,\\.-)+/g
- */
-export const spacesAndStuffRegex = createRegExp(
-	oneOrMore(whitespace.or(",", ".", "-")),
-	["g"],
-);
-
-export const discordEmojiRegex = /<a?:.+?:(\d+)?>|\p{Extended_Pictographic}/gu;

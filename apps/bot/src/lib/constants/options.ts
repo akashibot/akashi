@@ -31,9 +31,9 @@ export async function getImageOption(
 	const cache = await ctx.services.storages.image.getItem(ctx.channelId);
 	const image =
 		ctx.options.attachment?.proxyUrl ??
-		ctx.options.url ??
+		(ctx.options.url as string | null) ??
 		ctx.options.user?.avatarURL() ??
-		cache ??
+		cache?.toString() ??
 		undefined;
 
 	if (!image) throw new Error("No image found");

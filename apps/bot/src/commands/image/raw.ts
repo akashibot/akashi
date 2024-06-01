@@ -5,11 +5,12 @@ import {
 	AttachmentBuilder,
 	Options,
 	createStringOption,
+	Embed,
 } from "seyfert";
 import { getImageOption, imageCommandOptions } from "@/lib/constants/options";
 import { imageMeta } from "image-meta";
-import { Stopwatch } from "@sapphire/stopwatch";
 import { spacesAndCommasRegex } from "@/lib/constants/regexes";
+import { cnc, fileName } from "@/lib/utils/format";
 
 export const imageRawCommandOptions = {
 	operation: createStringOption({
@@ -29,28 +30,29 @@ export const imageRawCommandOptions = {
 export default class RawImageCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof imageRawCommandOptions>) {
 		const source = await getImageOption(ctx);
-		const stopwatch = new Stopwatch();
-		const operation = ctx.options.operation
-			.split(spacesAndCommasRegex)
-			.join(",");
+		const { operation } = ctx.options;
+		const rawOperation = operation.split(spacesAndCommasRegex);
+
+		console.log(operation, rawOperation);
 
 		const image = await ctx.services.ipx<ArrayBuffer>(
-			`/${operation}/${source}`,
-			{
-				onResponse: () => {
-					stopwatch.stop();
-				},
-			},
+			`/${rawOperation.join(",")}/${source}`,
 		);
 
-		const metadata = imageMeta(Buffer.from(image));
+		const { type } = imageMeta(new Uint8Array(image));
 
 		const response = new AttachmentBuilder()
 			.setFile("buffer", Buffer.from(image))
-			.setName(`${this.name}.${metadata.type ?? "png"}`);
+			.setName(fileName(ctx, type));
+
+		const embed = new Embed()
+			.setTitle("Raw Image")
+			.setDescription(cnc(" ~> ", ...rawOperation))
+			.setImage(`attachment://${fileName(ctx, type)}`)
+			.setFooter({ text: cnc("/", "image", type ?? "png") });
 
 		return ctx.editOrReply({
-			content: `Took ${stopwatch.toString()} ⌛ | Want to make your own images? Read [this](https://github.com/akashibot/ipx?tab=readme-ov-file#modifiers)`,
+			embeds: [embed],
 			files: [response],
 			flags: 4,
 		});

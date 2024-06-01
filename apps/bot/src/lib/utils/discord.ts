@@ -1,13 +1,5 @@
-import {
-	CommandContext,
-	Message,
-	OptionsRecord,
-	UsingClient,
-	WebhookMessage,
-} from "seyfert";
-import { SendResolverProps, When } from "seyfert/lib/common";
-import { APIInteractionResponseCallbackData } from "seyfert/lib/types";
-import { discordEmojiRegex, spacesAndStuffRegex } from "../constants/regexes";
+import { Message, UsingClient } from "seyfert";
+import { separationRegex } from "../constants/regexes";
 import { getGuildOrCreate } from "@akashi/db";
 import { custom } from "../structures/services/storage";
 import { guildOwsChannel } from "../constants/storage-keys";
@@ -40,51 +32,19 @@ export async function getMessageMedia(
 	return getMediaUrl(message);
 }
 
-export async function send<T extends OptionsRecord>(
-	ctx: CommandContext<T>,
-	body: Omit<
-		APIInteractionResponseCallbackData,
-		"embeds" | "components" | "poll"
-	> &
-		SendResolverProps & { variant?: "ok" | "err" | "info" },
-): Promise<
-	// biome-ignore lint/suspicious/noConfusingVoidType: eh
-	When<false, WebhookMessage | Message, void | WebhookMessage | Message>
-> {
-	const match = {
-		ok: "✅",
-		err: "❌",
-		info: "U+2139",
-		default: "",
-	};
-
-	return ctx.editOrReply({
-		content: `${match[body.variant ?? "default"]} ${body.content}`,
-		...body,
-	});
-}
-
-export function containsDiscordEmoji(content: string): boolean {
-	return discordEmojiRegex.test(content);
-}
-
 export async function runOwsChecks(message: Message, edit = false) {
 	const owsChannel =
 		(await custom.getItem<string>(guildOwsChannel(message.guildId!))) ??
 		(await getGuildOrCreate(message.guildId!)).owsChannel;
 
 	if (owsChannel === message.channelId) {
-		const words = message.content.split(spacesAndStuffRegex);
+		const words = message.content.split(separationRegex);
 
-		if (
-			words.length !== 1 ||
-			message.content.endsWith(".") ||
-			containsDiscordEmoji(words.join(""))
-		)
+		if (words.length !== 1 || message.content.endsWith("."))
 			await message.delete();
 		else await message.react("✅");
 
-		if (edit) await message.react("✏️")
+		if (edit) await message.react("✏️");
 
 		await custom.setItem<string>(guildOwsChannel(message.guildId!), owsChannel);
 	}
