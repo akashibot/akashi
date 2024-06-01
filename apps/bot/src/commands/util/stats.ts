@@ -19,7 +19,7 @@ export default class UtilStatsCommand extends SubCommand {
 				`ArrayBuffers: ${memoryUsageStats.arrayBuffers}`,
 				"# Bot info",
 				`Uptime: ${formatUptime(Math.floor(process.uptime()))}`,
-				`Guilds: ${ctx.client.cache.guilds?.count()} (cached)`,
+				`Guilds: ${await ctx.client.cache.guilds?.count()} (cached)`,
 			),
 		});
 	}
