@@ -11,6 +11,7 @@ import { formatError } from "@/lib/utils/format";
 @Declare({
 	name: "meme",
 	description: "Meme commands parent",
+	integrationTypes: ["UserInstall", "GuildInstall"],
 })
 @AutoLoad()
 export default class MemeParent extends Command {

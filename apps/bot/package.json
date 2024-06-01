@@ -16,6 +16,7 @@
 		"@sapphire/stopwatch": "^1.5.2",
 		"c12": "^1.10.0",
 		"dotenv": "^16.4.5",
+		"fuse.js": "^7.0.0",
 		"h3": "^1.11.1",
 		"image-meta": "^0.2.0",
 		"ipx": "github:akashibot/ipx",

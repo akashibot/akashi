@@ -7,6 +7,7 @@ import {
 	createStringOption,
 	Middlewares,
 } from "seyfert";
+import Fuse from "fuse.js";
 
 const removeOptions = {
 	name: createStringOption({
@@ -20,13 +21,15 @@ const removeOptions = {
 			);
 
 			return interaction.respond(
-				tags
-					.filter((tag) => tag.name.includes(focus))
-					.map((tag) => ({
-						name: tag.name,
-						value: tag.name,
-					}))
-					.slice(0, 10),
+				focus.length === 0
+					? tags.map((t) => ({ name: t.name, value: t.name })).slice(0, 25)
+					: new Fuse(tags, { keys: ["name", "content"] })
+							.search(focus)
+							.map(({ item: tag }) => ({
+								name: tag.name,
+								value: tag.name,
+							}))
+							.slice(0, 25),
 			);
 		},
 	}),
