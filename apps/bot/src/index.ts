@@ -10,7 +10,7 @@ import {
 import { context } from "./lib/structures/context";
 import middlewares from "./middlewares";
 import { loadConfig } from "c12";
-import { UnstoreAdapter } from "./lib/cache";
+import { UnstorageAdapter } from "./lib/cache";
 import { APIEmbed } from "seyfert/lib/types";
 import { getOptions, parseContent } from "@akashi/parser";
 
@@ -46,7 +46,7 @@ const client = new Client({
 client.setServices({
 	middlewares,
 	cache: {
-		adapter: new UnstoreAdapter(),
+		adapter: new UnstorageAdapter(),
 	},
 });
 client.start().then(() => client.uploadCommands());

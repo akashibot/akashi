@@ -2,7 +2,7 @@ import { Adapter } from "seyfert";
 import { prefixStorage } from "unstorage";
 import { storage } from "./structures/services/storage";
 
-export class UnstoreAdapter implements Adapter {
+export class UnstorageAdapter implements Adapter {
 	readonly __storage = storage;
 	storage = prefixStorage<string>(this.__storage, "seyfert:values");
 	relationships = prefixStorage<string[]>(
