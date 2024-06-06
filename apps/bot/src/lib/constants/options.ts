@@ -27,13 +27,16 @@ export const imageCommandOptions = {
 
 export async function getImageOption(
 	ctx: CommandContext<typeof imageCommandOptions>,
-) {
-	const cache = await ctx.services.storages.image.getItem(ctx.channelId);
+): Promise<string> {
+	const { options, channelId, services } = ctx;
+	const { attachment, url, user } = options;
+
+	const cache = await services.storages.image.getItem(channelId);
 	const image =
-		ctx.options.attachment?.proxyUrl ??
-		(ctx.options.url as string | null) ??
-		ctx.options.user?.avatarURL() ??
-		cache?.toString() ??
+		attachment?.proxyUrl ||
+		(url as string | undefined) ||
+		(user?.avatarURL() ?? undefined) ||
+		cache?.toString() ||
 		undefined;
 
 	if (!image) throw new Error("No image found");
