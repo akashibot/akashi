@@ -5,21 +5,25 @@ import {
 	type ParseClient,
 	config,
 	type RuntimeConfig,
+	CommandOption,
 } from "seyfert";
 import { context } from "./lib/structures/context";
 import middlewares from "./middlewares";
-import { YunaParser } from "yunaforseyfert";
 import { loadConfig } from "c12";
 import { UnstoreAdapter } from "./lib/cache";
 import { APIEmbed } from "seyfert/lib/types";
+import { getOptions, parseContent } from "@akashi/parser";
 
 const client = new Client({
 	context,
 	commands: {
 		prefix: (msg) => ["-", "*", `<@${msg.client.botId}>`, "akashi"],
-		argsParser: YunaParser({
-			logResult: process.env.NODE_ENV === "development",
-		}),
+		// argsParser: YunaParser({
+		// 	logResult: process.env.NODE_ENV === "development",
+		// }),
+		argsParser: (content, cmd) => {
+			return getOptions(parseContent(content), cmd.options as CommandOption[]);
+		},
 		defaults: {
 			props: {
 				requiredTokens: 0,

@@ -9,6 +9,7 @@
 		"bot": "pnpm --filter bot",
 		"ipx": "pnpm --filter ipx",
 		"db": "pnpm --filter @akashi/db",
+		"parser": "pnpm --filter @akashi/parser",
 		"illumi": "pnpm --filter illumi",
 		"sato": "pnpm --filter sato",
 		"vault": "pnpm --filter vault"
