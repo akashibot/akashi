@@ -9,6 +9,7 @@ import {
 	Groups,
 } from "seyfert";
 import { formatError } from "@/lib/utils/format";
+import { MessageFlags } from "seyfert/lib/types";
 
 @Declare({
 	name: "admin",
@@ -44,7 +45,7 @@ export default class AdminParent extends Command {
 	async onMiddlewaresError(ctx: CommandContext, error: string) {
 		return ctx.editOrReply({
 			content: error,
-			flags: 4,
+			flags: MessageFlags.Ephemeral | MessageFlags.SuppressEmbeds,
 		});
 	}
 }

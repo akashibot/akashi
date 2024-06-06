@@ -6,11 +6,13 @@ import {
 	Options,
 	createStringOption,
 	Embed,
+	Middlewares,
 } from "seyfert";
 import { getImageOption, imageCommandOptions } from "@/lib/constants/options";
 import { imageMeta } from "image-meta";
 import { spacesAndCommasRegex } from "@/lib/constants/regexes";
 import { cnc, fileName } from "@/lib/utils/format";
+import { MessageFlags } from "seyfert/lib/types";
 
 export const imageRawCommandOptions = {
 	operation: createStringOption({
@@ -25,8 +27,12 @@ export const imageRawCommandOptions = {
 	name: "raw",
 	description: "Raw process an image",
 	aliases: ["pipe", "custom"],
+	props: {
+		requiredTokens: 10,
+	},
 })
 @Options(imageRawCommandOptions)
+@Middlewares(["RequiredTokens"])
 export default class RawImageCommand extends SubCommand {
 	public async run(ctx: CommandContext<typeof imageRawCommandOptions>) {
 		const source = await getImageOption(ctx);
@@ -54,7 +60,7 @@ export default class RawImageCommand extends SubCommand {
 		return ctx.editOrReply({
 			embeds: [embed],
 			files: [response],
-			flags: 4,
+			flags: MessageFlags.SuppressEmbeds,
 		});
 	}
 }

@@ -5,16 +5,15 @@ import {
 	AutoLoad,
 	CommandContext,
 	OnOptionsReturnObject,
-	Middlewares,
 } from "seyfert";
 import { formatError } from "@/lib/utils/format";
+import { MessageFlags } from "seyfert/lib/types";
 
 @Declare({
 	name: "image",
 	description: "Image commands parent",
 	aliases: ["img", "i"],
 })
-@Middlewares(["Tokens"])
 @AutoLoad()
 export default class ImageParent extends Command {
 	async onRunError(ctx: CommandContext, error: unknown) {
@@ -39,7 +38,7 @@ export default class ImageParent extends Command {
 	async onMiddlewaresError(ctx: CommandContext, error: string) {
 		return ctx.editOrReply({
 			content: error,
-			flags: 4,
+			flags: MessageFlags.Ephemeral | MessageFlags.SuppressEmbeds,
 		});
 	}
 }

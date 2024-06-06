@@ -1,10 +1,10 @@
-import { adminMiddleware } from "./admin.middleware";
-import { tagOwnerMiddleware } from "./tag-owner.middleware";
-import { tagUsageMiddleware } from "./tag-usage.middleware";
-import { tokensMiddleware } from "./tokens.middleware";
+import { adminMiddleware } from "./misc/admin";
+import { tagOwnerMiddleware } from "./tags/tag-owner";
+import { tagUsageMiddleware } from "./tags/tag-uses";
+import { requiredTokensMiddleware } from "./tokens/required-tokens";
 
 export default {
-	Tokens: tokensMiddleware,
+	RequiredTokens: requiredTokensMiddleware,
 	Admin: adminMiddleware,
 	TagOwner: tagOwnerMiddleware,
 	TagUsage: tagUsageMiddleware,

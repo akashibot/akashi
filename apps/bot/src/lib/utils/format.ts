@@ -26,9 +26,13 @@ export function formatUptime(seconds: number): string {
 }
 
 export function formatError(error: unknown, message?: string) {
-	return `❌ ${
-		error instanceof Error ? error.message : `${message ?? "Error"}: ${error}`
-	}`;
+	const errorMessage =
+		error instanceof Error ? error.message : (error as string);
+
+	if (errorMessage.includes("415")) return cn("❌", "Unsupported file type");
+	if (errorMessage.includes("429")) return cn("❌", "Rate limited");
+
+	return cn("❌", `${message ?? "Error"}:`, errorMessage);
 }
 
 export function cn(...args: (string | number | boolean | unknown)[]): string {

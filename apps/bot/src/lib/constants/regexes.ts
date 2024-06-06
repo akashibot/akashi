@@ -8,7 +8,7 @@ import {
 } from "magic-regexp";
 
 /**
- * /(https?:\\/\\/)?
+ * `/(https?:\\/\\/)?`
  */
 export const httpsRegex = createRegExp(
 	maybe(exactly("http", maybe("s"), "://").grouped()),
@@ -16,7 +16,7 @@ export const httpsRegex = createRegExp(
 );
 
 /**
- * /(https?:\\/\\/)?.*\\.((?:(?:png|gif)|jpg)|jpeg)/
+ * `/(https?:\\/\\/)?.*\\.((?:(?:png|gif)|jpg)|jpeg)/`
  */
 export const httpsImageRegex = createRegExp(
 	maybe(exactly("http", maybe("s"), "://").grouped()),
@@ -26,7 +26,7 @@ export const httpsImageRegex = createRegExp(
 );
 
 /**
- * \/.*[\s,;:.].*\/
+ * `\/.*[\s,;:.].*\/`
  */
 export const separationRegex = /.*[\s,;:.-_].*/g;
 
@@ -37,3 +37,8 @@ export const spacesAndCommasRegex = createRegExp(
 	oneOrMore(whitespace.or(",")),
 	["g"],
 );
+
+/**
+ * `/\b\d+x\d+\b/`
+ */
+export const sizeRegex = /\b\d+x\d+\b/g;

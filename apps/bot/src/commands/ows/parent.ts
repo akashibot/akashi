@@ -8,6 +8,7 @@ import {
 	type PermissionStrings,
 } from "seyfert";
 import { cn, formatError } from "@/lib/utils/format";
+import { MessageFlags } from "seyfert/lib/types";
 
 @Declare({
 	name: "ows",
@@ -39,7 +40,7 @@ export default class ConfigParent extends Command {
 	onMiddlewaresError(ctx: CommandContext, error: string) {
 		return ctx.editOrReply({
 			content: error,
-			flags: 4,
+			flags: MessageFlags.Ephemeral | MessageFlags.SuppressEmbeds,
 		});
 	}
 

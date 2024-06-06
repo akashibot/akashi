@@ -16,14 +16,20 @@ import { APIEmbed } from "seyfert/lib/types";
 const client = new Client({
 	context,
 	commands: {
-		prefix: () => ["*"],
+		prefix: (msg) => ["-", "*", `<@${msg.client.botId}>`, "akashi"],
 		argsParser: YunaParser({
 			logResult: process.env.NODE_ENV === "development",
 		}),
+		defaults: {
+			props: {
+				requiredTokens: 0,
+			},
+		},
 	},
 	allowedMentions: {
 		parse: [],
 	},
+
 	async getRC() {
 		const { config: seyfertConfig } = await loadConfig({
 			configFile: "../seyfert.config.ts",
@@ -46,6 +52,9 @@ declare module "seyfert" {
 	interface ExtendContext extends ReturnType<typeof context> {}
 	interface RegisteredMiddlewares
 		extends ParseMiddlewares<typeof middlewares> {}
+	interface ExtraProps {
+		requiredTokens?: number;
+	}
 }
 
 declare module "tagscript" {
