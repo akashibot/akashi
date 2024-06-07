@@ -64,7 +64,7 @@ export function getOptions(
 		}
 	}
 
-	console.log(opts);
+	// console.log(opts);
 
 	return opts;
 }

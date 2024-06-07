@@ -13,7 +13,7 @@ import { BaseParser, IParser, Context, SafeObjectTransformer } from "tagscript";
  */
 export class AFetchParser extends BaseParser implements IParser {
 	public constructor() {
-		super(["afetch", "fetch", "http"], true, true);
+		super(["afetch", "fetch", "http"], false, true);
 	}
 
 	public async parse(ctx: Context) {
@@ -21,7 +21,7 @@ export class AFetchParser extends BaseParser implements IParser {
 			responseType: "json",
 		});
 
-		ctx.response.variables[ctx.tag.parameter! ?? "data"] =
+		ctx.response.variables[ctx.tag.parameter ?? "data"] =
 			new SafeObjectTransformer(data);
 
 		return "";

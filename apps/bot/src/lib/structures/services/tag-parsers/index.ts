@@ -11,6 +11,7 @@ import {
 	LooseVarsParser,
 	DefineParser,
 	StringFormatParser,
+	BreakParser,
 } from "tagscript";
 
 import { AFetchParser } from "./parsers/afetch";
@@ -35,5 +36,6 @@ export const interpreter = new Interpreter(
 	new IPXParser(),
 	new EmbedParser(),
 	new StringFormatParser(),
+	new BreakParser(),
 	new StrictVarsParser(), // Mandatory for custom vars yk
 );

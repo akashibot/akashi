@@ -30,7 +30,8 @@ export function formatError(error: unknown, message?: string) {
 		error instanceof Error ? error.message : (error as string);
 
 	if (errorMessage.includes("415")) return cn("❌", "Unsupported file type");
-	if (errorMessage.includes("429")) return cn("❌", "Rate limited");
+	if (errorMessage.toLowerCase().includes("fetch failed"))
+		return cn("❌", "Service is down/off");
 
 	return cn("❌", `${message ?? "Error"}:`, errorMessage);
 }
