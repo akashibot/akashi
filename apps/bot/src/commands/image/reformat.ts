@@ -1,13 +1,13 @@
-import {
-	type CommandContext,
-	Declare,
-	SubCommand,
-	AttachmentBuilder,
-	Options,
-	createStringOption,
-} from "seyfert";
 import { getImageOption, imageCommandOptions } from "@/lib/constants/options";
 import { cn } from "@/lib/utils/format";
+import {
+	AttachmentBuilder,
+	type CommandContext,
+	Declare,
+	Options,
+	SubCommand,
+	createStringOption,
+} from "seyfert";
 
 const reformatImageOptions = {
 	format: createStringOption({

@@ -1,3 +1,5 @@
+import { cn } from "@/lib/utils/format";
+import { createTag } from "@akashi/db";
 import {
 	type CommandContext,
 	Declare,
@@ -6,8 +8,6 @@ import {
 	createBooleanOption,
 	createStringOption,
 } from "seyfert";
-import { createTag } from "@akashi/db";
-import { cn } from "@/lib/utils/format";
 
 const createOptions = {
 	name: createStringOption({

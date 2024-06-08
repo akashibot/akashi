@@ -1,6 +1,6 @@
-import { type CommandContext, Declare, SubCommand } from "seyfert";
-import { getGuildOrCreate, updateGuildOrCreate } from "@akashi/db";
 import { guildOwsChannel } from "@/lib/constants/storage-keys";
+import { getGuildOrCreate, updateGuildOrCreate } from "@akashi/db";
+import { type CommandContext, Declare, SubCommand } from "seyfert";
 
 @Declare({
 	name: "remove",

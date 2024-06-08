@@ -1,4 +1,4 @@
-import { translate, langs } from "microsoft-translate-api";
+import { langs, translate } from "microsoft-translate-api";
 
 interface TranslateBody {
 	text: string;

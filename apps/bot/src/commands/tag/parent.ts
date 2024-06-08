@@ -1,3 +1,4 @@
+import { formatError } from "@/lib/utils/format";
 import { md } from "mdbox";
 import {
 	AutoLoad,
@@ -6,7 +7,6 @@ import {
 	Declare,
 	OnOptionsReturnObject,
 } from "seyfert";
-import { formatError } from "@/lib/utils/format";
 import { MessageFlags } from "seyfert/lib/types";
 
 @Declare({

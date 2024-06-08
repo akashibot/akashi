@@ -1,12 +1,12 @@
+import { getImageOption, imageCommandOptions } from "@/lib/constants/options";
 import {
+	AttachmentBuilder,
 	type CommandContext,
 	Declare,
-	SubCommand,
-	AttachmentBuilder,
-	Options,
 	Middlewares,
+	Options,
+	SubCommand,
 } from "seyfert";
-import { getImageOption, imageCommandOptions } from "@/lib/constants/options";
 
 @Declare({
 	name: "invert",

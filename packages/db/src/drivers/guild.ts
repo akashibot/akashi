@@ -1,6 +1,6 @@
 import { eq } from "drizzle-orm";
-import { db, schema } from "../";
 import { PgUpdateSetSource } from "drizzle-orm/pg-core";
+import { db, schema } from "../";
 
 export async function getGuild(guildId: string) {
 	const guild = await db.query.guilds

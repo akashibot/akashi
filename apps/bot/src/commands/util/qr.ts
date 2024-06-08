@@ -1,11 +1,11 @@
 import {
+	AttachmentBuilder,
 	type CommandContext,
 	Declare,
-	SubCommand,
 	Options,
-	createStringOption,
 	RequestMethod,
-	AttachmentBuilder,
+	SubCommand,
+	createStringOption,
 } from "seyfert";
 
 const qrOptions = {

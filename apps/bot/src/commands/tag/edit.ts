@@ -1,15 +1,15 @@
 import { cn } from "@/lib/utils/format";
 import { createTag, getGuildOrThrow, getTag, updateTag } from "@akashi/db";
+import Fuse from "fuse.js";
 import {
 	type CommandContext,
 	Declare,
+	Middlewares,
 	Options,
 	SubCommand,
-	createStringOption,
-	Middlewares,
 	createBooleanOption,
+	createStringOption,
 } from "seyfert";
-import Fuse from "fuse.js";
 
 const editOptions = {
 	name: createStringOption({

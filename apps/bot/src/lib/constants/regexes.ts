@@ -1,10 +1,10 @@
 import {
-	createRegExp,
-	maybe,
-	exactly,
 	char,
-	whitespace,
+	createRegExp,
+	exactly,
+	maybe,
 	oneOrMore,
+	whitespace,
 } from "magic-regexp";
 
 /**

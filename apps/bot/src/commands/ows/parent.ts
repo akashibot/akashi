@@ -1,13 +1,13 @@
+import { cn, formatError } from "@/lib/utils/format";
 import { md } from "mdbox";
 import {
-	Declare,
-	Command,
 	AutoLoad,
+	Command,
 	type CommandContext,
+	Declare,
 	type OnOptionsReturnObject,
 	type PermissionStrings,
 } from "seyfert";
-import { cn, formatError } from "@/lib/utils/format";
 import { MessageFlags } from "seyfert/lib/types";
 
 @Declare({

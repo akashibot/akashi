@@ -1,13 +1,13 @@
 import { getGuildOrThrow, removeTag } from "@akashi/db";
+import Fuse from "fuse.js";
 import {
 	type CommandContext,
 	Declare,
+	Middlewares,
 	Options,
 	SubCommand,
 	createStringOption,
-	Middlewares,
 } from "seyfert";
-import Fuse from "fuse.js";
 
 const removeOptions = {
 	name: createStringOption({

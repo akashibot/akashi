@@ -1,8 +1,8 @@
 import "dotenv/config";
 import { drizzle } from "drizzle-orm/node-postgres";
-import { schema } from "./tables/schema.ts";
 import { Pool } from "pg";
 import { databaseUrl } from "./config.ts";
+import { schema } from "./tables/schema.ts";
 
 export const client = new Pool({
 	connectionString: databaseUrl,

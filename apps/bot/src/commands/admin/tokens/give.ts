@@ -2,11 +2,11 @@ import { getUserOrCreate, updateUserOrCreate } from "@akashi/db";
 import {
 	type CommandContext,
 	Declare,
-	SubCommand,
-	Options,
-	createUserOption,
-	createNumberOption,
 	Group,
+	Options,
+	SubCommand,
+	createNumberOption,
+	createUserOption,
 } from "seyfert";
 
 const adminTokensGiveOptions = {

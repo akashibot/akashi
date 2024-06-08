@@ -1,8 +1,8 @@
 import {
-	Parser,
 	Lexer,
-	PrefixedStrategy,
+	Parser,
 	ParserResult,
+	PrefixedStrategy,
 } from "@sapphire/lexure";
 
 type CommandOption = {

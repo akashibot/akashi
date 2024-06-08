@@ -1,6 +1,6 @@
+import { and, eq } from "drizzle-orm";
 import { PgUpdateSetSource } from "drizzle-orm/pg-core";
 import { db, drizzle, getGuildOrCreate, getUserOrCreate, schema } from "../";
-import { and, eq } from "drizzle-orm";
 
 export async function getTag(name: string, guildId: string) {
 	return db.query.tags

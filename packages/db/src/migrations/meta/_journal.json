@@ -1,34 +1,34 @@
 {
-  "version": "6",
-  "dialect": "postgresql",
-  "entries": [
-    {
-      "idx": 0,
-      "version": "6",
-      "when": 1716993609626,
-      "tag": "0000_odd_thor_girl",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1717016712154,
-      "tag": "0001_thankful_blur",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "6",
-      "when": 1717098144326,
-      "tag": "0002_gifted_avengers",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "6",
-      "when": 1717099015226,
-      "tag": "0003_flawless_northstar",
-      "breakpoints": true
-    }
-  ]
+	"version": "6",
+	"dialect": "postgresql",
+	"entries": [
+		{
+			"idx": 0,
+			"version": "6",
+			"when": 1716993609626,
+			"tag": "0000_odd_thor_girl",
+			"breakpoints": true
+		},
+		{
+			"idx": 1,
+			"version": "6",
+			"when": 1717016712154,
+			"tag": "0001_thankful_blur",
+			"breakpoints": true
+		},
+		{
+			"idx": 2,
+			"version": "6",
+			"when": 1717098144326,
+			"tag": "0002_gifted_avengers",
+			"breakpoints": true
+		},
+		{
+			"idx": 3,
+			"version": "6",
+			"when": 1717099015226,
+			"tag": "0003_flawless_northstar",
+			"breakpoints": true
+		}
+	]
 }

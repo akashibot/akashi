@@ -1,5 +1,5 @@
 import { ofetch } from "ofetch";
-import { BaseParser, IParser, Context, SafeObjectTransformer } from "tagscript";
+import { BaseParser, Context, IParser, SafeObjectTransformer } from "tagscript";
 
 /**
  * Custom parser to fetch data from a URL.

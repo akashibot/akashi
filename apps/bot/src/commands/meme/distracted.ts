@@ -1,12 +1,12 @@
+import { Stopwatch } from "@sapphire/stopwatch";
 import {
+	AttachmentBuilder,
 	type CommandContext,
 	Declare,
-	SubCommand,
-	AttachmentBuilder,
 	Options,
+	SubCommand,
 	createAttachmentOption,
 } from "seyfert";
-import { Stopwatch } from "@sapphire/stopwatch";
 
 const distractedOptions = {
 	boyfriend: createAttachmentOption({

@@ -1,6 +1,6 @@
 import { relations } from "drizzle-orm";
-import { tags } from "./tags";
 import { guilds } from "./guilds";
+import { tags } from "./tags";
 import { users } from "./users";
 
 export const tagsRelations = relations(tags, (helpers) => ({

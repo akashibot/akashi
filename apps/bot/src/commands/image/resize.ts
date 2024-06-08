@@ -1,16 +1,16 @@
-import {
-	type CommandContext,
-	Declare,
-	SubCommand,
-	AttachmentBuilder,
-	Options,
-	Middlewares,
-	createNumberOption,
-	createStringOption,
-	createBooleanOption,
-} from "seyfert";
 import { getImageOption, imageCommandOptions } from "@/lib/constants/options";
 import { sizeRegex } from "@/lib/constants/regexes";
+import {
+	AttachmentBuilder,
+	type CommandContext,
+	Declare,
+	Middlewares,
+	Options,
+	SubCommand,
+	createBooleanOption,
+	createNumberOption,
+	createStringOption,
+} from "seyfert";
 
 const resizeOptions = {
 	enlarge: createBooleanOption({

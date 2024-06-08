@@ -1,14 +1,14 @@
+import { guildOwsChannel } from "@/lib/constants/storage-keys";
+import { cn } from "@/lib/utils/format";
+import { getGuildOrCreate, updateGuildOrCreate } from "@akashi/db";
 import {
 	type CommandContext,
 	Declare,
-	SubCommand,
 	Options,
-	createChannelOption,
+	SubCommand,
 	TextGuildChannel,
+	createChannelOption,
 } from "seyfert";
-import { getGuildOrCreate, updateGuildOrCreate } from "@akashi/db";
-import { cn } from "@/lib/utils/format";
-import { guildOwsChannel } from "@/lib/constants/storage-keys";
 
 const configOwsSetOptions = {
 	channel: createChannelOption({

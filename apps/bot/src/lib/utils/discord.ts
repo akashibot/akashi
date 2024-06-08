@@ -1,8 +1,8 @@
+import { getGuildOrCreate } from "@akashi/db";
 import { Message, UsingClient } from "seyfert";
 import { separationRegex } from "../constants/regexes";
-import { getGuildOrCreate } from "@akashi/db";
-import { custom } from "../structures/services/storage";
 import { guildOwsChannel } from "../constants/storage-keys";
+import { custom } from "../structures/services/storage";
 
 export function getMediaUrl(message: Message): string | undefined {
 	if (message.attachments[0]?.proxyUrl) {

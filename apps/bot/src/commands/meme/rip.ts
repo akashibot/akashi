@@ -1,12 +1,12 @@
-import {
-	type CommandContext,
-	Declare,
-	SubCommand,
-	AttachmentBuilder,
-	Options,
-} from "seyfert";
 import { getImageOption, imageCommandOptions } from "@/lib/constants/options";
 import { Stopwatch } from "@sapphire/stopwatch";
+import {
+	AttachmentBuilder,
+	type CommandContext,
+	Declare,
+	Options,
+	SubCommand,
+} from "seyfert";
 
 @Declare({
 	name: "rip",

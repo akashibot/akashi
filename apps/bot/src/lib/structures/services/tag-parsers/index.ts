@@ -1,24 +1,24 @@
 import {
-	Interpreter,
-	RandomParser,
-	RangeParser,
+	BreakParser,
+	DefineParser,
 	FiftyFiftyParser,
 	IfStatementParser,
-	SliceParser,
-	JSONVarParser,
 	IncludesParser,
-	StrictVarsParser,
+	Interpreter,
+	JSONVarParser,
 	LooseVarsParser,
-	DefineParser,
+	RandomParser,
+	RangeParser,
+	SliceParser,
+	StrictVarsParser,
 	StringFormatParser,
-	BreakParser,
 } from "tagscript";
 
 import { AFetchParser } from "./parsers/afetch";
-import { NoteParser } from "./parsers/note";
 import { AttachParser } from "./parsers/attach";
-import { IPXParser } from "./parsers/ipx";
 import { EmbedParser } from "./parsers/embed";
+import { IPXParser } from "./parsers/ipx";
+import { NoteParser } from "./parsers/note";
 
 export const interpreter = new Interpreter(
 	new RandomParser(),

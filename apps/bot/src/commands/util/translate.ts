@@ -1,13 +1,13 @@
+import { separationRegex } from "@/lib/constants/regexes";
+import { md } from "mdbox";
 import {
 	type CommandContext,
 	Declare,
-	SubCommand,
-	Options,
-	createStringOption,
 	Embed,
+	Options,
+	SubCommand,
+	createStringOption,
 } from "seyfert";
-import { md } from "mdbox";
-import { separationRegex } from "@/lib/constants/regexes";
 
 const translateOptions = {
 	text: createStringOption({

@@ -1,18 +1,18 @@
 import "dotenv/config";
+import { getOptions, parseContent } from "@akashi/parser";
+import { loadConfig } from "c12";
 import {
 	Client,
-	type ParseMiddlewares,
-	type ParseClient,
-	config,
-	type RuntimeConfig,
 	CommandOption,
+	type ParseClient,
+	type ParseMiddlewares,
+	type RuntimeConfig,
+	config,
 } from "seyfert";
+import { APIEmbed } from "seyfert/lib/types";
+import { UnstorageAdapter } from "./lib/cache";
 import { context } from "./lib/structures/context";
 import middlewares from "./middlewares";
-import { loadConfig } from "c12";
-import { UnstorageAdapter } from "./lib/cache";
-import { APIEmbed } from "seyfert/lib/types";
-import { getOptions, parseContent } from "@akashi/parser";
 
 const client = new Client({
 	context,

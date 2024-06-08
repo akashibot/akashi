@@ -1,4 +1,4 @@
-import { BaseParser, split, type Context, type IParser } from "tagscript";
+import { BaseParser, type Context, type IParser, split } from "tagscript";
 
 /**
  * This parser allows sending files along with message using file url.

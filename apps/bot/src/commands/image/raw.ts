@@ -1,17 +1,17 @@
-import {
-	type CommandContext,
-	Declare,
-	SubCommand,
-	AttachmentBuilder,
-	Options,
-	createStringOption,
-	Embed,
-	Middlewares,
-} from "seyfert";
 import { getImageOption, imageCommandOptions } from "@/lib/constants/options";
-import { imageMeta } from "image-meta";
 import { spacesAndCommasRegex } from "@/lib/constants/regexes";
 import { cnc, fileName } from "@/lib/utils/format";
+import { imageMeta } from "image-meta";
+import {
+	AttachmentBuilder,
+	type CommandContext,
+	Declare,
+	Embed,
+	Middlewares,
+	Options,
+	SubCommand,
+	createStringOption,
+} from "seyfert";
 import { MessageFlags } from "seyfert/lib/types";
 
 export const imageRawCommandOptions = {

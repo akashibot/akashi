@@ -1,17 +1,17 @@
-import {
-	type CommandContext,
-	Declare,
-	Options,
-	SubCommand,
-	createStringOption,
-	createBooleanOption,
-	AttachmentBuilder,
-	Middlewares,
-} from "seyfert";
-import { md } from "mdbox";
-import { IntegerTransformer, StringTransformer } from "tagscript";
 import { getGuildOrThrow, getTagOrThrow } from "@akashi/db";
 import Fuse from "fuse.js";
+import { md } from "mdbox";
+import {
+	AttachmentBuilder,
+	type CommandContext,
+	Declare,
+	Middlewares,
+	Options,
+	SubCommand,
+	createBooleanOption,
+	createStringOption,
+} from "seyfert";
+import { IntegerTransformer, StringTransformer } from "tagscript";
 
 const getOptions = {
 	name: createStringOption({
