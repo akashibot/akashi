@@ -1,1 +1,0 @@
-ALTER TABLE "tags" ALTER COLUMN "guildId" SET NOT NULL;
