@@ -1,2 +1,0 @@
-# 📦 Vault
-## A cache proxy

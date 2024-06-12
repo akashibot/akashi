@@ -87,18 +87,12 @@ importers:
 
   apps/illumi:
     dependencies:
-      microsoft-translate-api:
-        specifier: github:akashibot/microsoft-translate-api
-        version: https://codeload.github.com/akashibot/microsoft-translate-api/tar.gz/71a5256a9f82877a58fb3b8febb4a8cddd3591e8
       pkg-types:
         specifier: ^1.1.1
         version: 1.1.1
       sharp:
         specifier: ^0.33.3
         version: 0.33.4
-      uqr:
-        specifier: ^0.1.2
-        version: 0.1.2
     devDependencies:
       '@akashi/typescript-config':
         specifier: workspace:*
@@ -2690,10 +2684,6 @@ packages:
   micromatch@4.0.7:
     resolution: {integrity: sha512-LPP/3KorzCwBxfeUuZmaR6bG2kdeHSbe0P2tY3FLRU4vYrjYz5hI4QZwV0njUx3jeuKe67YukQ1LSPZBKDqO/Q==}
     engines: {node: '>=8.6'}
-
-  microsoft-translate-api@https://codeload.github.com/akashibot/microsoft-translate-api/tar.gz/71a5256a9f82877a58fb3b8febb4a8cddd3591e8:
-    resolution: {tarball: https://codeload.github.com/akashibot/microsoft-translate-api/tar.gz/71a5256a9f82877a58fb3b8febb4a8cddd3591e8}
-    version: 1.0.0
 
   mime@1.6.0:
     resolution: {integrity: sha512-x0Vn8spI+wuJ1O6S7gnbaQg8Pxh4NNHb7KSINmEWKiPE4RKOplvijn+NkmYmmRgP68mc70j2EbeTFRsrswaQeg==}
@@ -6175,8 +6165,6 @@ snapshots:
     dependencies:
       braces: 3.0.3
       picomatch: 2.3.1
-
-  microsoft-translate-api@https://codeload.github.com/akashibot/microsoft-translate-api/tar.gz/71a5256a9f82877a58fb3b8febb4a8cddd3591e8: {}
 
   mime@1.6.0: {}
 

@@ -18,9 +18,7 @@
 		"tsup": "^8.0.2"
 	},
 	"dependencies": {
-		"microsoft-translate-api": "github:akashibot/microsoft-translate-api",
 		"pkg-types": "^1.1.1",
-		"sharp": "^0.33.3",
-		"uqr": "^0.1.2"
+		"sharp": "^0.33.3"
 	}
 }
