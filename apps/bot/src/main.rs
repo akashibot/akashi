@@ -1,4 +1,4 @@
-#![warn(clippy::str_to_string)]
+#![deny(clippy::all)]
 
 use poise::serenity_prelude::{self as serenity, UserId};
 use std::{
@@ -30,7 +30,8 @@ async fn on_error(error: poise::FrameworkError<'_, Data, Error>) {
     match error {
         poise::FrameworkError::Setup { error, .. } => panic!("Failed to start bot: {:?}", error),
         poise::FrameworkError::Command { error, ctx, .. } => {
-            ctx.say(format!("{:?}", error)).await.unwrap();
+            // remove the quotes from error
+            ctx.say(error.to_string()).await.unwrap();
             println!("Error in command `{}`: {:?}", ctx.command().name, error);
         }
         error => {
@@ -41,7 +42,7 @@ async fn on_error(error: poise::FrameworkError<'_, Data, Error>) {
     }
 }
 
-#[tokio::main(flavor = "current_thread")]
+#[tokio::main(flavor = "multi_thread")]
 async fn main() {
     let _ = dotenvy::dotenv();
 
@@ -56,6 +57,7 @@ async fn main() {
 
             // Image commands
             commands::image::invert::invert(),
+            commands::image::resize::resize()
         ],
         prefix_options: poise::PrefixFrameworkOptions {
             prefix: Some(",".into()),
@@ -65,6 +67,7 @@ async fn main() {
             additional_prefixes: vec![
                 poise::Prefix::Literal("akashi"),
             ],
+            mention_as_prefix: true,
             ..Default::default()
         },
         // The global error handler for all error cases that may occur
