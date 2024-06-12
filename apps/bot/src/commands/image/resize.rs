@@ -1,3 +1,5 @@
+use poise::serenity_prelude;
+
 use crate::{utils::load_image, Context, Error};
 
 fn parse_size(size_str: &str) -> Result<(u32, u32), String> {
@@ -18,11 +20,18 @@ fn parse_size(size_str: &str) -> Result<(u32, u32), String> {
 pub async fn resize(
     ctx: Context<'_>,
     #[description = "New image size"] size: String,
-    #[description = "Url of the image"] url: Option<String>
+    #[description = "Image url"] url: Option<String>,
+    #[description = "Image attachment"] attachment: Option<serenity_prelude::Attachment>
 ) -> Result<(), Error> {
     let (width, height) = parse_size(&size)?;
 
-    load_image(ctx, url, format!("s_{}x{}", width, height)).await?;
+    let image: String = match (url, attachment) {
+        (Some(url), _) => url,
+        (None, Some(attachment)) => attachment.proxy_url,
+        _ => return Err("No image url or attachment provided".into()),
+    };
+
+    load_image(ctx, image, format!("s_{}x{}", width, height)).await?;
 
     Ok(())
 }

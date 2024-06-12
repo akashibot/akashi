@@ -10,10 +10,10 @@ pub async fn fetch_image(url: String) -> Result<Vec<u8>, RError> {
     Ok(bytes.to_vec())
 }
 
-pub async fn load_image(ctx: Context<'_>, url: Option<String>, operation: String) -> Result<ReplyHandle, Error> {
+pub async fn load_image(ctx: Context<'_>, url: String, operation: String) -> Result<ReplyHandle, Error> {
     let start = Instant::now();
     let image_url = match url {
-        Some(url) if !url.is_empty() => format!("{}/{}/{}", ctx.data().ipx_host, operation, url),
+        url if !url.is_empty() => format!("{}/{}/{}", ctx.data().ipx_host, operation, url),
         _ => return Err("URL is required and must not be empty".into()),
     };
 
