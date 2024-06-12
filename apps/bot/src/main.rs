@@ -1,9 +1,7 @@
 #![deny(clippy::all)]
 
 use poise::serenity_prelude::{self as serenity, UserId};
-use std::{
-    collections::HashSet, env::var, sync::Arc, time::Duration
-};
+use std::{collections::HashSet, env::var, sync::Arc, time::Duration};
 
 mod commands;
 mod utils;
@@ -28,7 +26,7 @@ async fn on_error(error: poise::FrameworkError<'_, Data, Error>) {
     // They are many errors that can occur, so we only handle the ones we want to customize
     // and forward the rest to the default handler
     match error {
-        poise::FrameworkError::Setup { error, .. } => panic!("Failed to start bot: {:?}", error),
+        poise::FrameworkError::Setup { error, .. } => panic!("Failed to start bot: {error:?}"),
         poise::FrameworkError::Command { error, ctx, .. } => {
             // remove the quotes from error
             ctx.say(error.to_string()).await.unwrap();
@@ -36,7 +34,7 @@ async fn on_error(error: poise::FrameworkError<'_, Data, Error>) {
         }
         error => {
             if let Err(e) = poise::builtins::on_error(error).await {
-                println!("Error while handling error: {}", e);
+                println!("Error while handling error: {e}");
             }
         }
     }
@@ -48,25 +46,23 @@ async fn main() {
 
     let mut bot_owners = HashSet::<UserId>::new();
 
-    bot_owners.insert(1076700780175831100.into());
+    bot_owners.insert(1_076_700_780_175_831_100.into());
 
     let options = poise::FrameworkOptions {
         commands: vec![
             // Util commands
             commands::util::help::help(),
-
             // Image commands
             commands::image::invert::invert(),
-            commands::image::resize::resize()
+            commands::image::resize::resize(),
+            commands::image::quality::quality(),
         ],
         prefix_options: poise::PrefixFrameworkOptions {
             prefix: Some(",".into()),
             edit_tracker: Some(Arc::new(poise::EditTracker::for_timespan(
                 Duration::from_secs(3600),
             ))),
-            additional_prefixes: vec![
-                poise::Prefix::Literal("akashi"),
-            ],
+            additional_prefixes: vec![poise::Prefix::Literal("akashi")],
             mention_as_prefix: true,
             ..Default::default()
         },
@@ -87,7 +83,8 @@ async fn main() {
         // Every command invocation must pass this check to continue execution
         command_check: Some(|ctx| {
             Box::pin(async move {
-                if ctx.author().id == 507367752391196682 { //marcrock id
+                if ctx.author().id == 507_367_752_391_196_682 {
+                    //marcrock id
                     return Ok(false);
                 }
 
@@ -111,9 +108,9 @@ async fn main() {
     };
 
     let framework = poise::Framework::builder()
-        .setup(move |ctx, _ready, framework| {
+        .setup(move |ctx, ready, framework| {
             Box::pin(async move {
-                println!("Logged in as {}", _ready.user.name);
+                println!("Logged in as {}", ready.user.name);
                 poise::builtins::register_globally(ctx, &framework.options().commands).await?;
                 Ok(Data {
                     ipx_host: var("IPX_HOST").expect("Missing `IPX_HOST` env var."),
@@ -132,5 +129,5 @@ async fn main() {
         .framework(framework)
         .await;
 
-    client.unwrap().start().await.unwrap()
+    client.unwrap().start().await.unwrap();
 }

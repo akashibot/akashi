@@ -1,6 +1,6 @@
+use crate::{Context, Error};
 use poise::{serenity_prelude::CreateAttachment, CreateReply, ReplyHandle};
 use reqwest::Error as RError;
-use crate::{Context, Error};
 use std::time::Instant;
 
 pub async fn fetch_image(url: String) -> Result<Vec<u8>, RError> {
@@ -10,7 +10,11 @@ pub async fn fetch_image(url: String) -> Result<Vec<u8>, RError> {
     Ok(bytes.to_vec())
 }
 
-pub async fn load_image(ctx: Context<'_>, url: String, operation: String) -> Result<ReplyHandle, Error> {
+pub async fn load_image(
+    ctx: Context<'_>,
+    url: String,
+    operation: String,
+) -> Result<ReplyHandle, Error> {
     let start = Instant::now();
     let image_url = match url {
         url if !url.is_empty() => format!("{}/{}/{}", ctx.data().ipx_host, operation, url),

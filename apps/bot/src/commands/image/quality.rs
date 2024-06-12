@@ -2,15 +2,13 @@ use poise::serenity_prelude;
 
 use crate::{utils::load_image, Context, Error};
 
-/// Invert an image colors (or alpha if specified.)
+/// Set an image quality
 ///
-/// `invert alpha`
+/// `quality 0`
 #[poise::command(prefix_command, track_edits, slash_command, category = "image")]
-pub async fn invert(
+pub async fn quality(
     ctx: Context<'_>,
-    #[description = "Should invert alpha channel"]
-    #[flag]
-    alpha: bool,
+    #[description = "New image quality (Between 0 and 100)"] quality: u8,
     #[description = "Image url"] url: Option<String>,
     #[description = "Image attachment"] attachment: Option<serenity_prelude::Attachment>,
 ) -> Result<(), Error> {
@@ -20,7 +18,12 @@ pub async fn invert(
         _ => return Err("No image url or attachment provided".into()),
     };
 
-    load_image(ctx, image, format!("negate_{alpha:?}")).await?;
+    match quality {
+        0..=100 => {
+            load_image(ctx, image, format!("quality_{quality}")).await?;
+        }
+        _ => return Err("Quality must be between 0 and 100".into()),
+    }
 
     Ok(())
 }
