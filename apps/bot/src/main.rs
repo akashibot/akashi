@@ -56,7 +56,7 @@ async fn main() {
 
     let mut bot_owners = HashSet::<UserId>::new();
 
-    bot_owners.insert(1_076_700_780_175_831_100.into());
+    bot_owners.insert(1076700780175831100.into());
 
     let options = poise::FrameworkOptions {
         commands: vec![
@@ -100,8 +100,8 @@ async fn main() {
         // Every command invocation must pass this check to continue execution
         command_check: Some(|ctx| {
             Box::pin(async move {
-                if ctx.author().id == 507_367_752_391_196_682 {
-                    //marcrock id
+                if ctx.author().id == 858367536240394259 {
+                    // sawako id
                     return Ok(false);
                 }
 
@@ -163,10 +163,8 @@ async fn event_handler(
                 }
             } else if !new_message.embeds.is_empty() {
                 let mut cached_images = data.cached_images.lock().await;
-                for embed in &new_message.embeds {
-                    let url = embed.image.as_ref().unwrap().url.clone();
+                    let url = new_message.embeds.first().unwrap().image.as_ref().unwrap().url.clone();
                     cached_images.insert(new_message.channel_id, url.to_owned());
-                }
             }
         }
         _ => {}

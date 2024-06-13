@@ -18,7 +18,7 @@ pub async fn speech(
 ) -> Result<(), Error> {
     let image = get_image_url(ctx, url, attachment)
         .await
-        .unwrap_or(ctx.author().face());
+        .unwrap();
 
     let mut body = HashMap::new();
 

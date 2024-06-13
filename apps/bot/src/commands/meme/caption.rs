@@ -19,7 +19,7 @@ pub async fn caption(
 ) -> Result<(), Error> {
     let image = get_image_url(ctx, url, attachment)
         .await
-        .unwrap_or(ctx.author().face());
+        .unwrap();
 
     ctx.defer_or_broadcast().await?;
 

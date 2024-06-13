@@ -25,7 +25,7 @@ pub async fn invert(
 ) -> Result<(), Error> {
     let image = get_image_url(ctx, url, attachment)
         .await
-        .unwrap_or(ctx.author().face());
+        .unwrap();
 
     load_image(ctx, image, format!("negate_{alpha:?}")).await?;
 

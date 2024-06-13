@@ -87,7 +87,7 @@ pub async fn get_image_url(
 
             match entry {
                 Entry::Occupied(entry) => Ok(entry.get().to_owned()),
-                _ => Err("No image URL or attachment provided".into()),
+                _ => Ok(format!("{}?format=png", ctx.author().face())),
             }
         }
     }

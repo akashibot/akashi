@@ -32,17 +32,17 @@ fn parse_size(size_str: &str) -> Result<(u32, u32), String> {
 )]
 pub async fn resize(
     ctx: Context<'_>,
-    #[description = "New image size"] size: String,
+    #[description = "New image size (E.g: 200x200)"] size: String,
     #[description = "Image url"] url: Option<String>,
     #[description = "Image attachment"] attachment: Option<serenity_prelude::Attachment>,
 ) -> Result<(), Error> {
     let (width, height) = parse_size(&size)?;
-
+    
     let image = get_image_url(ctx, url, attachment)
         .await
-        .unwrap_or(ctx.author().face());
+        .unwrap();
 
-    load_image(ctx, image, format!("s_{width}x{height}")).await?;
+    load_image(ctx, image, format!("enlarge,s_{width}x{height}")).await?;
 
     Ok(())
 }
