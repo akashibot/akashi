@@ -1,4 +1,6 @@
-use crate::{utils::markup::ansi::Ansi, utils::markup::markdown::Markdown, utils::table, Context, Error};
+use crate::{
+    utils::markup::ansi::Ansi, utils::markup::markdown::Markdown, utils::table, Context, Error,
+};
 
 /// Get Akashi stats
 #[poise::command(prefix_command, track_edits, slash_command, category = "util")]
@@ -34,13 +36,12 @@ pub async fn stats(ctx: Context<'_>) -> Result<(), Error> {
         ("Memory usage".fg_green(), mem.fg_blue()),
         ("CPU usage".fg_green(), cpu.fg_blue()),
         ("Disk usage".fg_green(), disk.fg_blue()),
-        ("Uptime".fg_green(), uptime.fg_blue())
+        ("Uptime".fg_green(), uptime.fg_blue()),
     ];
 
     let stats = table::key_value(&values);
 
-    ctx.say(stats.codeblock("ansi"))
-    .await?;
+    ctx.say(stats.codeblock("ansi")).await?;
 
     Ok(())
 }

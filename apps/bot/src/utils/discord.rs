@@ -1,5 +1,8 @@
 use crate::{Context, Error};
-use poise::{serenity_prelude::{model::colour, Attachment, CreateAttachment, CreateEmbed}, CreateReply, ReplyHandle};
+use poise::{
+    serenity_prelude::{model::colour, Attachment, CreateAttachment, CreateEmbed},
+    CreateReply, ReplyHandle,
+};
 use reqwest::{Error as RError, Response};
 use std::collections::{hash_map::Entry, HashMap};
 
@@ -15,11 +18,17 @@ pub async fn fetch_image(url: String) -> Result<Vec<u8>, RError> {
     Ok(get_response_bytes(response).await.unwrap())
 }
 
-pub async fn send_image_embed(ctx: Context<'_>, file: CreateAttachment) -> Result<ReplyHandle, Error> {
+pub async fn send_image_embed(
+    ctx: Context<'_>,
+    file: CreateAttachment,
+) -> Result<ReplyHandle, Error> {
     ctx.send(
-        CreateReply::default()
-            .attachment(file.clone())
-            .embed(CreateEmbed::default().title("Result").color(colour::colours::branding::GREEN).attachment(file.filename)),
+        CreateReply::default().attachment(file.clone()).embed(
+            CreateEmbed::default()
+                .title("Result")
+                .color(colour::colours::branding::GREEN)
+                .attachment(file.filename),
+        ),
     )
     .await
     .map_err(Into::into)
@@ -37,7 +46,8 @@ pub async fn load_image(
 
     let buffer: Vec<u8> = fetch_image(image_url).await?;
     let ext = get_sig(&buffer).unwrap_or(Type::Png).as_str();
-    let file: CreateAttachment = CreateAttachment::bytes(buffer.as_slice(), format!("{}.{ext}", ctx.command().name));
+    let file: CreateAttachment =
+        CreateAttachment::bytes(buffer.as_slice(), format!("{}.{ext}", ctx.command().name));
 
     send_image_embed(ctx, file).await
 }
@@ -45,18 +55,29 @@ pub async fn load_image(
 pub async fn load_meme(
     ctx: Context<'_>,
     endpoint: String,
-    body: HashMap<String, String>
+    body: HashMap<String, String>,
 ) -> Result<ReplyHandle, Error> {
-    let response: Response = ctx.data().reqwest_client.post(format!("{}{}", ctx.data().illumi_host, endpoint)).json(&body).send().await?;
+    let response: Response = ctx
+        .data()
+        .reqwest_client
+        .post(format!("{}{}", ctx.data().illumi_host, endpoint))
+        .json(&body)
+        .send()
+        .await?;
     let bytes: Vec<u8> = get_response_bytes(response).await.unwrap();
-    
+
     let ext = get_sig(&bytes).unwrap_or(Type::Png).as_str();
-    let file: CreateAttachment = CreateAttachment::bytes(bytes.as_slice(), format!("{}.{ext}", ctx.command().name));
+    let file: CreateAttachment =
+        CreateAttachment::bytes(bytes.as_slice(), format!("{}.{ext}", ctx.command().name));
 
     send_image_embed(ctx, file).await
 }
 
-pub async fn get_image_url(ctx: Context<'_>, url: Option<String>, attachment: Option<Attachment>) -> Result<String, Error> {
+pub async fn get_image_url(
+    ctx: Context<'_>,
+    url: Option<String>,
+    attachment: Option<Attachment>,
+) -> Result<String, Error> {
     match (url, attachment) {
         (Some(url), _) => Ok(url),
         (None, Some(attachment)) => Ok(attachment.proxy_url),
@@ -66,9 +87,8 @@ pub async fn get_image_url(ctx: Context<'_>, url: Option<String>, attachment: Op
 
             match entry {
                 Entry::Occupied(entry) => Ok(entry.get().to_owned()),
-                _ => Err("No image URL or attachment provided".into())
+                _ => Err("No image URL or attachment provided".into()),
             }
         }
     }
 }
-

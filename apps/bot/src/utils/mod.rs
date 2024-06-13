@@ -1,4 +1,4 @@
 pub mod discord;
-pub mod table;
-pub mod markup;
 pub mod filetype;
+pub mod markup;
+pub mod table;

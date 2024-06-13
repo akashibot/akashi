@@ -1,6 +1,9 @@
 use poise::serenity_prelude;
 
-use crate::{utils::discord::{get_image_url, load_image}, Context, Error};
+use crate::{
+    utils::discord::{get_image_url, load_image},
+    Context, Error,
+};
 
 fn parse_size(size_str: &str) -> Result<(u32, u32), String> {
     let parts: Vec<&str> = size_str.split('x').collect();
@@ -20,7 +23,13 @@ fn parse_size(size_str: &str) -> Result<(u32, u32), String> {
 /// Resize an image
 ///
 /// `resize 200x200`
-#[poise::command(prefix_command, track_edits, slash_command, category = "image", broadcast_typing)]
+#[poise::command(
+    prefix_command,
+    track_edits,
+    slash_command,
+    category = "image",
+    broadcast_typing
+)]
 pub async fn resize(
     ctx: Context<'_>,
     #[description = "New image size"] size: String,
@@ -29,7 +38,9 @@ pub async fn resize(
 ) -> Result<(), Error> {
     let (width, height) = parse_size(&size)?;
 
-    let image = get_image_url(ctx, url, attachment).await.unwrap_or(ctx.author().face());
+    let image = get_image_url(ctx, url, attachment)
+        .await
+        .unwrap_or(ctx.author().face());
 
     load_image(ctx, image, format!("s_{width}x{height}")).await?;
 

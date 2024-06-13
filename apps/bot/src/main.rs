@@ -1,8 +1,13 @@
 #![deny(clippy::all)]
 
-use poise::serenity_prelude::{self as serenity, ActivityData, ChannelId, UserId};
 use poise::serenity_prelude::futures::lock::Mutex;
-use std::{collections::{HashMap, HashSet}, env::var, sync::Arc, time::Duration};
+use poise::serenity_prelude::{self as serenity, ActivityData, ChannelId, UserId};
+use std::{
+    collections::{HashMap, HashSet},
+    env::var,
+    sync::Arc,
+    time::Duration,
+};
 
 mod commands;
 mod utils;
@@ -64,7 +69,7 @@ async fn main() {
             commands::image::quality::quality(),
             // Meme commands
             commands::meme::caption::caption(),
-            commands::meme::speech::speech()
+            commands::meme::speech::speech(),
         ],
         event_handler: |ctx, event, framework, data| {
             Box::pin(event_handler(ctx, event, framework, data))

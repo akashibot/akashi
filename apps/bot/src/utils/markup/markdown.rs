@@ -22,7 +22,8 @@ pub trait Markdown {
     fn strikethrough(&self) -> String;
     fn underline(&self) -> String;
     fn url(&self, url: impl Display, comment: Option<impl Display>) -> String;
-    #[must_use] fn timestamp(seconds: usize, style: TimestampStyle) -> String {
+    #[must_use]
+    fn timestamp(seconds: usize, style: TimestampStyle) -> String {
         format!("<t:{seconds}:{style}>")
     }
 }
@@ -86,7 +87,10 @@ where
     fn escape_codeblock(&self, language: impl Display) -> String {
         Regex::new(r"```")
             .unwrap()
-            .replace_all(&cut(self, 1988 - language.to_string().len()), "`\u{200b}`\u{200b}`")
+            .replace_all(
+                &cut(self, 1988 - language.to_string().len()),
+                "`\u{200b}`\u{200b}`",
+            )
             .into_owned()
     }
 

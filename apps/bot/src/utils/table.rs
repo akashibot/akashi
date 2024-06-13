@@ -1,6 +1,10 @@
 /// Returns the longer string of the two given strings
 fn get_longer_str<'a>(a: &'a str, b: &'a str) -> &'a str {
-    if a.len() > b.len() { a } else { b }
+    if a.len() > b.len() {
+        a
+    } else {
+        b
+    }
 }
 
 /// Generates a table given a list of tuples containing strings
