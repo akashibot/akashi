@@ -1,7 +1,8 @@
 #![deny(clippy::all)]
 
-use poise::serenity_prelude::{self as serenity, UserId};
-use std::{collections::HashSet, env::var, sync::Arc, time::Duration};
+use poise::serenity_prelude::{self as serenity, ActivityData, ChannelId, UserId};
+use poise::serenity_prelude::futures::lock::Mutex;
+use std::{collections::{HashMap, HashSet}, env::var, sync::Arc, time::Duration};
 
 mod commands;
 mod utils;
@@ -13,6 +14,10 @@ type Context<'a> = poise::Context<'a, Data, Error>;
 // Custom user data passed to all command functions
 pub struct Data {
     ipx_host: String,
+    illumi_host: String,
+    sysinfo: Mutex<sysinfo::System>,
+    reqwest_client: reqwest::Client,
+    cached_images: Mutex<HashMap<ChannelId, String>>,
 }
 
 // #[derive(Deserialize, Debug)]
@@ -52,11 +57,18 @@ async fn main() {
         commands: vec![
             // Util commands
             commands::util::help::help(),
+            commands::util::stats::stats(),
             // Image commands
             commands::image::invert::invert(),
             commands::image::resize::resize(),
             commands::image::quality::quality(),
+            // Meme commands
+            commands::meme::caption::caption(),
+            commands::meme::speech::speech()
         ],
+        event_handler: |ctx, event, framework, data| {
+            Box::pin(event_handler(ctx, event, framework, data))
+        },
         prefix_options: poise::PrefixFrameworkOptions {
             prefix: Some(",".into()),
             edit_tracker: Some(Arc::new(poise::EditTracker::for_timespan(
@@ -95,25 +107,19 @@ async fn main() {
         // Set to true to bypass checks, which is useful for testing
         skip_checks_for_owners: false,
         owners: bot_owners,
-        event_handler: |_ctx, event, _framework, _data| {
-            Box::pin(async move {
-                println!(
-                    "Got an event in event handler: {:?}",
-                    event.snake_case_name()
-                );
-                Ok(())
-            })
-        },
         ..Default::default()
     };
 
     let framework = poise::Framework::builder()
-        .setup(move |ctx, ready, framework| {
+        .setup(move |ctx, _, framework| {
             Box::pin(async move {
-                println!("Logged in as {}", ready.user.name);
                 poise::builtins::register_globally(ctx, &framework.options().commands).await?;
                 Ok(Data {
                     ipx_host: var("IPX_HOST").expect("Missing `IPX_HOST` env var."),
+                    illumi_host: var("ILLUMI_HOST").expect("Missing `ILLUMI_HOST` env var."),
+                    sysinfo: Mutex::new(sysinfo::System::new()),
+                    reqwest_client: reqwest::Client::new(),
+                    cached_images: Mutex::new(HashMap::new()),
                 })
             })
         })
@@ -130,4 +136,35 @@ async fn main() {
         .await;
 
     client.unwrap().start().await.unwrap();
+}
+
+async fn event_handler(
+    ctx: &serenity::Context,
+    event: &serenity::FullEvent,
+    _framework: poise::FrameworkContext<'_, Data, Error>,
+    data: &Data,
+) -> Result<(), Error> {
+    match event {
+        serenity::FullEvent::Ready { data_about_bot, .. } => {
+            ctx.set_activity(Some(ActivityData::playing("with images")));
+            println!("Logged in as {}", data_about_bot.user.name);
+        }
+        serenity::FullEvent::Message { new_message } => {
+            if !new_message.attachments.is_empty() {
+                let mut cached_images = data.cached_images.lock().await;
+                for attachment in &new_message.attachments {
+                    let url = attachment.proxy_url.clone();
+                    cached_images.insert(new_message.channel_id, url.to_owned());
+                }
+            } else if !new_message.embeds.is_empty() {
+                let mut cached_images = data.cached_images.lock().await;
+                for embed in &new_message.embeds {
+                    let url = embed.image.as_ref().unwrap().url.clone();
+                    cached_images.insert(new_message.channel_id, url.to_owned());
+                }
+            }
+        }
+        _ => {}
+    }
+    Ok(())
 }

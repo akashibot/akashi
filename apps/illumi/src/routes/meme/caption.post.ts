@@ -39,8 +39,8 @@ export default eventHandler(async (event) => {
 		text: {
 			text: `<span background="white" color="black">${body.caption}</span>`,
 			align: "center",
-			width: Math.round(captionWidth - 50),
-			height: captionHeight - 20, // padding
+			width: Math.round(captionWidth / 2),
+			height: captionHeight - 50, // padding
 			rgba: true,
 			font: "Impact",
 			wrap: "word",
