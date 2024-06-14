@@ -21,12 +21,17 @@ pub async fn fetch_image(url: String) -> Result<Vec<u8>, RError> {
 pub async fn send_image_embed(
     ctx: Context<'_>,
     file: CreateAttachment,
-    time: Option<i64>
+    time: Option<u128>
 ) -> Result<ReplyHandle, Error> {
+    let title = match time {
+        Some(time) => format!("Result in {time:?}ms"),
+        None => "Result".to_string(),
+    };
+
     ctx.send(
         CreateReply::default().attachment(file.clone()).embed(
             CreateEmbed::default()
-                .title(format!("Result {}", time.unwrap_or("")))
+                .title(title)
                 .color(colour::colours::branding::GREEN)
                 .attachment(file.filename),
         ),
@@ -40,6 +45,8 @@ pub async fn load_image(
     url: String,
     operation: String,
 ) -> Result<ReplyHandle, Error> {
+    // calculate time taken to load image
+    let start = std::time::Instant::now();
     let image_url: String = match url {
         url if !url.is_empty() => format!("{}/ipx/{}/{}", ctx.data().api_url, operation, url),
         _ => return Err("URL is required and must not be empty".into()),
@@ -49,8 +56,9 @@ pub async fn load_image(
     let ext = get_sig(&buffer).unwrap_or(Type::Png).as_str();
     let file: CreateAttachment =
         CreateAttachment::bytes(buffer.as_slice(), format!("{}.{ext}", ctx.command().name));
+    let time = start.elapsed().as_millis();
 
-    send_image_embed(ctx, file).await
+    send_image_embed(ctx, file, Some(time)).await
 }
 
 pub async fn load_meme(

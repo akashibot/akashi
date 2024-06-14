@@ -10,7 +10,7 @@ use crate::{
 /// Make a speech balloon of an image
 ///
 /// `speech`
-#[poise::command(prefix_command, track_edits, slash_command, category = "meme")]
+#[poise::command(prefix_command, track_edits, slash_command, category = "meme", broadcast_typing)]
 pub async fn speech(
     ctx: Context<'_>,
     #[description = "Image url"] url: Option<String>,

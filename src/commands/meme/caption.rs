@@ -10,7 +10,7 @@ use crate::{
 /// Caption an image
 ///
 /// `caption me when ehwheedsdasda`
-#[poise::command(prefix_command, track_edits, slash_command, category = "meme")]
+#[poise::command(prefix_command, track_edits, slash_command, category = "meme", broadcast_typing)]
 pub async fn caption(
     ctx: Context<'_>,
     #[description = "Caption text"] caption: String,
