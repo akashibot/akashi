@@ -5,9 +5,9 @@ use crate::{
     Context, Error,
 };
 
-/// Invert an image colors (or alpha if specified.)
+/// Invert an image alpha
 ///
-/// `invert alpha`
+/// `invert`
 #[poise::command(
     prefix_command,
     track_edits,
@@ -17,9 +17,6 @@ use crate::{
 )]
 pub async fn invert(
     ctx: Context<'_>,
-    #[description = "Should invert alpha channel"]
-    #[flag]
-    alpha: bool,
     #[description = "Image url"] url: Option<String>,
     #[description = "Image attachment"] attachment: Option<serenity_prelude::Attachment>,
 ) -> Result<(), Error> {
@@ -27,7 +24,7 @@ pub async fn invert(
         .await
         .unwrap();
 
-    load_image(ctx, image, format!("negate_{alpha:?}")).await?;
+    load_image(ctx, image, "negate".to_owned(), None).await?;
 
     Ok(())
 }

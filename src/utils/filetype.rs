@@ -3,16 +3,14 @@
 use std::cmp::min;
 use std::ops::Range;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, poise::ChoiceParameter)]
 pub enum Type {
     Gif,
     Jpeg,
     Png,
     Webp,
-    MP4,
-    Webm,
-    MP3,
 }
+
 impl Type {
     pub fn as_str(&self) -> &'static str {
         match self {
@@ -20,9 +18,6 @@ impl Type {
             Type::Jpeg => "jpeg",
             Type::Png => "png",
             Type::Webp => "webp",
-            Type::MP4 => "mp4",
-            Type::Webm => "webm",
-            Type::MP3 => "mp3",
         }
     }
     pub fn as_mime(&self) -> &'static str {
@@ -31,13 +26,17 @@ impl Type {
             Type::Jpeg => "image/jpeg",
             Type::Png => "image/png",
             Type::Webp => "image/webp",
-            Type::MP4 => "video/mp4",
-            Type::Webm => "video/webm",
-            Type::MP3 => "audio/mpeg",
         }
     }
-    pub fn is_video(&self) -> bool {
-        matches!(self, Type::MP4 | Type::Webm)
+
+    pub fn from_str(s: &str) -> Option<Type> {
+        match s.to_lowercase().as_str() {
+            "gif" => Some(Type::Gif),
+            "jpeg" => Some(Type::Jpeg),
+            "png" => Some(Type::Png),
+            "webp" => Some(Type::Webp),
+            _ => None,
+        }
     }
 }
 
@@ -67,10 +66,7 @@ pub fn get_sig(buf: &[u8]) -> Option<Type> {
         [71, 73, 70, ..] => Some(Type::Gif),
         [255, 216, 255, ..] => Some(Type::Jpeg),
         [137, 80, 78, 71, 13, 10, 26, 10, ..] => Some(Type::Png),
-        [0x1A, 0x45, 0xDF, 0xA3, ..] => Some(Type::Webm),
-        [0x49, 0x44, 0x33, ..] /* ID3 tagged */ | [0xff, 0xfb, ..] /* untagged */ => Some(Type::MP3),
         _ if check_webp(buf) => Some(Type::Webp),
-        _ if check_mp4(buf) => Some(Type::MP4),
         _ => None,
     }
 }

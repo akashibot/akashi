@@ -1,9 +1,11 @@
 #![deny(clippy::all)]
 
+use lru::LruCache;
 use poise::serenity_prelude::futures::lock::Mutex;
 use poise::serenity_prelude::{self as serenity, ActivityData, ChannelId, UserId};
+use std::num::NonZeroUsize;
 use std::{
-    collections::{HashMap, HashSet},
+    collections::HashSet,
     env::var,
     sync::Arc,
     time::Duration,
@@ -21,7 +23,7 @@ pub struct Data {
     api_url: String,
     sysinfo: Mutex<sysinfo::System>,
     reqwest_client: reqwest::Client,
-    cached_images: Mutex<HashMap<ChannelId, String>>,
+    cached_images: Mutex<LruCache<ChannelId, String>>,
 }
 
 // #[derive(Deserialize, Debug)]
@@ -49,11 +51,11 @@ async fn on_error(error: poise::FrameworkError<'_, Data, Error>) {
     }
 }
 
-#[tokio::main(flavor = "multi_thread")]
+#[tokio::main]
 async fn main() {
     let _ = dotenvy::dotenv();
 
-    let mut bot_owners = HashSet::<UserId>::new();
+    let mut bot_owners = HashSet::<UserId>::default();
 
     bot_owners.insert(1076700780175831100.into());
 
@@ -66,6 +68,9 @@ async fn main() {
             commands::image::invert::invert(),
             commands::image::resize::resize(),
             commands::image::quality::quality(),
+            commands::image::to::to(),
+            commands::image::blur::blur(),
+            commands::image::grayscale::grayscale(),
             // Meme commands
             commands::meme::caption::caption(),
             commands::meme::speech::speech(),
@@ -122,7 +127,7 @@ async fn main() {
                     api_url: var("API_URL").expect("Missing `API_URL` env var."),
                     sysinfo: Mutex::new(sysinfo::System::new()),
                     reqwest_client: reqwest::Client::new(),
-                    cached_images: Mutex::new(HashMap::new()),
+                    cached_images: LruCache::new(NonZeroUsize::new(10).unwrap()).into(),
                 })
             })
         })
@@ -157,12 +162,12 @@ async fn event_handler(
                 let mut cached_images = data.cached_images.lock().await;
                 for attachment in &new_message.attachments {
                     let url = attachment.proxy_url.clone();
-                    cached_images.insert(new_message.channel_id, url.to_owned());
+                    cached_images.put(new_message.channel_id, url.to_owned());
                 }
-            } else if !new_message.embeds.is_empty() {
+            } else if Some(new_message.embeds.first().unwrap().image.clone()).is_some() {
                 let mut cached_images = data.cached_images.lock().await;
                     let url = new_message.embeds.first().unwrap().image.as_ref().unwrap().url.clone();
-                    cached_images.insert(new_message.channel_id, url.to_owned());
+                    cached_images.put(new_message.channel_id, url.to_owned());
             }
         }
         _ => {}

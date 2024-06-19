@@ -42,7 +42,16 @@ pub async fn resize(
         .await
         .unwrap();
 
-    load_image(ctx, image, format!("enlarge,s_{width}x{height}")).await?;
+    load_image(ctx, image, format!("enlarge,s_{width}x{height}"), None).await?;
 
     Ok(())
+}
+
+#[test]
+fn test_parse_size() {
+    assert_eq!(parse_size("200x200").unwrap(), (200, 200));
+    assert_eq!(parse_size("100x100").unwrap(), (100, 100));
+    assert!(parse_size("200").is_err());
+    assert!(parse_size("200x").is_err());
+    assert!(parse_size("x200").is_err());
 }

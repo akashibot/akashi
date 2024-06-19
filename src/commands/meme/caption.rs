@@ -9,7 +9,7 @@ use crate::{
 
 /// Caption an image
 ///
-/// `caption me when ehwheedsdasda`
+/// `caption "me when ehwheedsdasda"` — *Quotes are needed if you want multi-line caption*
 #[poise::command(prefix_command, track_edits, slash_command, category = "meme", broadcast_typing)]
 pub async fn caption(
     ctx: Context<'_>,
