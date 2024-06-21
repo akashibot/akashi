@@ -160,14 +160,17 @@ async fn event_handler(
         serenity::FullEvent::Message { new_message } => {
             if !new_message.attachments.is_empty() {
                 let mut cached_images = data.cached_images.lock().await;
+                
                 for attachment in &new_message.attachments {
                     let url = attachment.proxy_url.clone();
+                    
                     cached_images.put(new_message.channel_id, url.to_owned());
                 }
-            } else if Some(new_message.embeds.first().unwrap().image.clone()).is_some() {
+            } else if !new_message.embeds.is_empty() && !new_message.embeds.first().is_none() {
                 let mut cached_images = data.cached_images.lock().await;
-                    let url = new_message.embeds.first().unwrap().image.as_ref().unwrap().url.clone();
-                    cached_images.put(new_message.channel_id, url.to_owned());
+                let url = new_message.embeds.first().unwrap().image.as_ref().unwrap().url.clone();
+                
+                cached_images.put(new_message.channel_id, url.to_owned());
             }
         }
         _ => {}

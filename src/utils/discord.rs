@@ -1,6 +1,6 @@
 use crate::{Context, Error};
 use poise::{
-    serenity_prelude::{model::colour, Attachment, CreateAttachment, CreateEmbed},
+    serenity_prelude::{model::colour, Attachment, CreateAttachment, CreateEmbed, CreateEmbedFooter},
     CreateReply, ReplyHandle,
 };
 use reqwest::Response;
@@ -27,17 +27,17 @@ pub async fn send_image_embed(
     file: CreateAttachment,
     time: Option<u128>
 ) -> Result<ReplyHandle, Error> {
-    let title = match time {
+    let time = match time {
         Some(time) => format!("Result in {time:?}ms"),
-        None => "Result".to_string(),
+        None => "".to_string()
     };
 
     ctx.send(
         CreateReply::default().attachment(file.clone()).embed(
             CreateEmbed::default()
-                .title(title)
-                .color(colour::colours::branding::GREEN)
-                .attachment(file.filename),
+                .color(colour::colours::roles::DEFAULT)
+                .attachment(file.filename)
+                .footer(CreateEmbedFooter::new(time)),
         ),
     )
     .await

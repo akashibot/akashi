@@ -1,4 +1,4 @@
-use poise::serenity_prelude;
+use poise::{serenity_prelude, ChoiceParameter};
 
 use crate::{
     utils::discord::{get_image_url, load_image},
@@ -20,6 +20,14 @@ fn parse_size(size_str: &str) -> Result<(u32, u32), String> {
     Ok((width, height))
 }
 
+#[derive(Debug, poise::ChoiceParameter)]
+pub enum ResizeTypeChoices {
+    #[name = "embed"]
+    Embed,
+    #[name = "enlarge"]
+    Enlarge
+}
+
 /// Resize an image
 ///
 /// `resize 200x200`
@@ -33,16 +41,20 @@ fn parse_size(size_str: &str) -> Result<(u32, u32), String> {
 pub async fn resize(
     ctx: Context<'_>,
     #[description = "New image size (E.g: 200x200)"] size: String,
+    #[description = "Resize type (default: Enlarge)"] #[rename = "type"] resize_type: Option<ResizeTypeChoices>,
     #[description = "Image url"] url: Option<String>,
     #[description = "Image attachment"] attachment: Option<serenity_prelude::Attachment>,
 ) -> Result<(), Error> {
     let (width, height) = parse_size(&size)?;
-    
-    let image = get_image_url(ctx, url, attachment)
-        .await
-        .unwrap();
 
-    load_image(ctx, image, format!("enlarge,s_{width}x{height}"), None).await?;
+    let image = get_image_url(ctx, url, attachment).await.unwrap();
+    
+    let resize_like = match Some(resize_type) {
+        Some(like) => like.unwrap(),
+        None => ResizeTypeChoices::Enlarge
+    };
+
+    load_image(ctx, image, format!("{},s_{width}x{height}", resize_like.name()), None).await?;
 
     Ok(())
 }
