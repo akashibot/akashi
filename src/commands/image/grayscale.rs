@@ -1,6 +1,7 @@
 use poise::serenity_prelude;
 
-use crate::{utils::discord::{get_image_url, load_image}, Context, Error};
+use crate::utils::discord::{get_image_url, load_image};
+use crate::{Context, Error};
 
 /// Grayscale an image
 ///

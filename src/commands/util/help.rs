@@ -8,14 +8,10 @@ pub async fn help(
     #[autocomplete = "poise::builtins::autocomplete_command"]
     command: Option<String>,
 ) -> Result<(), Error> {
-    poise::builtins::help(
-        ctx,
-        command.as_deref(),
-        poise::builtins::HelpConfiguration {
-            extra_text_at_bottom: "Akashi bot (rust rewrite)",
-            ..Default::default()
-        },
-    )
+    poise::builtins::help(ctx, command.as_deref(), poise::builtins::HelpConfiguration {
+        extra_text_at_bottom: "Akashi bot (rust rewrite)",
+        ..Default::default()
+    })
     .await?;
 
     Ok(())

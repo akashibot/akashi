@@ -1,14 +1,16 @@
 [package]
 name = "bot"
-version = "1.0.4"
+version = "1.0.5"
 edition = "2021"
 
 [dependencies]
 dotenvy = "0.15.7"
-poise = "0.6.1"
+poise = { version = "0.6.1" }
+serenity = { version = "0.12.2", features = ["typesize"]}
 regex = "1.10.5"
 reqwest = { version = "0.12.4", features = ["json"] }
 serde = "1.0.203"
 sysinfo = "0.30.12"
 tokio = { version = "1.38.0", features = ["rt-multi-thread"]}
 lru = "0.12.3"
+typesize = "0.1.7"

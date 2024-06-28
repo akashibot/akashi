@@ -1,15 +1,14 @@
 #![deny(clippy::all)]
 
+use std::collections::HashSet;
+use std::env::var;
+use std::num::NonZeroUsize;
+use std::sync::Arc;
+use std::time::Duration;
+
 use lru::LruCache;
 use poise::serenity_prelude::futures::lock::Mutex;
 use poise::serenity_prelude::{self as serenity, ActivityData, ChannelId, UserId};
-use std::num::NonZeroUsize;
-use std::{
-    collections::HashSet,
-    env::var,
-    sync::Arc,
-    time::Duration,
-};
 
 mod commands;
 mod utils;
@@ -37,17 +36,23 @@ async fn on_error(error: poise::FrameworkError<'_, Data, Error>) {
     // They are many errors that can occur, so we only handle the ones we want to customize
     // and forward the rest to the default handler
     match error {
-        poise::FrameworkError::Setup { error, .. } => panic!("Failed to start bot: {error:?}"),
-        poise::FrameworkError::Command { error, ctx, .. } => {
+        poise::FrameworkError::Setup {
+            error, ..
+        } => panic!("Failed to start bot: {error:?}"),
+        poise::FrameworkError::Command {
+            error,
+            ctx,
+            ..
+        } => {
             // remove the quotes from error
             ctx.say(error.to_string()).await.unwrap();
             println!("Error in command `{}`: {:?}", ctx.command().name, error);
-        }
+        },
         error => {
             if let Err(e) = poise::builtins::on_error(error).await {
                 println!("Error while handling error: {e}");
             }
-        }
+        },
     }
 }
 
@@ -80,9 +85,9 @@ async fn main() {
         },
         prefix_options: poise::PrefixFrameworkOptions {
             prefix: Some(",".into()),
-            edit_tracker: Some(Arc::new(poise::EditTracker::for_timespan(
-                Duration::from_secs(3600),
-            ))),
+            edit_tracker: Some(Arc::new(poise::EditTracker::for_timespan(Duration::from_secs(
+                3600,
+            )))),
             additional_prefixes: vec![poise::Prefix::Literal("akashi")],
             mention_as_prefix: true,
             ..Default::default()
@@ -127,7 +132,7 @@ async fn main() {
                     api_url: var("API_URL").expect("Missing `API_URL` env var."),
                     sysinfo: Mutex::new(sysinfo::System::new()),
                     reqwest_client: reqwest::Client::new(),
-                    cached_images: LruCache::new(NonZeroUsize::new(10).unwrap()).into(),
+                    cached_images: LruCache::new(NonZeroUsize::new(50).unwrap()).into(),
                 })
             })
         })
@@ -139,9 +144,7 @@ async fn main() {
     let intents =
         serenity::GatewayIntents::non_privileged() | serenity::GatewayIntents::MESSAGE_CONTENT;
 
-    let client = serenity::ClientBuilder::new(token, intents)
-        .framework(framework)
-        .await;
+    let client = serenity::ClientBuilder::new(token, intents).framework(framework).await;
 
     client.unwrap().start().await.unwrap();
 }
@@ -153,27 +156,31 @@ async fn event_handler(
     data: &Data,
 ) -> Result<(), Error> {
     match event {
-        serenity::FullEvent::Ready { data_about_bot, .. } => {
+        serenity::FullEvent::Ready {
+            data_about_bot, ..
+        } => {
             ctx.set_activity(Some(ActivityData::playing("with images")));
             println!("Logged in as {}", data_about_bot.user.name);
-        }
-        serenity::FullEvent::Message { new_message } => {
+        },
+        serenity::FullEvent::Message {
+            new_message,
+        } => {
             if !new_message.attachments.is_empty() {
                 let mut cached_images = data.cached_images.lock().await;
-                
+
                 for attachment in &new_message.attachments {
                     let url = attachment.proxy_url.clone();
-                    
+
                     cached_images.put(new_message.channel_id, url.to_owned());
                 }
             } else if !new_message.embeds.is_empty() && !new_message.embeds.first().is_none() {
                 let mut cached_images = data.cached_images.lock().await;
                 let url = new_message.embeds.first().unwrap().image.as_ref().unwrap().url.clone();
-                
+
                 cached_images.put(new_message.channel_id, url.to_owned());
             }
-        }
-        _ => {}
+        },
+        _ => {},
     }
     Ok(())
 }

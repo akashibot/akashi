@@ -1,6 +1,7 @@
 use poise::serenity_prelude;
 
-use crate::{utils::discord::{get_image_url, load_image}, Context, Error};
+use crate::utils::discord::{get_image_url, load_image};
+use crate::{Context, Error};
 
 /// Set an image quality
 ///
@@ -20,7 +21,7 @@ pub async fn quality(
     match quality {
         0..=100 => {
             load_image(ctx, image, format!("quality_{quality}"), None).await?;
-        }
+        },
         _ => return Err("Quality must be between 0 and 100".into()),
     }
 

@@ -12,9 +12,7 @@ pub fn key_value(input: &[(impl AsRef<str>, impl AsRef<str>)]) -> String {
     let longest: &str = input
         .iter()
         .map(|(x, y)| (x.as_ref(), y.as_ref()))
-        .fold(input[0].0.as_ref(), |previous, (current, _)| {
-            get_longer_str(previous, current)
-        });
+        .fold(input[0].0.as_ref(), |previous, (current, _)| get_longer_str(previous, current));
 
     input
         .iter()

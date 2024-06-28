@@ -2,10 +2,8 @@ use std::collections::HashMap;
 
 use poise::serenity_prelude;
 
-use crate::{
-    utils::discord::{get_image_url, load_meme},
-    Context, Error,
-};
+use crate::utils::discord::{get_image_url, load_meme};
+use crate::{Context, Error};
 
 /// Caption an image
 ///
@@ -17,9 +15,7 @@ pub async fn caption(
     #[description = "Image url"] url: Option<String>,
     #[description = "Image attachment"] attachment: Option<serenity_prelude::Attachment>,
 ) -> Result<(), Error> {
-    let image = get_image_url(ctx, url, attachment)
-        .await
-        .unwrap();
+    let image = get_image_url(ctx, url, attachment).await.unwrap();
 
     ctx.defer_or_broadcast().await?;
 

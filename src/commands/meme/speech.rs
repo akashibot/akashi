@@ -2,10 +2,8 @@ use std::collections::HashMap;
 
 use poise::serenity_prelude;
 
-use crate::{
-    utils::discord::{get_image_url, load_meme},
-    Context, Error,
-};
+use crate::utils::discord::{get_image_url, load_meme};
+use crate::{Context, Error};
 
 /// Make a speech balloon of an image
 ///
@@ -16,9 +14,7 @@ pub async fn speech(
     #[description = "Image url"] url: Option<String>,
     #[description = "Image attachment"] attachment: Option<serenity_prelude::Attachment>,
 ) -> Result<(), Error> {
-    let image = get_image_url(ctx, url, attachment)
-        .await
-        .unwrap();
+    let image = get_image_url(ctx, url, attachment).await.unwrap();
 
     let mut body = HashMap::new();
 

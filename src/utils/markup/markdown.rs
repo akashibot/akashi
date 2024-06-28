@@ -40,19 +40,15 @@ pub enum TimestampStyle {
 
 impl Display for TimestampStyle {
     fn fmt(&self, f: &mut std::fmt::Formatter<'_>) -> std::fmt::Result {
-        write!(
-            f,
-            "{}",
-            match self {
-                Self::FullLong => "F",
-                Self::FullShort => "f",
-                Self::DateLong => "D",
-                Self::DateShort => "d",
-                Self::TimeLong => "T",
-                Self::TimeShort => "t",
-                Self::Relative => "R",
-            }
-        )
+        write!(f, "{}", match self {
+            Self::FullLong => "F",
+            Self::FullShort => "f",
+            Self::DateLong => "D",
+            Self::DateShort => "d",
+            Self::TimeLong => "T",
+            Self::TimeShort => "t",
+            Self::Relative => "R",
+        })
     }
 }
 
@@ -73,44 +69,26 @@ where
             .into_owned()
     }
     fn escape_bold(&self) -> String {
-        Regex::new(r"\*\*")
-            .unwrap()
-            .replace_all(&cut(self, 1998), r"\*\*")
-            .into_owned()
+        Regex::new(r"\*\*").unwrap().replace_all(&cut(self, 1998), r"\*\*").into_owned()
     }
     fn escape_codestring(&self) -> String {
-        Regex::new(r"`")
-            .unwrap()
-            .replace_all(&cut(self, 1998), r"'")
-            .into_owned()
+        Regex::new(r"`").unwrap().replace_all(&cut(self, 1998), r"'").into_owned()
     }
     fn escape_codeblock(&self, language: impl Display) -> String {
         Regex::new(r"```")
             .unwrap()
-            .replace_all(
-                &cut(self, 1988 - language.to_string().len()),
-                "`\u{200b}`\u{200b}`",
-            )
+            .replace_all(&cut(self, 1988 - language.to_string().len()), "`\u{200b}`\u{200b}`")
             .into_owned()
     }
 
     fn escape_spoiler(&self) -> String {
-        Regex::new(r"__")
-            .unwrap()
-            .replace_all(&cut(self, 1996), r"\|\|")
-            .into_owned()
+        Regex::new(r"__").unwrap().replace_all(&cut(self, 1996), r"\|\|").into_owned()
     }
     fn escape_strikethrough(&self) -> String {
-        Regex::new(r"~~")
-            .unwrap()
-            .replace_all(&cut(self, 1996), r"\~\~")
-            .into_owned()
+        Regex::new(r"~~").unwrap().replace_all(&cut(self, 1996), r"\~\~").into_owned()
     }
     fn escape_underline(&self) -> String {
-        Regex::new(r"\|\|")
-            .unwrap()
-            .replace_all(&cut(self, 1996), r"\_\_")
-            .into_owned()
+        Regex::new(r"\|\|").unwrap().replace_all(&cut(self, 1996), r"\_\_").into_owned()
     }
 
     fn italics(&self) -> String {
@@ -143,12 +121,9 @@ where
     }
 
     fn url(&self, url: impl Display, comment: Option<impl Display>) -> String {
-        format!(
-            "[{self}]({url}{})",
-            match comment {
-                Some(c) => format!(" '{c}'"),
-                None => String::new(),
-            }
-        )
+        format!("[{self}]({url}{})", match comment {
+            Some(c) => format!(" '{c}'"),
+            None => String::new(),
+        })
     }
 }

@@ -1,12 +1,12 @@
-use crate::{Context, Error};
-use poise::{
-    serenity_prelude::{model::colour, Attachment, CreateAttachment, CreateEmbed, CreateEmbedFooter},
-    CreateReply, ReplyHandle,
-};
-use reqwest::Response;
 use std::collections::HashMap;
 
+use poise::serenity_prelude::model::colour;
+use poise::serenity_prelude::{Attachment, CreateAttachment, CreateEmbed, CreateEmbedFooter};
+use poise::{CreateReply, ReplyHandle};
+use reqwest::Response;
+
 use super::filetype::{get_sig, Type};
+use crate::{Context, Error};
 
 pub async fn get_response_bytes(res: Response) -> Result<Vec<u8>, Error> {
     Ok(res.bytes().await?.to_vec())
@@ -25,11 +25,11 @@ pub async fn fetch_image(url: String) -> Result<Vec<u8>, Error> {
 pub async fn send_image_embed(
     ctx: Context<'_>,
     file: CreateAttachment,
-    time: Option<u128>
+    time: Option<u128>,
 ) -> Result<ReplyHandle, Error> {
     let time = match time {
         Some(time) => format!("Took {time:?}ms to complete"),
-        None => "".to_string()
+        None => "".to_string(),
     };
 
     ctx.send(
@@ -48,7 +48,7 @@ pub async fn load_image(
     ctx: Context<'_>,
     url: String,
     operation: String,
-    ext: Option<Type>
+    ext: Option<Type>,
 ) -> Result<ReplyHandle, Error> {
     // calculate time taken to load image
     let start = std::time::Instant::now();
@@ -105,6 +105,6 @@ pub async fn get_image_url(
                 Some(image) => Ok(image.to_string()),
                 None => Ok(format!("{}?format=png", ctx.author().face())),
             }
-        }
+        },
     }
 }

@@ -1,6 +1,7 @@
 use poise::serenity_prelude;
 
-use crate::{utils::discord::{get_image_url, load_image}, Context, Error};
+use crate::utils::discord::{get_image_url, load_image};
+use crate::{Context, Error};
 
 /// Blur an image
 ///
@@ -20,7 +21,7 @@ pub async fn blur(
     match value {
         1..=100 => {
             load_image(ctx, image, format!("blur_{value}"), None).await?;
-        }
+        },
         _ => return Err("Value must be between 0.3 and 500".into()),
     }
 
