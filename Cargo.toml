@@ -1,11 +1,11 @@
 [package]
 name = "bot"
-version = "1.0.5"
+version = "1.0.6"
 edition = "2021"
 
 [dependencies]
 dotenvy = "0.15.7"
-poise = { version = "0.6.1" }
+poise = { git = "https://github.com/serenity-rs/poise", branch = "current" }
 serenity = { version = "0.12.2", features = ["typesize"]}
 regex = "1.10.5"
 reqwest = { version = "0.12.4", features = ["json"] }

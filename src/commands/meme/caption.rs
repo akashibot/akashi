@@ -2,13 +2,13 @@ use std::collections::HashMap;
 
 use poise::serenity_prelude;
 
-use crate::utils::discord::{get_image_url, load_meme};
+use crate::utils::discord::image::{get_image_url, load_meme};
 use crate::{Context, Error};
 
 /// Caption an image
 ///
 /// `caption "me when ehwheedsdasda"` — *Quotes are needed if you want multi-line caption*
-#[poise::command(prefix_command, track_edits, slash_command, category = "meme", broadcast_typing)]
+#[poise::command(prefix_command, track_edits, slash_command, category = "Meme")]
 pub async fn caption(
     ctx: Context<'_>,
     #[description = "Caption text"] caption: String,

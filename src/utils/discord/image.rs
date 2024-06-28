@@ -1,11 +1,13 @@
 use std::collections::HashMap;
 
-use poise::serenity_prelude::model::colour;
-use poise::serenity_prelude::{Attachment, CreateAttachment, CreateEmbed, CreateEmbedFooter};
+use poise::serenity_prelude::CreateAttachment;
 use poise::{CreateReply, ReplyHandle};
 use reqwest::Response;
+use serenity::all::{Attachment, CreateEmbed, CreateEmbedFooter};
+use serenity::model::colour;
 
-use super::filetype::{get_sig, Type};
+use super::cache::fallback_cached_image;
+use crate::utils::filetype::{get_sig, Type};
 use crate::{Context, Error};
 
 pub async fn get_response_bytes(res: Response) -> Result<Vec<u8>, Error> {
@@ -88,23 +90,36 @@ pub async fn load_meme(
     send_image_embed(ctx, file, None).await
 }
 
-// Order: url, attachment, cached image, avatar
 pub async fn get_image_url(
     ctx: Context<'_>,
     url: Option<String>,
     attachment: Option<Attachment>,
-) -> Result<String, Error> {
-    match (url, attachment) {
-        (Some(url), _) => Ok(url),
-        (None, Some(attachment)) => Ok(attachment.proxy_url),
-        (None, None) => {
-            let mut images = ctx.data().cached_images.lock().await;
-            let entry = images.get(&ctx.channel_id());
+) -> Result<String, String> {
+    let referenced_message = match ctx {
+        poise::Context::Prefix(ctx) => ctx.msg.referenced_message.as_ref(),
+        poise::Context::Application(_) => None,
+    };
 
-            match entry {
-                Some(image) => Ok(image.to_string()),
-                None => Ok(format!("{}?format=png", ctx.author().face())),
+    match (url, attachment, referenced_message) {
+        (Some(url), _, _) => Ok(url),
+        (None, Some(attachment), _) => Ok(attachment.proxy_url.clone()),
+        (None, None, Some(referenced_message)) => {
+            if !referenced_message.attachments.is_empty() {
+                Ok(referenced_message.attachments.first().unwrap().proxy_url.clone())
+            } else if !referenced_message.embeds.is_empty() {
+                Ok(referenced_message
+                    .embeds
+                    .first()
+                    .unwrap()
+                    .image
+                    .clone()
+                    .unwrap()
+                    .proxy_url
+                    .unwrap())
+            } else {
+                fallback_cached_image(ctx).await
             }
         },
+        (None, None, None) => fallback_cached_image(ctx).await,
     }
 }

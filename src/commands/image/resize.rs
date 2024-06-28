@@ -1,12 +1,12 @@
 use poise::{serenity_prelude, ChoiceParameter};
 
-use crate::utils::discord::{get_image_url, load_image};
+use crate::utils::discord::image::{get_image_url, load_image};
 use crate::{Context, Error};
 
 fn parse_size(size_str: &str) -> Result<(u32, u32), String> {
     let parts: Vec<&str> = size_str.split('x').collect();
     let width = parts
-        .get(0)
+        .first()
         .ok_or_else(|| "Invalid format".to_owned())?
         .parse::<u32>()
         .map_err(|_| "Invalid width".to_owned())?;
@@ -30,7 +30,7 @@ pub enum ResizeTypeChoices {
 ///
 /// `resize 200x200`
 /// `resize 200` ("height" will be the same as "width now")
-#[poise::command(prefix_command, track_edits, slash_command, category = "image", broadcast_typing)]
+#[poise::command(prefix_command, track_edits, slash_command, category = "Image", broadcast_typing)]
 pub async fn resize(
     ctx: Context<'_>,
     #[description = "New image size (E.g: 200x200 or 200)"] size: String,

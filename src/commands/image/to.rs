@@ -1,13 +1,13 @@
 use poise::serenity_prelude;
 
-use crate::utils::discord::{get_image_url, load_image};
+use crate::utils::discord::image::{get_image_url, load_image};
 use crate::utils::filetype::Type;
 use crate::{Context, Error};
 
 /// Change an image mimetype
 ///
 /// `to png`
-#[poise::command(prefix_command, track_edits, slash_command, category = "image", broadcast_typing)]
+#[poise::command(prefix_command, track_edits, slash_command, category = "Image", broadcast_typing)]
 pub async fn to(
     ctx: Context<'_>,
     #[description = "Image mimetype target"] mime: Type,

@@ -1,12 +1,12 @@
 use poise::serenity_prelude;
 
-use crate::utils::discord::{get_image_url, load_image};
+use crate::utils::discord::image::{get_image_url, load_image};
 use crate::{Context, Error};
 
 /// Set an image quality
 ///
 /// `quality 0`
-#[poise::command(prefix_command, track_edits, slash_command, category = "image", broadcast_typing)]
+#[poise::command(prefix_command, track_edits, slash_command, category = "Image", broadcast_typing)]
 pub async fn quality(
     ctx: Context<'_>,
     #[description = "New image quality (Between 0 and 100)"]

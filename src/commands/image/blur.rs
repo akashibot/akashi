@@ -1,12 +1,12 @@
 use poise::serenity_prelude;
 
-use crate::utils::discord::{get_image_url, load_image};
+use crate::utils::discord::image::{get_image_url, load_image};
 use crate::{Context, Error};
 
 /// Blur an image
 ///
 /// `blur 7`
-#[poise::command(prefix_command, track_edits, slash_command, category = "image", broadcast_typing)]
+#[poise::command(prefix_command, track_edits, slash_command, category = "Image", broadcast_typing)]
 pub async fn blur(
     ctx: Context<'_>,
     #[description = "The sigma of the Gaussian mask (between 0.3 and 500)"]

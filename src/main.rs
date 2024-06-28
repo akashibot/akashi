@@ -69,6 +69,7 @@ async fn main() {
             // Util commands
             commands::util::help::help(),
             commands::util::stats::stats(),
+            commands::util::servers::servers(),
             // Image commands
             commands::image::invert::invert(),
             commands::image::resize::resize(),
@@ -92,21 +93,7 @@ async fn main() {
             mention_as_prefix: true,
             ..Default::default()
         },
-        // The global error handler for all error cases that may occur
         on_error: |error| Box::pin(on_error(error)),
-        // This code is run before every command
-        pre_command: |ctx| {
-            Box::pin(async move {
-                println!("Executing command {}...", ctx.command().qualified_name);
-            })
-        },
-        // This code is run after a command if it was successful (returned Ok)
-        post_command: |ctx| {
-            Box::pin(async move {
-                println!("Executed command {}!", ctx.command().qualified_name);
-            })
-        },
-        // Every command invocation must pass this check to continue execution
         command_check: Some(|ctx| {
             Box::pin(async move {
                 if ctx.author().id == 858367536240394259 {
@@ -173,11 +160,15 @@ async fn event_handler(
 
                     cached_images.put(new_message.channel_id, url.to_owned());
                 }
-            } else if !new_message.embeds.is_empty() && !new_message.embeds.first().is_none() {
-                let mut cached_images = data.cached_images.lock().await;
-                let url = new_message.embeds.first().unwrap().image.as_ref().unwrap().url.clone();
+            } else if !new_message.embeds.is_empty() {
+                let first_embed = new_message.embeds.first().unwrap();
 
-                cached_images.put(new_message.channel_id, url.to_owned());
+                if let Some(ref embed_image) = first_embed.image {
+                    let mut cached_images = data.cached_images.lock().await;
+                    let url = embed_image.proxy_url.clone();
+
+                    cached_images.put(new_message.channel_id, url.unwrap());
+                }
             }
         },
         _ => {},

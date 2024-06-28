@@ -1,15 +1,17 @@
-use crate::{
-    utils::{markup::{ansi::Ansi, markdown::Markdown}, table}, Context, Data, Error,
-};
+use sysinfo::{ProcessRefreshKind, RefreshKind};
 use typesize::*;
-use sysinfo::{RefreshKind, ProcessRefreshKind};
+
+use crate::utils::markup::{markdown::Markdown, ansi::Ansi};
+use crate::utils::discord::table;
+use crate::{Context, Data, Error};
 
 /// Get Akashi stats
-#[poise::command(prefix_command, track_edits, slash_command, category = "util")]
+#[poise::command(prefix_command, track_edits, slash_command, category = "Util")]
 pub async fn stats(ctx: Context<'_>) -> Result<(), Error> {
     let data = ctx.data();
 
-    let (cache_mem, process_mem, cpu, uptime, images, version) = get_system_stats(ctx, data).await?;
+    let (cache_mem, process_mem, cpu, uptime, images, version) =
+        get_system_stats(ctx, data).await?;
 
     let values: Vec<(String, String)> = vec![
         ("Memory usage (cache)".fg_green(), cache_mem.fg_cyan()),
@@ -26,7 +28,10 @@ pub async fn stats(ctx: Context<'_>) -> Result<(), Error> {
     Ok(())
 }
 
-async fn get_system_stats(ctx: Context<'_>, data: &Data) -> Result<(String, String, String, u64, String, String), Error> {
+async fn get_system_stats(
+    ctx: Context<'_>,
+    data: &Data,
+) -> Result<(String, String, String, u64, String, String), Error> {
     let mut system_info = data.sysinfo.lock().await;
     refresh_system_info(&mut system_info);
 
@@ -43,7 +48,7 @@ async fn get_system_stats(ctx: Context<'_>, data: &Data) -> Result<(String, Stri
 fn refresh_system_info(system_info: &mut sysinfo::System) {
     system_info.refresh_specifics(
         RefreshKind::new()
-            .with_processes(ProcessRefreshKind::new().with_memory().with_cpu().with_disk_usage())
+            .with_processes(ProcessRefreshKind::new().with_memory().with_cpu().with_disk_usage()),
     );
 }
 
