@@ -28,7 +28,7 @@ pub async fn send_image_embed(
     time: Option<u128>
 ) -> Result<ReplyHandle, Error> {
     let time = match time {
-        Some(time) => format!("Result in {time:?}ms"),
+        Some(time) => format!("Took {time:?}ms to complete"),
         None => "".to_string()
     };
 
@@ -88,6 +88,7 @@ pub async fn load_meme(
     send_image_embed(ctx, file, None).await
 }
 
+// Order: url, attachment, cached image, avatar
 pub async fn get_image_url(
     ctx: Context<'_>,
     url: Option<String>,
