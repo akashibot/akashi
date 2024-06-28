@@ -48,13 +48,8 @@ pub async fn resize(
     let (width, height) = parse_size(&size)?;
 
     let image = get_image_url(ctx, url, attachment).await.unwrap();
-    
-    let resize_like = match Some(resize_type) {
-        Some(like) => like.unwrap(),
-        None => ResizeTypeChoices::Enlarge
-    };
 
-    load_image(ctx, image, format!("{},s_{width}x{height}", resize_like.name()), None).await?;
+    load_image(ctx, image, format!("{},s_{width}x{height}", resize_type.unwrap_or(ResizeTypeChoices::Enlarge).name()), None).await?;
 
     Ok(())
 }
