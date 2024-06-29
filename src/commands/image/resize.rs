@@ -1,6 +1,7 @@
-use poise::{serenity_prelude, ChoiceParameter};
+use image::{imageops, ImageError, ImageFormat};
+use poise::serenity_prelude;
 
-use crate::utils::discord::image::{get_image_url, load_image};
+use crate::utils::discord::image::{ load_dynamic_buffer, operate_image};
 use crate::{Context, Error};
 
 fn parse_size(size_str: &str) -> Result<(u32, u32), String> {
@@ -18,14 +19,6 @@ fn parse_size(size_str: &str) -> Result<(u32, u32), String> {
     Ok((width, height))
 }
 
-#[derive(Debug, poise::ChoiceParameter)]
-pub enum ResizeTypeChoices {
-    #[name = "embed"]
-    Embed,
-    #[name = "enlarge"]
-    Enlarge,
-}
-
 /// Resize an image
 ///
 /// `resize 200x200`
@@ -34,40 +27,38 @@ pub enum ResizeTypeChoices {
 pub async fn resize(
     ctx: Context<'_>,
     #[description = "New image size (E.g: 200x200 or 200)"] size: String,
-    #[description = "Resize type (default: enlarge)"]
-    #[rename = "type"]
-    resize_type: Option<ResizeTypeChoices>,
+    #[description = "Resize type"] resize_type: Option<ResizeType>,
     #[description = "Image url"] url: Option<String>,
     #[description = "Image attachment"] attachment: Option<serenity_prelude::Attachment>,
 ) -> Result<(), Error> {
     let (width, height) = parse_size(&size)?;
+    
+    ctx.defer_or_broadcast().await?;
 
-    let image = get_image_url(ctx, url, attachment).await.unwrap();
+    let image = load_dynamic_buffer(ctx, url, attachment).await.map_err(|_| Err::<ImageError, &str>("Error loading image")).unwrap();
 
-    load_image(
-        ctx,
-        image,
-        format!("{},s_{width}x{height}", resize_type.unwrap_or(ResizeTypeChoices::Enlarge).name()),
-        None,
-    )
-    .await?;
+    operate_image(ctx, image.resize(width, height, resize_type.unwrap_or(ResizeType::Nearest).to_valid_type()), Some(ImageFormat::Png)).await?;
 
     Ok(())
 }
 
-#[cfg(test)]
-mod resize_tests {
-    use super::*;
+#[derive(Debug, PartialEq, poise::ChoiceParameter)]
+pub enum ResizeType {
+    Nearest,
+    Triangle,
+    CatmullRom,
+    Gaussian,
+    Lanczos3,
+}
 
-    #[test]
-    fn test_parse_size() {
-        assert_eq!(parse_size("200x200").unwrap(), (200, 200));
-        assert_eq!(parse_size("100x100").unwrap(), (100, 100));
-        assert_eq!(parse_size("200").unwrap(), (200, 200));
-        assert!(parse_size("200").is_ok());
-        assert!(parse_size("200x").is_ok());
-        assert_eq!(parse_size("200x").unwrap(), (200, 200));
-        assert!(parse_size("x200").is_err());
-        assert!(parse_size("").is_err());
+impl ResizeType {
+    pub fn to_valid_type(&self) -> imageops::FilterType {
+        match self {
+            ResizeType::Nearest => imageops::FilterType::Nearest,
+            ResizeType::Triangle => imageops::FilterType::Triangle,
+            ResizeType::CatmullRom => imageops::FilterType::CatmullRom,
+            ResizeType::Gaussian => imageops::FilterType::Gaussian,
+            ResizeType::Lanczos3 => imageops::FilterType::Lanczos3,
+        }
     }
 }

@@ -1,5 +1,7 @@
 use std::collections::HashMap;
+use std::io::Cursor;
 
+use image::{DynamicImage, ImageError, ImageFormat};
 use poise::serenity_prelude::CreateAttachment;
 use poise::{CreateReply, ReplyHandle};
 use reqwest::Response;
@@ -46,28 +48,6 @@ pub async fn send_image_embed(
     .map_err(Into::into)
 }
 
-pub async fn load_image(
-    ctx: Context<'_>,
-    url: String,
-    operation: String,
-    ext: Option<Type>,
-) -> Result<ReplyHandle, Error> {
-    // calculate time taken to load image
-    let start = std::time::Instant::now();
-    let image_url: String = match url {
-        url if !url.is_empty() => format!("{}/ipx/{}/{}", ctx.data().api_url, operation, url),
-        _ => return Err("URL is required and must not be empty".into()),
-    };
-
-    let buffer: Vec<u8> = fetch_image(image_url).await?;
-    let ext = ext.unwrap_or(get_sig(&buffer).unwrap_or(Type::Png)).as_str();
-    let file: CreateAttachment =
-        CreateAttachment::bytes(buffer.as_slice(), format!("{}.{ext}", ctx.command().name));
-    let time = start.elapsed().as_millis();
-
-    send_image_embed(ctx, file, Some(time)).await
-}
-
 pub async fn load_meme(
     ctx: Context<'_>,
     endpoint: String,
@@ -90,6 +70,37 @@ pub async fn load_meme(
     send_image_embed(ctx, file, None).await
 }
 
+pub async fn load_dynamic_buffer(
+    ctx: Context<'_>,
+    url: Option<String>,
+    attachment: Option<Attachment>,
+) -> Result<DynamicImage, ImageError> {
+    let image_url = get_image_url(ctx, url, attachment).await.unwrap();
+    let image_buffer = fetch_image(image_url).await.unwrap(); 
+    
+    load_image(image::load_from_memory(image_buffer.as_slice())).await
+}
+
+pub async fn load_image(image: Result<DynamicImage, ImageError>) -> Result<DynamicImage, ImageError> {
+    match image {
+        Ok(img) => Ok(img),
+        Err(err) => Err(err)
+    }
+}
+
+pub async fn operate_image(ctx: Context<'_>, image: DynamicImage, format: Option<ImageFormat>) -> Result<ReplyHandle, Error> {
+    let mut bytes = Vec::new();
+    
+    let start = std::time::Instant::now();
+    image.write_to(&mut Cursor::new(&mut bytes), format.unwrap_or(ImageFormat::Png)).unwrap();
+        
+    let ext = get_sig(bytes.as_slice()).unwrap_or(Type::Png).as_str();
+    let file: CreateAttachment = CreateAttachment::bytes(bytes, format!("{}.{ext}", ctx.command().name));
+
+    let time = start.elapsed().as_millis();
+    send_image_embed(ctx, file, Some(time)).await
+}
+
 pub async fn get_image_url(
     ctx: Context<'_>,
     url: Option<String>,
@@ -103,23 +114,15 @@ pub async fn get_image_url(
     match (url, attachment, referenced_message) {
         (Some(url), _, _) => Ok(url),
         (None, Some(attachment), _) => Ok(attachment.proxy_url.clone()),
-        (None, None, Some(referenced_message)) => {
-            if !referenced_message.attachments.is_empty() {
-                Ok(referenced_message.attachments.first().unwrap().proxy_url.clone())
-            } else if !referenced_message.embeds.is_empty() {
-                Ok(referenced_message
-                    .embeds
-                    .first()
-                    .unwrap()
-                    .image
-                    .clone()
-                    .unwrap()
-                    .proxy_url
-                    .unwrap())
+        (None, None, Some(referenced_message)) => Ok({
+            if let Some(image) = referenced_message.attachments.first() {
+                image.proxy_url.clone()
+            } else if let Some(embed) = referenced_message.embeds.first() {
+                embed.image.clone().unwrap().proxy_url.unwrap()
             } else {
-                fallback_cached_image(ctx).await
+                fallback_cached_image(ctx).await?
             }
-        },
+        }),
         (None, None, None) => fallback_cached_image(ctx).await,
     }
 }

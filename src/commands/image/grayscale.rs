@@ -1,6 +1,7 @@
+use image::{ImageError, ImageFormat};
 use poise::serenity_prelude;
 
-use crate::utils::discord::image::{get_image_url, load_image};
+use crate::utils::discord::image::{load_dynamic_buffer, operate_image};
 use crate::{Context, Error};
 
 /// Grayscale an image
@@ -12,9 +13,11 @@ pub async fn grayscale(
     #[description = "Image url"] url: Option<String>,
     #[description = "Image attachment"] attachment: Option<serenity_prelude::Attachment>,
 ) -> Result<(), Error> {
-    let image = get_image_url(ctx, url, attachment).await.unwrap();
+    ctx.defer_or_broadcast().await?;
 
-    load_image(ctx, image, "grayscale".to_string(), None).await?;
+    let image = load_dynamic_buffer(ctx, url, attachment).await.map_err(|_| Err::<ImageError, &str>("Error loading image")).unwrap();
+
+    operate_image(ctx, image.grayscale(), Some(ImageFormat::Png)).await?;
 
     Ok(())
 }

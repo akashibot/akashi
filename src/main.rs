@@ -73,7 +73,6 @@ async fn main() {
             // Image commands
             commands::image::invert::invert(),
             commands::image::resize::resize(),
-            commands::image::quality::quality(),
             commands::image::to::to(),
             commands::image::blur::blur(),
             commands::image::grayscale::grayscale(),

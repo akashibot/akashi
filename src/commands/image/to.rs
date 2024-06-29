@@ -1,6 +1,7 @@
+use image::ImageError;
 use poise::serenity_prelude;
 
-use crate::utils::discord::image::{get_image_url, load_image};
+use crate::utils::discord::image::{load_dynamic_buffer, operate_image};
 use crate::utils::filetype::Type;
 use crate::{Context, Error};
 
@@ -14,9 +15,11 @@ pub async fn to(
     #[description = "Image url"] url: Option<String>,
     #[description = "Image attachment"] attachment: Option<serenity_prelude::Attachment>,
 ) -> Result<(), Error> {
-    let image = get_image_url(ctx, url, attachment).await.unwrap();
+    ctx.defer_or_broadcast().await?;
 
-    load_image(ctx, image, format!("f_{:?}", mime), Type::from_str(mime.as_str())).await?;
+    let image = load_dynamic_buffer(ctx, url, attachment).await.map_err(|_| Err::<ImageError, &str>("Error loading image")).unwrap();
+
+    operate_image(ctx, image, Some(mime.to_valid_imageformat())).await?;
 
     Ok(())
 }

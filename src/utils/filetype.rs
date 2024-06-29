@@ -3,6 +3,8 @@
 use std::cmp::min;
 use std::ops::Range;
 
+use image::ImageFormat;
+
 #[derive(Debug, PartialEq, poise::ChoiceParameter)]
 pub enum Type {
     Gif,
@@ -38,6 +40,15 @@ impl Type {
             _ => None,
         }
     }
+
+    pub fn to_valid_imageformat(&self) -> ImageFormat {
+        match self {
+            Type::Gif => ImageFormat::Gif,
+            Type::Jpeg => ImageFormat::Jpeg,
+            Type::Png => ImageFormat::Png,
+            Type::Webp => ImageFormat::WebP,
+        }
+    }
 }
 
 const WEBP: [u8; 4] = [87, 69, 66, 80];
@@ -54,11 +65,6 @@ fn sig(that: &[u8], eq: &[u8]) -> bool {
 fn check_webp(that: &[u8]) -> bool {
     let bytes_offset_removed = &that[bounded_range(8, 12, that.len())];
     sig(bytes_offset_removed, &WEBP)
-}
-
-fn check_mp4(that: &[u8]) -> bool {
-    let bytes_offset_removed = &that[bounded_range(4, 8, that.len())];
-    sig(bytes_offset_removed, &MP4)
 }
 
 pub fn get_sig(buf: &[u8]) -> Option<Type> {
