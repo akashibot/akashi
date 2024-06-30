@@ -211,6 +211,7 @@ dependencies = [
  "image",
  "lru",
  "poise",
+ "rand",
  "regex",
  "reqwest 0.12.4",
  "serde",

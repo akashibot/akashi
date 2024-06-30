@@ -9,6 +9,7 @@ use serenity::all::{Attachment, CreateEmbed, CreateEmbedFooter};
 use serenity::model::colour;
 
 use super::cache::fallback_cached_image;
+use super::rand::generate_random_text;
 use crate::utils::filetype::{get_sig, Type};
 use crate::{Context, Error};
 
@@ -64,7 +65,7 @@ pub async fn load_meme(
 
     let ext = get_sig(&bytes).unwrap_or(Type::Png).as_str();
     let file: CreateAttachment =
-        CreateAttachment::bytes(bytes.as_slice(), format!("{}.{ext}", ctx.command().name));
+        CreateAttachment::bytes(bytes.as_slice(), format!("{}.{ext}", generate_random_text(5)));
 
     send_image_embed(ctx, file, None).await
 }
@@ -94,7 +95,7 @@ pub async fn operate_image(ctx: Context<'_>, image: DynamicImage, format: Option
     image.write_to(&mut Cursor::new(&mut bytes), format.unwrap_or(ImageFormat::Png)).unwrap();
         
     let ext = get_sig(bytes.as_slice()).unwrap_or(Type::Png).as_str();
-    let file: CreateAttachment = CreateAttachment::bytes(bytes, format!("{}.{ext}", ctx.command().name));
+    let file: CreateAttachment = CreateAttachment::bytes(bytes, format!("{}.{ext}", generate_random_text(5)));
 
     let time = start.elapsed().as_millis();
     send_image_embed(ctx, file, Some(time)).await
