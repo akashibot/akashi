@@ -16,14 +16,13 @@ pub async fn get_response_bytes(res: Response) -> Result<Vec<u8>, Error> {
     Ok(res.bytes().await?.to_vec())
 }
 
-pub async fn fetch_image(url: String) -> Result<Vec<u8>, Error> {
-    let response = reqwest::get(url).await?;
+pub async fn fetch_image(ctx: Context<'_>, url: String) -> Result<Vec<u8>, Error> {
+    let response = ctx.data().reqwest_client.get(url).send().await;
 
-    if !response.status().is_success() {
-        return Err("An error has occurred while processing your image".into());
+    match response {
+        Ok(res) => Ok(get_response_bytes(res).await.unwrap()),
+        Err(_) => Err("An error has occurred while processing your image".into())
     }
-
-    Ok(get_response_bytes(response).await.unwrap())
 }
 
 pub async fn send_image_embed(
@@ -39,7 +38,7 @@ pub async fn send_image_embed(
     ctx.send(
         CreateReply::default().attachment(file.clone()).embed(
             CreateEmbed::default()
-                .color(colour::colours::roles::DEFAULT)
+                .color(colour::colours::branding::GREEN)
                 .attachment(file.filename)
                 .footer(CreateEmbedFooter::new(time)),
         ),
@@ -76,7 +75,7 @@ pub async fn load_dynamic_buffer(
     attachment: Option<Attachment>,
 ) -> Result<DynamicImage, ImageError> {
     let image_url = get_image_url(ctx, url, attachment).await.unwrap();
-    let image_buffer = fetch_image(image_url).await.unwrap(); 
+    let image_buffer = fetch_image(ctx, image_url).await.unwrap(); 
     
     load_image(image::load_from_memory(image_buffer.as_slice())).await
 }
@@ -89,9 +88,9 @@ pub async fn load_image(image: Result<DynamicImage, ImageError>) -> Result<Dynam
 }
 
 pub async fn operate_image(ctx: Context<'_>, image: DynamicImage, format: Option<ImageFormat>) -> Result<ReplyHandle, Error> {
+    let start = std::time::Instant::now();
     let mut bytes = Vec::new();
     
-    let start = std::time::Instant::now();
     image.write_to(&mut Cursor::new(&mut bytes), format.unwrap_or(ImageFormat::Png)).unwrap();
         
     let ext = get_sig(bytes.as_slice()).unwrap_or(Type::Png).as_str();
@@ -114,15 +113,23 @@ pub async fn get_image_url(
     match (url, attachment, referenced_message) {
         (Some(url), _, _) => Ok(url),
         (None, Some(attachment), _) => Ok(attachment.proxy_url.clone()),
-        (None, None, Some(referenced_message)) => Ok({
+        (None, None, Some(referenced_message)) => {
             if let Some(image) = referenced_message.attachments.first() {
-                image.proxy_url.clone()
+                Ok(image.proxy_url.clone())
             } else if let Some(embed) = referenced_message.embeds.first() {
-                embed.image.clone().unwrap().proxy_url.unwrap()
+                if let Some(image) = &embed.image {
+                    if let Some(proxy_url) = &image.proxy_url {
+                        Ok(proxy_url.clone())
+                    } else {
+                        fallback_cached_image(ctx).await
+                    }
+                } else {
+                    fallback_cached_image(ctx).await
+                }
             } else {
-                fallback_cached_image(ctx).await?
+                fallback_cached_image(ctx).await
             }
-        }),
+        },
         (None, None, None) => fallback_cached_image(ctx).await,
     }
 }

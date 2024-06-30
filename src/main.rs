@@ -9,15 +9,15 @@ use std::time::Duration;
 use lru::LruCache;
 use poise::serenity_prelude::futures::lock::Mutex;
 use poise::serenity_prelude::{self as serenity, ActivityData, ChannelId, UserId};
+use regex::Regex;
+use utils::discord::cache::save_image_to_cache;
 
 mod commands;
 mod utils;
 
-// Types used by all command functions
 type Error = Box<dyn std::error::Error + Send + Sync>;
 type Context<'a> = poise::Context<'a, Data, Error>;
 
-// Custom user data passed to all command functions
 pub struct Data {
     api_url: String,
     sysinfo: Mutex<sysinfo::System>,
@@ -25,34 +25,17 @@ pub struct Data {
     cached_images: Mutex<LruCache<ChannelId, String>>,
 }
 
-// #[derive(Deserialize, Debug)]
-// struct Env {
-//     discord_token: String,
-//     ipx_host: String,
-// }
-
 async fn on_error(error: poise::FrameworkError<'_, Data, Error>) {
-    // This is our custom error handler
-    // They are many errors that can occur, so we only handle the ones we want to customize
-    // and forward the rest to the default handler
     match error {
-        poise::FrameworkError::Setup {
-            error, ..
-        } => panic!("Failed to start bot: {error:?}"),
-        poise::FrameworkError::Command {
-            error,
-            ctx,
-            ..
-        } => {
-            // remove the quotes from error
-            ctx.say(error.to_string()).await.unwrap();
-            println!("Error in command `{}`: {:?}", ctx.command().name, error);
-        },
+        poise::FrameworkError::Setup { error, .. } => panic!("Failed to start bot: {:?}", error),
+        poise::FrameworkError::Command { error, ctx, .. } => {
+            println!("Error in command `{}`: {:?}", ctx.command().name, error,);
+        }
         error => {
             if let Err(e) = poise::builtins::on_error(error).await {
-                println!("Error while handling error: {e}");
+                println!("Error while handling error: {}", e)
             }
-        },
+        }
     }
 }
 
@@ -70,12 +53,14 @@ async fn main() {
             commands::util::help::help(),
             commands::util::stats::stats(),
             commands::util::servers::servers(),
+            
             // Image commands
             commands::image::invert::invert(),
             commands::image::resize::resize(),
             commands::image::to::to(),
             commands::image::blur::blur(),
             commands::image::grayscale::grayscale(),
+
             // Meme commands
             commands::meme::caption::caption(),
             commands::meme::speech::speech(),
@@ -86,7 +71,7 @@ async fn main() {
         prefix_options: poise::PrefixFrameworkOptions {
             prefix: Some(",".into()),
             edit_tracker: Some(Arc::new(poise::EditTracker::for_timespan(Duration::from_secs(
-                3600,
+                30,
             )))),
             additional_prefixes: vec![poise::Prefix::Literal("akashi")],
             mention_as_prefix: true,
@@ -103,8 +88,6 @@ async fn main() {
                 Ok(true)
             })
         }),
-        // Enforce command checks even for owners (enforced by default)
-        // Set to true to bypass checks, which is useful for testing
         skip_checks_for_owners: false,
         owners: bot_owners,
         ..Default::default()
@@ -151,24 +134,44 @@ async fn event_handler(
         serenity::FullEvent::Message {
             new_message,
         } => {
+            // println!("message: {:#?}", new_message);
             if !new_message.attachments.is_empty() {
-                let mut cached_images = data.cached_images.lock().await;
+                let first_attachment = new_message.attachments.first().unwrap();
 
-                for attachment in &new_message.attachments {
-                    let url = attachment.proxy_url.clone();
+                if !first_attachment.proxy_url.is_empty() {
+                    let url = first_attachment.proxy_url.clone();
 
-                    cached_images.put(new_message.channel_id, url.to_owned());
-                }
-            } else if !new_message.embeds.is_empty() {
-                let first_embed = new_message.embeds.first().unwrap();
-
-                if let Some(ref embed_image) = first_embed.image {
-                    let mut cached_images = data.cached_images.lock().await;
-                    let url = embed_image.proxy_url.clone();
-
-                    cached_images.put(new_message.channel_id, url.unwrap());
+                    save_image_to_cache(data, new_message.channel_id, url.to_owned()).await?;
                 }
             }
+            
+            if !new_message.embeds.is_empty() {
+                let first_embed = new_message.embeds.first().unwrap();
+
+                // println!("embed: {:#?}", first_embed);
+
+                if let Some(embed_image) = &first_embed.image {
+                    let url = embed_image.proxy_url.clone();
+
+                    save_image_to_cache(data, new_message.channel_id, url.expect("missing embed image url")).await?;
+                }
+
+                if let Some(embed_thumbnail) = &first_embed.thumbnail {
+                    let url = embed_thumbnail.proxy_url.clone();
+
+                    save_image_to_cache(data, new_message.channel_id, url.expect("missing embed thumbnail url")).await?;
+                }
+            }
+
+            let image_url_regex = Regex::new(r"(https?://(?:[a-zA-Z0-9]+\.)*[a-zA-Z0-9]+(?:/\S*)?\.(?:jpe?g|png|gif|webp))").unwrap();
+            if image_url_regex.is_match(&new_message.content) {
+                let url = image_url_regex.captures(&new_message.content).unwrap().get(0).unwrap().as_str();
+
+                save_image_to_cache(data, new_message.channel_id, url.to_owned()).await?;
+            }
+
+
+            // println!("{}", data.cached_images.lock().await.get(&new_message.channel_id).unwrap_or(&"none".to_string()));
         },
         _ => {},
     }
