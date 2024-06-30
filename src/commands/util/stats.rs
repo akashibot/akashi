@@ -1,8 +1,9 @@
 use sysinfo::{ProcessRefreshKind, RefreshKind};
 use typesize::*;
 
-use crate::utils::markup::{markdown::Markdown, ansi::Ansi};
 use crate::utils::discord::table;
+use crate::utils::markup::ansi::Ansi;
+use crate::utils::markup::markdown::Markdown;
 use crate::{Context, Data, Error};
 
 /// Get Akashi stats

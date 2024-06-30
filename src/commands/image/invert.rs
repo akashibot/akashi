@@ -16,7 +16,10 @@ pub async fn invert(
 ) -> Result<(), Error> {
     ctx.defer_or_broadcast().await?;
 
-    let image = load_dynamic_buffer(ctx, url, attachment).await.map_err(|_| Err::<ImageError, &str>("Error loading image")).unwrap();
+    let image = load_dynamic_buffer(ctx, url, attachment)
+        .await
+        .map_err(|_| Err::<ImageError, &str>("Error loading image"))
+        .unwrap();
     let mut inplaced_image = image.clone();
 
     inplaced_image.invert();

@@ -27,15 +27,21 @@ pub struct Data {
 
 async fn on_error(error: poise::FrameworkError<'_, Data, Error>) {
     match error {
-        poise::FrameworkError::Setup { error, .. } => panic!("Failed to start bot: {:?}", error),
-        poise::FrameworkError::Command { error, ctx, .. } => {
+        poise::FrameworkError::Setup {
+            error, ..
+        } => panic!("Failed to start bot: {:?}", error),
+        poise::FrameworkError::Command {
+            error,
+            ctx,
+            ..
+        } => {
             println!("Error in command `{}`: {:?}", ctx.command().name, error,);
-        }
+        },
         error => {
             if let Err(e) = poise::builtins::on_error(error).await {
                 println!("Error while handling error: {}", e)
             }
-        }
+        },
     }
 }
 
@@ -53,14 +59,12 @@ async fn main() {
             commands::util::help::help(),
             commands::util::stats::stats(),
             commands::util::servers::servers(),
-            
             // Image commands
             commands::image::invert::invert(),
             commands::image::resize::resize(),
             commands::image::to::to(),
             commands::image::blur::blur(),
             commands::image::grayscale::grayscale(),
-
             // Meme commands
             commands::meme::caption::caption(),
             commands::meme::speech::speech(),
@@ -70,9 +74,7 @@ async fn main() {
         },
         prefix_options: poise::PrefixFrameworkOptions {
             prefix: Some(",".into()),
-            edit_tracker: Some(Arc::new(poise::EditTracker::for_timespan(Duration::from_secs(
-                30,
-            )))),
+            edit_tracker: Some(Arc::new(poise::EditTracker::for_timespan(Duration::from_secs(30)))),
             additional_prefixes: vec![poise::Prefix::Literal("akashi")],
             mention_as_prefix: true,
             ..Default::default()
@@ -144,7 +146,7 @@ async fn event_handler(
                     save_image_to_cache(data, new_message.channel_id, url.to_owned()).await?;
                 }
             }
-            
+
             if !new_message.embeds.is_empty() {
                 let first_embed = new_message.embeds.first().unwrap();
 
@@ -153,25 +155,44 @@ async fn event_handler(
                 if let Some(embed_image) = &first_embed.image {
                     let url = embed_image.proxy_url.clone();
 
-                    save_image_to_cache(data, new_message.channel_id, url.expect("missing embed image url")).await?;
+                    save_image_to_cache(
+                        data,
+                        new_message.channel_id,
+                        url.expect("missing embed image url"),
+                    )
+                    .await?;
                 }
 
                 if let Some(embed_thumbnail) = &first_embed.thumbnail {
                     let url = embed_thumbnail.proxy_url.clone();
 
-                    save_image_to_cache(data, new_message.channel_id, url.expect("missing embed thumbnail url")).await?;
+                    save_image_to_cache(
+                        data,
+                        new_message.channel_id,
+                        url.expect("missing embed thumbnail url"),
+                    )
+                    .await?;
                 }
             }
 
-            let image_url_regex = Regex::new(r"(https?://(?:[a-zA-Z0-9]+\.)*[a-zA-Z0-9]+(?:/\S*)?\.(?:jpe?g|png|gif|webp))").unwrap();
+            let image_url_regex = Regex::new(
+                r"(https?://(?:[a-zA-Z0-9]+\.)*[a-zA-Z0-9]+(?:/\S*)?\.(?:jpe?g|png|gif|webp))",
+            )
+            .unwrap();
             if image_url_regex.is_match(&new_message.content) {
-                let url = image_url_regex.captures(&new_message.content).unwrap().get(0).unwrap().as_str();
+                let url = image_url_regex
+                    .captures(&new_message.content)
+                    .unwrap()
+                    .get(0)
+                    .unwrap()
+                    .as_str();
 
                 save_image_to_cache(data, new_message.channel_id, url.to_owned()).await?;
             }
 
-
-            // println!("{}", data.cached_images.lock().await.get(&new_message.channel_id).unwrap_or(&"none".to_string()));
+            // println!("{}",
+            // data.cached_images.lock().await.get(&new_message.channel_id).unwrap_or(&"none".
+            // to_string()));
         },
         _ => {},
     }

@@ -1,7 +1,7 @@
 use image::{imageops, ImageError, ImageFormat};
 use poise::serenity_prelude;
 
-use crate::utils::discord::image::{ load_dynamic_buffer, operate_image};
+use crate::utils::discord::image::{load_dynamic_buffer, operate_image};
 use crate::{Context, Error};
 
 fn parse_size(size_str: &str) -> Result<(u32, u32), String> {
@@ -32,12 +32,20 @@ pub async fn resize(
     #[description = "Image attachment"] attachment: Option<serenity_prelude::Attachment>,
 ) -> Result<(), Error> {
     let (width, height) = parse_size(&size)?;
-    
+
     ctx.defer_or_broadcast().await?;
 
-    let image = load_dynamic_buffer(ctx, url, attachment).await.map_err(|_| Err::<ImageError, &str>("Error loading image")).unwrap();
+    let image = load_dynamic_buffer(ctx, url, attachment)
+        .await
+        .map_err(|_| Err::<ImageError, &str>("Error loading image"))
+        .unwrap();
 
-    operate_image(ctx, image.resize(width, height, resize_type.unwrap_or(ResizeType::Nearest).to_valid_type()), Some(ImageFormat::Png)).await?;
+    operate_image(
+        ctx,
+        image.resize(width, height, resize_type.unwrap_or(ResizeType::Nearest).to_valid_type()),
+        Some(ImageFormat::Png),
+    )
+    .await?;
 
     Ok(())
 }

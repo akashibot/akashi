@@ -7,7 +7,7 @@ use crate::{Context, Error};
 /// Blur an image
 ///
 /// `blur 7`
-/// 
+///
 /// ⚠️ This command is experimental and may not work as expected.
 /// Current status: working as intended.
 #[poise::command(prefix_command, track_edits, slash_command, category = "Image", broadcast_typing)]
@@ -22,7 +22,10 @@ pub async fn blur(
 ) -> Result<(), Error> {
     ctx.defer_or_broadcast().await?;
 
-    let image = load_dynamic_buffer(ctx, url, attachment).await.map_err(|_| Err::<ImageError, &str>("Error loading image")).unwrap();
+    let image = load_dynamic_buffer(ctx, url, attachment)
+        .await
+        .map_err(|_| Err::<ImageError, &str>("Error loading image"))
+        .unwrap();
 
     match value {
         1..=100 => {

@@ -22,7 +22,7 @@ pub async fn fetch_image(ctx: Context<'_>, url: String) -> Result<Vec<u8>, Error
 
     match response {
         Ok(res) => Ok(get_response_bytes(res).await.unwrap()),
-        Err(_) => Err("An error has occurred while processing your image".into())
+        Err(_) => Err("An error has occurred while processing your image".into()),
     }
 }
 
@@ -76,26 +76,33 @@ pub async fn load_dynamic_buffer(
     attachment: Option<Attachment>,
 ) -> Result<DynamicImage, ImageError> {
     let image_url = get_image_url(ctx, url, attachment).await.unwrap();
-    let image_buffer = fetch_image(ctx, image_url).await.unwrap(); 
-    
+    let image_buffer = fetch_image(ctx, image_url).await.unwrap();
+
     load_image(image::load_from_memory(image_buffer.as_slice())).await
 }
 
-pub async fn load_image(image: Result<DynamicImage, ImageError>) -> Result<DynamicImage, ImageError> {
+pub async fn load_image(
+    image: Result<DynamicImage, ImageError>,
+) -> Result<DynamicImage, ImageError> {
     match image {
         Ok(img) => Ok(img),
-        Err(err) => Err(err)
+        Err(err) => Err(err),
     }
 }
 
-pub async fn operate_image(ctx: Context<'_>, image: DynamicImage, format: Option<ImageFormat>) -> Result<ReplyHandle, Error> {
+pub async fn operate_image(
+    ctx: Context<'_>,
+    image: DynamicImage,
+    format: Option<ImageFormat>,
+) -> Result<ReplyHandle, Error> {
     let start = std::time::Instant::now();
     let mut bytes = Vec::new();
-    
+
     image.write_to(&mut Cursor::new(&mut bytes), format.unwrap_or(ImageFormat::Png)).unwrap();
-        
+
     let ext = get_sig(bytes.as_slice()).unwrap_or(Type::Png).as_str();
-    let file: CreateAttachment = CreateAttachment::bytes(bytes, format!("{}.{ext}", generate_random_text(5)));
+    let file: CreateAttachment =
+        CreateAttachment::bytes(bytes, format!("{}.{ext}", generate_random_text(5)));
 
     let time = start.elapsed().as_millis();
     send_image_embed(ctx, file, Some(time)).await

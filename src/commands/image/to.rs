@@ -17,7 +17,10 @@ pub async fn to(
 ) -> Result<(), Error> {
     ctx.defer_or_broadcast().await?;
 
-    let image = load_dynamic_buffer(ctx, url, attachment).await.map_err(|_| Err::<ImageError, &str>("Error loading image")).unwrap();
+    let image = load_dynamic_buffer(ctx, url, attachment)
+        .await
+        .map_err(|_| Err::<ImageError, &str>("Error loading image"))
+        .unwrap();
 
     operate_image(ctx, image, Some(mime.to_valid_imageformat())).await?;
 
