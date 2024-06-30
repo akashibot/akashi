@@ -21,8 +21,8 @@ fn parse_size(size_str: &str) -> Result<(u32, u32), String> {
 
 /// Resize an image
 ///
-/// `resize 200x200`
-/// `resize 200` ("height" will be the same as "width now")
+/// `resize 200x200 <image>`
+/// `resize 200 <image>` ("height" will be the same as "width now")
 #[poise::command(prefix_command, track_edits, slash_command, category = "Image", broadcast_typing)]
 pub async fn resize(
     ctx: Context<'_>,

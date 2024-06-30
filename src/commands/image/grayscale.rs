@@ -4,9 +4,9 @@ use poise::serenity_prelude;
 use crate::utils::discord::image::{load_dynamic_buffer, operate_image};
 use crate::{Context, Error};
 
-/// Grayscale an image
+/// Return a grayscale version of this image
 ///
-/// `grayscale`
+/// `grayscale <image>`
 #[poise::command(prefix_command, track_edits, slash_command, category = "Image", broadcast_typing)]
 pub async fn grayscale(
     ctx: Context<'_>,

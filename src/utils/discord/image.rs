@@ -56,7 +56,7 @@ pub async fn load_meme(
     let response: Response = ctx
         .data()
         .reqwest_client
-        .post(format!("{}{}", ctx.data().api_url, endpoint))
+        .post(format!("{}/meme{}", ctx.data().api_url, endpoint))
         .json(&body)
         .send()
         .await?;

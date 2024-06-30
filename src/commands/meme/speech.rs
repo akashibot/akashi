@@ -22,7 +22,7 @@ pub async fn speech(
 
     body.insert("image".into(), image);
 
-    load_meme(ctx, "/meme/speech".to_owned(), body).await?;
+    load_meme(ctx, "/speech".to_owned(), body).await?;
 
     Ok(())
 }

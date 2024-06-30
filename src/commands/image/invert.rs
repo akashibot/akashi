@@ -4,10 +4,9 @@ use poise::serenity_prelude;
 use crate::utils::discord::image::{load_dynamic_buffer, operate_image};
 use crate::{Context, Error};
 
-/// Invert an image
+/// Invert the colors of the image
 ///
-/// `,invert`
-/// `/invert`
+/// `invert <image>`
 #[poise::command(prefix_command, track_edits, slash_command, category = "Image", broadcast_typing)]
 pub async fn invert(
     ctx: Context<'_>,

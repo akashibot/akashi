@@ -11,15 +11,16 @@ use crate::{Context, Data, Error};
 pub async fn stats(ctx: Context<'_>) -> Result<(), Error> {
     let data = ctx.data();
 
-    let (cache_mem, process_mem, cpu, uptime, images, version) =
+    let (cache_mem, process_mem, cpu, uptime, images, version, guild_count) =
         get_system_stats(ctx, data).await?;
 
     let values: Vec<(String, String)> = vec![
-        ("Memory usage (cache)".fg_green(), cache_mem.fg_cyan()),
-        ("Memory usage (rust)".fg_green(), process_mem.fg_cyan()),
+        ("Cache memory usage".fg_green(), cache_mem.fg_cyan()),
+        ("Memory usage".fg_green(), process_mem.fg_cyan()),
         ("CPU usage".fg_green(), cpu.fg_cyan()),
         ("Cached images".fg_green(), images.fg_cyan()),
         ("Bot version".fg_green(), version.fg_cyan()),
+        ("Guild count (cached)".fg_green(), guild_count.fg_cyan()),
     ];
 
     let stats = table::key_value(&values);
@@ -32,7 +33,7 @@ pub async fn stats(ctx: Context<'_>) -> Result<(), Error> {
 async fn get_system_stats(
     ctx: Context<'_>,
     data: &Data,
-) -> Result<(String, String, String, u64, String, String), Error> {
+) -> Result<(String, String, String, u64, String, String, String), Error> {
     let mut system_info = data.sysinfo.lock().await;
     refresh_system_info(&mut system_info);
 
@@ -42,8 +43,9 @@ async fn get_system_stats(
     let uptime = get_process_uptime(&system_info)?;
     let images = format_cached_images(ctx).await;
     let version = get_bot_version();
+    let guild_count = format_guild_count(ctx)?;
 
-    Ok((cache_mem, process_mem, cpu, uptime, images, version))
+    Ok((cache_mem, process_mem, cpu, uptime, images, version, guild_count))
 }
 
 fn refresh_system_info(system_info: &mut sysinfo::System) {
@@ -69,6 +71,11 @@ fn format_cpu_usage(system_info: &sysinfo::System) -> Result<String, Error> {
     let pid = sysinfo::get_current_pid().map_err(|e| Error::from(e.to_string()))?;
     let process = system_info.process(pid).ok_or_else(|| Error::from("Process not found"))?;
     Ok(format!("{:.1}%", process.cpu_usage()))
+}
+
+fn format_guild_count(ctx: Context<'_>) -> Result<String, Error> {
+    let guild_count = ctx.cache().guild_count();
+    Ok(format!("{guild_count}"))
 }
 
 fn get_process_uptime(system_info: &sysinfo::System) -> Result<u64, Error> {

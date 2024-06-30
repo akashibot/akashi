@@ -7,7 +7,7 @@ use crate::{Context, Error};
 
 /// Change an image mimetype
 ///
-/// `to png`
+/// `to png <image>`
 #[poise::command(prefix_command, track_edits, slash_command, category = "Image", broadcast_typing)]
 pub async fn to(
     ctx: Context<'_>,

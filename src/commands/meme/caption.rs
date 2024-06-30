@@ -24,7 +24,7 @@ pub async fn caption(
     body.insert("image".into(), image);
     body.insert("caption".into(), caption);
 
-    load_meme(ctx, "/meme/caption".to_owned(), body).await?;
+    load_meme(ctx, "/caption".to_owned(), body).await?;
 
     Ok(())
 }
