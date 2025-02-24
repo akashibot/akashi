@@ -1,0 +1,35 @@
+[workspace]
+resolver = "2"
+members = [ "akashi-cli", "akashi-commands","akashi-core", "akashi-database", "akashi-handlers", "akashi-shared", "akashi-strings" ]
+
+[workspace.dependencies]
+# Async
+tokio = { version = "1", features = ["full"] }
+
+# Logging
+tracing = "=0.1.41"
+tracing-subscriber = { version = "=0.3.19", features = ["env-filter", "json"] }
+
+# Env
+dotenvy = "=0.15.7"
+
+# Discord
+poise = { git = "https://github.com/serenity-rs/poise", branch = "serenity-next" }
+serenity = { git = "https://github.com/serenity-rs/serenity", rev = "6286c18" }
+
+# Fetching
+isahc = { version = "1", features = ["json"] }
+serde = { version = "1", features = ["derive"] }
+
+# Database
+sqlx = { version = "0.8.3", features =  ["runtime-tokio", "tls-rustls", "postgres", "chrono"] }
+
+# Misc
+chrono = { version = "0" }
+dashmap = { version = "6", features = ["typesize"] }
+base64 = "0.22.1"
+regex = "1"
+thiserror = { version = "2" }
+translators = { version = "0.1.5", features = ["google", "tokio-async"] }
+tagscript = { git = "https://github.com/akashibot/tagscript" }
+unstorage-rs = { git = "https://github.com/akashibot/unstorage-rs" }

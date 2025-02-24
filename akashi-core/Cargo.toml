@@ -1,0 +1,16 @@
+[package]
+name = "akashi-core"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tokio = { workspace = true }
+tracing-subscriber = { workspace = true }
+tracing = { workspace = true }
+poise = { workspace = true }
+serenity = { workspace = true }
+dotenvy = { workspace = true }
+
+akashi-handlers = { path = "../akashi-handlers" }
+akashi-shared = { path = "../akashi-shared" }
+akashi-commands = { path = "../akashi-commands" }

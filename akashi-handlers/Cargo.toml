@@ -1,0 +1,12 @@
+[package]
+name = "akashi-handlers"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tokio = { workspace = true }
+poise = { workspace = true }
+tracing = { workspace = true }
+chrono = { workspace = true }
+
+akashi-shared = { path = "../akashi-shared" }

@@ -1,0 +1,13 @@
+[package]
+name = "akashi-cli"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tokio = { workspace = true }
+dashmap = { workspace = true }
+anyhow = { version = "1" }
+argh = { version = "0.1.13" }
+image = { version = "0.25.5", features = ["gif", "rayon"] }
+infer = { version = "0.19.0" }
+rayon = "1.10.0"

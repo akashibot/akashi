@@ -1,0 +1,10 @@
+[package]
+name = "akashi-database"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tracing = { workspace = true }
+sqlx = { workspace = true }
+thiserror = { workspace = true }
+chrono = { workspace = true }

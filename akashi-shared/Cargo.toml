@@ -1,0 +1,15 @@
+[package]
+name = "akashi-shared"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+tokio = { workspace = true }
+poise = { workspace = true }
+unstorage-rs = { workspace = true }
+serde = { workspace = true }
+chrono = { workspace = true }
+tracing = { workspace = true }
+dashmap = { workspace = true }
+
+akashi-database = { path = "../akashi-database" }
