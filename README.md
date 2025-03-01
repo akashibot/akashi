@@ -11,7 +11,7 @@
 
 *Commander, Commander~! You've got a new mission!*
 
-[Homepage](https://api.dbots.fun)
+[Homepage](https://github.com/akashibot/akashi)
 | [Discord](https://discord.gg/d86RAeHF6T)
 
 </div>
