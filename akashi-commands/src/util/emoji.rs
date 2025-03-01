@@ -1,8 +1,8 @@
 use akashi_shared::{AkashiContext, AkashiResult, error::AkashiErrors};
-use base64::{Engine, engine::general_purpose};
 use isahc::AsyncReadResponseExt;
 use poise::CreateReply;
 use regex::Regex;
+use akashi_strings::algorithms::base64::base64_encode;
 
 /// Download emoji(s)
 ///
@@ -75,7 +75,7 @@ pub async fn emoji(
 async fn encode_emoji_url(url: &str) -> AkashiResult<String> {
 	let mut res = isahc::get_async(url).await?;
 	let bytes = res.bytes().await?;
-	let b64 = general_purpose::STANDARD.encode(&bytes);
+	let b64 = base64_encode(&bytes);
 
 	let encoded_url = format!("data:image/png;base64,{b64}");
 

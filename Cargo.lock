@@ -69,8 +69,6 @@ version = "0.1.0"
 dependencies = [
  "akashi-shared",
  "akashi-strings",
- "base64",
- "chrono",
  "dashmap",
  "isahc",
  "poise",

@@ -6,14 +6,12 @@ edition = "2024"
 [dependencies]
 tracing = { workspace = true }
 dashmap = { workspace = true }
-base64 = { workspace = true }
 poise = { workspace = true }
 isahc = { workspace = true }
 serde = { workspace = true }
 regex = { workspace = true }
 translators = { workspace = true }
 tagscript = { workspace = true }
-chrono = { workspace = true }
 sysinfo = { workspace = true }
 
 akashi-shared = { path = "../akashi-shared" }
