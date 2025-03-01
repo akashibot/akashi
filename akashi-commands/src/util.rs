@@ -2,6 +2,7 @@ use akashi_shared::{AkashiData, AkashiError};
 use poise::Command;
 
 mod emoji;
+mod help;
 mod invidious;
 mod stats;
 mod translate;
@@ -13,5 +14,6 @@ pub fn register() -> Vec<Command<AkashiData, AkashiError>> {
 		translate::translate(),
 		translate::context_menu_translate(),
 		emoji::emoji(),
+		help::help(),
 	]
 }

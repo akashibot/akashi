@@ -3,7 +3,7 @@ use akashi_strings::discord::{ansi::Ansi, markdown::Markdown};
 use sysinfo::System;
 
 /// Show Akashi stats
-#[poise::command(slash_command, prefix_command)]
+#[poise::command(slash_command, prefix_command, category = "util")]
 pub async fn stats(ctx: AkashiContext<'_>) -> AkashiResult {
 	let uptime = ctx.data().uptime.clone().elapsed();
 

@@ -7,7 +7,7 @@ use poise::{builtins::paginate, serenity_prelude::User};
 ///
 /// <prefix>tag list
 /// <prefix>tag list @user
-#[poise::command(slash_command, prefix_command)]
+#[poise::command(slash_command, prefix_command, category = "tag")]
 pub async fn list(
 	ctx: AkashiContext<'_>,
 	#[description = "User to search by"] user: Option<User>,

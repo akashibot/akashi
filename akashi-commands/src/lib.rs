@@ -1,9 +1,9 @@
 use akashi_shared::{AkashiData, AkashiError};
 use poise::Command;
 
+mod debug;
 mod tag;
 mod util;
-mod debug;
 
 #[macro_use]
 extern crate serde;

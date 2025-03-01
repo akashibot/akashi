@@ -4,7 +4,7 @@ use akashi_shared::{AkashiContext, AkashiResult, database::models::tag::Tag, err
 /// Get a tag information
 ///
 /// <prefix>tag raw <tag_name>
-#[poise::command(slash_command, prefix_command)]
+#[poise::command(slash_command, prefix_command, category = "tag")]
 pub async fn raw(
 	ctx: AkashiContext<'_>,
 	#[description = "Tag name"]

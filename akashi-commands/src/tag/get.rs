@@ -29,7 +29,7 @@ pub async fn autocomplete_tag_name<'a>(
 /// Get a tag and view its content
 ///
 /// <prefix>tag get <tag_name> [args]
-#[poise::command(slash_command, prefix_command, aliases(""))]
+#[poise::command(slash_command, prefix_command, category = "tag")]
 pub async fn get(
 	ctx: AkashiContext<'_>,
 	#[description = "Tag name"]

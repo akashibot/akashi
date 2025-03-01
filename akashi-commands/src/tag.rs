@@ -18,7 +18,8 @@ use raw::raw;
 	slash_command,
 	subcommands("create", "get", "list", "raw", "edit"),
 	subcommand_required,
-	aliases("t")
+	aliases("t"),
+	category = "tag"
 )]
 async fn tag(_: AkashiContext<'_>) -> AkashiResult {
 	Ok(())

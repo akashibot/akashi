@@ -5,7 +5,7 @@ use translators::{GoogleTranslator, Translator};
 // todo: change this command, i dont want a crate for this shi
 
 /// Translate text
-#[poise::command(prefix_command, slash_command)]
+#[poise::command(prefix_command, slash_command, category = "util")]
 pub async fn translate(
 	ctx: AkashiContext<'_>,
 	#[description = "Language to translate to"] target: String,
@@ -21,7 +21,7 @@ pub async fn translate(
 	Ok(())
 }
 
-#[poise::command(context_menu_command = "Translate")]
+#[poise::command(context_menu_command = "Translate", hide_in_help)]
 pub async fn context_menu_translate(
 	ctx: AkashiContext<'_>,
 	#[description = "Message to translate"] msg: serenity::Message,

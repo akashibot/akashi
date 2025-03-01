@@ -1,8 +1,8 @@
 use akashi_shared::{AkashiContext, AkashiResult, error::AkashiErrors};
+use akashi_strings::algorithms::base64::base64_encode;
 use isahc::AsyncReadResponseExt;
 use poise::CreateReply;
 use regex::Regex;
-use akashi_strings::algorithms::base64::base64_encode;
 
 /// Download emoji(s)
 ///
@@ -12,7 +12,8 @@ use akashi_strings::algorithms::base64::base64_encode;
 	slash_command,
 	aliases("e", "em"),
 	required_bot_permissions = "MANAGE_GUILD_EXPRESSIONS",
-	required_permissions = "MANAGE_GUILD_EXPRESSIONS"
+	required_permissions = "MANAGE_GUILD_EXPRESSIONS",
+	category = "util"
 )]
 pub async fn emoji(
 	ctx: AkashiContext<'_>,
@@ -63,11 +64,8 @@ pub async fn emoji(
 
 	let response = emoji_links.join("\n");
 
-	ctx.send(
-		CreateReply::default()
-			.content(response)
-			.reply(true)
-	).await?;
+	ctx.send(CreateReply::default().content(response).reply(true))
+		.await?;
 
 	Ok(())
 }

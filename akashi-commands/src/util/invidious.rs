@@ -58,7 +58,7 @@ pub struct InvidiousVideoThumbnail {
 }
 
 /// Search through YouTube videos using Invidious API
-#[poise::command(slash_command, prefix_command)]
+#[poise::command(slash_command, prefix_command, category = "util")]
 pub async fn invidious(
 	ctx: AkashiContext<'_>,
 	#[description = "Query to search for"] query: String,

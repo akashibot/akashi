@@ -2,7 +2,7 @@ use super::get::autocomplete_tag_name;
 use akashi_shared::{AkashiContext, AkashiResult, database::models::tag::Tag, error::AkashiErrors};
 
 /// Edit a tag in the guild
-#[poise::command(slash_command, prefix_command)]
+#[poise::command(slash_command, prefix_command, category = "tag")]
 pub async fn edit(
 	ctx: AkashiContext<'_>,
 	#[description = "Tag name"]
