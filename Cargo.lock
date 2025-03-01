@@ -89,7 +89,7 @@ dependencies = [
  "akashi-shared",
  "dotenvy",
  "poise",
- "serenity 0.12.4 (git+https://github.com/serenity-rs/serenity?rev=6286c18)",
+ "serenity",
  "tokio",
  "tracing",
  "tracing-subscriber",
@@ -2097,7 +2097,7 @@ dependencies = [
  "parking_lot",
  "poise_macros",
  "regex",
- "serenity 0.12.4 (git+https://github.com/serenity-rs/serenity?branch=next)",
+ "serenity",
  "tokio",
  "tracing",
  "trim-in-place",
@@ -2667,44 +2667,6 @@ dependencies = [
 name = "serenity"
 version = "0.12.4"
 source = "git+https://github.com/serenity-rs/serenity?branch=next#b72b1ccc93f91a5ec894fa8159b8942c374fe7d2"
-dependencies = [
- "aformat",
- "arrayvec",
- "async-trait",
- "base64",
- "bitflags 2.6.0",
- "bool_to_bitflags",
- "bytes",
- "chrono",
- "dashmap",
- "extract_map",
- "flate2",
- "futures",
- "fxhash",
- "mime_guess",
- "nonmax",
- "parking_lot",
- "percent-encoding",
- "reqwest",
- "serde",
- "serde_cow",
- "serde_json",
- "small-fixed-array",
- "strum",
- "time",
- "to-arraystring",
- "tokio",
- "tokio-tungstenite",
- "tracing",
- "typesize",
- "url",
- "zeroize",
-]
-
-[[package]]
-name = "serenity"
-version = "0.12.4"
-source = "git+https://github.com/serenity-rs/serenity?rev=6286c18#6286c184a0f7030573ae49377c4b0f6d5c08a579"
 dependencies = [
  "aformat",
  "arrayvec",

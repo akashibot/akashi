@@ -4,9 +4,7 @@ use isahc::AsyncReadResponseExt;
 use poise::CreateReply;
 use regex::Regex;
 
-/// Download emoji(s)
-///
-/// Native emojis are not supported
+/// Download emoji(s) (Native emojis are not supported)
 #[poise::command(
 	prefix_command,
 	slash_command,
