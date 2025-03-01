@@ -19,7 +19,7 @@ pub(crate) struct SpeechCommand {}
 #[derive(FromArgs, Debug, PartialEq)]
 #[argh(subcommand, name = "rembg")]
 pub(crate) struct RembgCommand {
-    /// threshold idk
-    #[argh(option, short = 't')]
-    threshold: u32,
+	/// threshold idk
+	#[argh(option, short = 't')]
+	threshold: u32,
 }

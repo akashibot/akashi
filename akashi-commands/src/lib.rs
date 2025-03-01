@@ -1,7 +1,6 @@
 use akashi_shared::{AkashiData, AkashiError};
 use poise::Command;
 
-mod reminder;
 mod tag;
 mod util;
 
@@ -25,5 +24,5 @@ macro_rules! register_all_commands {
 }
 
 pub fn register_all() -> Vec<Command<AkashiData, AkashiError>> {
-    register_all_commands![util::register(), tag::register(), reminder::register()]
+	register_all_commands![util::register(), tag::register()]
 }

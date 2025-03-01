@@ -1,8 +1,10 @@
-pub mod structs;
+pub extern crate akashi_database as database;
+#[macro_use]
+extern crate tracing;
+pub mod error;
 pub mod util;
 
 use akashi_database::AkashiDatabase;
-use dashmap::DashSet;
 use poise::futures_util::lock::Mutex;
 use std::sync::Arc;
 use std::time::Instant;
@@ -12,41 +14,44 @@ pub type AkashiError = Box<dyn std::error::Error + Send + Sync>;
 pub type AkashiContext<'a> = poise::Context<'a, AkashiData, AkashiError>;
 pub type AkashiResult<T = ()> = Result<T, AkashiError>;
 
-pub extern crate akashi_database as database;
-
-#[macro_use]
-extern crate tracing;
-
 pub struct AkashiData {
-    pub uptime: Instant,
-    pub database: Mutex<Arc<AkashiDatabase>>,
-    pub cache: Mutex<Arc<UnstorageClient>>,
-    pub disabled_commands: DashSet<String>,
+	pub uptime: Instant,
+	pub database: Mutex<Arc<AkashiDatabase>>,
+	pub cache: Mutex<Arc<UnstorageClient>>,
 }
 
 impl AkashiData {
-    pub async fn new() -> Self {
-        let disabled_commands = DashSet::<String>::new();
+	pub async fn new() -> Self {
+		AkashiData {
+			uptime: Instant::now(),
+			database: Mutex::new(Arc::new(
+				AkashiDatabase::new()
+					.await
+					.expect("Failed to connect to database"),
+			)),
+			cache: Mutex::new(Arc::new(UnstorageClient::new(
+				"http://localhost:3000".to_string(),
+				None,
+			))),
+		}
+	}
+}
 
-        #[cfg(debug_assertions)]
-        {
-            disabled_commands.insert(String::from("reminder create"));
-        }
+#[cfg(test)]
+mod tests {
+	use unstorage_rs::UnstorageClient;
 
-        disabled_commands.insert(String::from("invidious"));
+	// test to add and delete a cache entry
+	#[tokio::test]
+	async fn test_cache() {
+		let cache = UnstorageClient::new("http://localhost:3000".to_string(), None);
 
-        AkashiData {
-            uptime: Instant::now(),
-            database: Mutex::new(Arc::new(
-                AkashiDatabase::new()
-                    .await
-                    .expect("Failed to connect to database"),
-            )),
-            cache: Mutex::new(Arc::new(UnstorageClient::new(
-                "http://localhost:3000".to_string(),
-                None,
-            ))),
-            disabled_commands,
-        }
-    }
+		cache.set_item("test", "test", None).await.unwrap();
+		let item = cache.get_item("test", None).await.unwrap();
+		assert_eq!(item, Some("test".to_string()));
+
+		cache.remove_item("test", None).await.unwrap();
+		let item = cache.get_item("test", None).await.unwrap();
+		assert_eq!(item, None);
+	}
 }
