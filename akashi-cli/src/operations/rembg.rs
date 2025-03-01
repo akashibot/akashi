@@ -4,7 +4,7 @@ use crate::util::color::most_abundant_color;
 use crate::util::gif::{decode_gif, save_gif};
 use crate::util::media::MediaType;
 use anyhow::{Result, anyhow};
-use image::{DynamicImage, Frame, GenericImageView, Pixel, Rgba, RgbaImage};
+use image::{DynamicImage, Frame, Pixel, Rgba, RgbaImage};
 use rayon::prelude::*;
 use std::path::PathBuf;
 
@@ -26,7 +26,7 @@ pub(crate) async fn rembg_image(input: PathBuf, output: PathBuf) -> Result<()> {
 }
 
 async fn rembg_static(input: PathBuf, output: PathBuf) -> Result<()> {
-	let mut img = image::open(input)?;
+	let img = image::open(input)?;
 	let abundant_color = match most_abundant_color(&img, 100) {
 		Some(color) => color,
 		None => return Err(anyhow!("Invalid (or non existing) color")),

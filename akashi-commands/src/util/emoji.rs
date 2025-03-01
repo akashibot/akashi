@@ -1,5 +1,5 @@
 use akashi_shared::error::AkashiErrors;
-use akashi_shared::{AkashiContext, AkashiError, AkashiResult};
+use akashi_shared::{AkashiContext, AkashiResult};
 use base64::{Engine, engine::general_purpose};
 use isahc::AsyncReadResponseExt;
 use regex::Regex;

@@ -1,6 +1,6 @@
 use akashi_shared::database::models::tag::Tag;
 use akashi_shared::error::AkashiErrors;
-use akashi_shared::{AkashiContext, AkashiError, AkashiResult};
+use akashi_shared::{AkashiContext, AkashiResult};
 use dashmap::DashMap;
 use poise::serenity_prelude::{AutocompleteChoice, CreateAutocompleteResponse};
 use tagscript::{Adapter, Block, Interpreter, block};

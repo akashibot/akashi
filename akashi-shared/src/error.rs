@@ -1,4 +1,3 @@
-use crate::AkashiError;
 use std::fmt;
 
 #[derive(Debug)]
@@ -32,15 +31,8 @@ impl fmt::Display for AkashiErrors {
 			AkashiErrors::NoValidEmojis => write!(f, "No valid emojis found"),
 			AkashiErrors::OnlyGuild => write!(f, "This command can only be used in a guild"),
 			AkashiErrors::Custom(msg) => write!(f, "Other error: {}", msg),
-			_ => write!(f, "Unknown error ({self:?})"),
 		}
 	}
 }
 
 impl std::error::Error for AkashiErrors {}
-
-impl From<AkashiErrors> for AkashiError {
-	fn from(error: AkashiErrors) -> Self {
-		Box::new(error)
-	}
-}

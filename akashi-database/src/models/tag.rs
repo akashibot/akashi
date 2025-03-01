@@ -1,6 +1,5 @@
-use crate::error::AkashiDatabaseError;
 use chrono::{NaiveDateTime, Utc};
-use sqlx::{Error, PgPool, Result};
+use sqlx::{PgPool, Result};
 
 type Snowflake = String;
 
@@ -37,15 +36,7 @@ impl Tag {
 			0
 		)
 		.fetch_one(pool)
-		.await
-		.map_err(|e| {
-			if let Error::Database(db_err) = &e {
-				if db_err.constraint() == Some("unique_name_guild") {
-					return AkashiDatabaseError::ExistingTag;
-				}
-			}
-			AkashiDatabaseError::Sqlx(e)
-		})?;
+		.await?;
 
 		debug!("Created tag: {:?}", tag);
 
@@ -53,11 +44,7 @@ impl Tag {
 	}
 
 	/// Delete a tag by its name
-	pub async fn delete(
-		pool: &PgPool,
-		guild_id: String,
-		name: String,
-	) -> Result<(), AkashiDatabaseError> {
+	pub async fn delete(pool: &PgPool, guild_id: String, name: String) -> Result<()> {
 		query!(
 			r#"
             DELETE FROM tags

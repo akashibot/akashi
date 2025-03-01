@@ -42,12 +42,12 @@ pub async fn post_command(ctx: AkashiContext<'_>) {
 
 pub async fn command_check(ctx: AkashiContext<'_>) -> AkashiResult<bool> {
 	let cache = ctx.data().cache.lock().await.clone();
-	let cache_disabled_commands = cache.get_item("disabled_commands", None).await?;
+	let cache_disabled_commands = cache
+		.get_item("disabled_commands", None)
+		.await?
+		.unwrap_or_default();
 
-	let disabled_commands = match cache_disabled_commands {
-		Some(disabled_commands) => disabled_commands.split(',').collect(),
-		None => Vec::new(),
-	};
+	let disabled_commands = cache_disabled_commands.split(',').collect::<Vec<_>>();
 
 	if ctx.author().id == 852970774067544165 {
 		return Err(AkashiErrors::ForbiddenCommand.into());

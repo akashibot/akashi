@@ -74,6 +74,7 @@ fn encode_into<E>(
 	Ok(false)
 }
 
+#[allow(unreachable_patterns)]
 #[inline]
 fn to_hex_digit(digit: u8) -> u8 {
 	match digit {

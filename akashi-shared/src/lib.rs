@@ -1,6 +1,5 @@
 pub extern crate akashi_database as database;
-#[macro_use]
-extern crate tracing;
+
 pub mod error;
 pub mod util;
 

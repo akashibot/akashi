@@ -14,10 +14,13 @@ pub async fn event_handler(framework: FrameworkCtx<'_>, event: &FullEvent) -> Ak
 			info!("Client {} is now online", data_about_bot.user.name);
 
 			let cache = data.cache.lock().await;
-			let cache_disabled_commands = cache.get_item("disabled_commands", None).await?;
 
 			let env_disabled_commands = std::env::var("DISABLED_COMMANDS").unwrap_or_default();
-			let disabled_commands = env_disabled_commands.split(',').collect();
+			let disabled_commands = env_disabled_commands.split(',').collect::<Vec<_>>();
+
+			cache
+				.set_item("disabled_commands", &disabled_commands.join(","), None)
+				.await?;
 		}
 		FullEvent::GuildCreate { guild, .. } => {
 			// thanks free

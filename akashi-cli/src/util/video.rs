@@ -3,10 +3,11 @@ use std::path::PathBuf;
 use std::process::Stdio;
 use tokio::process::Command;
 
-pub(crate) fn invoke_ffmpeg_command<'a>() -> &'a mut Command {
-	Command::new("ffmpeg")
-		.stderr(Stdio::null())
-		.stdout(Stdio::null())
+pub(crate) fn invoke_ffmpeg_command() -> Box<Command> {
+	let mut cmd = Box::new(Command::new("ffmpeg"));
+	cmd.stderr(Stdio::null()).stdout(Stdio::null());
+
+	cmd
 }
 
 pub(crate) async fn get_video_resolution(input: PathBuf) -> Result<(u32, u32)> {
