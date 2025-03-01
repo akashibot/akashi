@@ -5,8 +5,7 @@ pub mod util;
 
 use akashi_database::AkashiDatabase;
 use poise::futures_util::lock::Mutex;
-use std::sync::Arc;
-use std::time::Instant;
+use std::{sync::Arc, time::Instant};
 use unstorage_rs::UnstorageClient;
 
 pub type AkashiError = Box<dyn std::error::Error + Send + Sync>;

@@ -1,6 +1,4 @@
-use akashi_shared::database::models::tag::Tag;
-use akashi_shared::error::AkashiErrors;
-use akashi_shared::{AkashiContext, AkashiResult};
+use akashi_shared::{AkashiContext, AkashiResult, database::models::tag::Tag, error::AkashiErrors};
 
 /// Create a new tag in the guild
 #[poise::command(slash_command, prefix_command, aliases("new", "add"))]

@@ -1,6 +1,5 @@
 use akashi_shared::{AkashiContext, AkashiResult};
-use akashi_strings::discord::ansi::Ansi;
-use akashi_strings::discord::markdown::Markdown;
+use akashi_strings::discord::{ansi::Ansi, markdown::Markdown};
 use sysinfo::System;
 
 /// Show Akashi stats

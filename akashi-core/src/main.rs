@@ -1,13 +1,15 @@
 use akashi_commands::register_all;
-use akashi_handlers::events::event_handler;
-use akashi_handlers::handlers::{command_check, on_error, post_command, pre_command};
+use akashi_handlers::{
+	events::event_handler,
+	handlers::{command_check, on_error, post_command, pre_command},
+};
 use akashi_shared::AkashiData;
-use poise::serenity_prelude::CreateAllowedMentions;
-use poise::{EditTracker, serenity_prelude as serenity};
-use poise::{FrameworkOptions, PrefixFrameworkOptions};
+use poise::{
+	EditTracker, FrameworkOptions, PrefixFrameworkOptions, serenity_prelude as serenity,
+	serenity_prelude::CreateAllowedMentions,
+};
 use serenity::cache::Settings as CacheSettings;
-use std::sync::Arc;
-use std::time::Duration;
+use std::{sync::Arc, time::Duration};
 
 mod tracing_utils;
 

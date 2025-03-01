@@ -1,7 +1,5 @@
 use super::get::autocomplete_tag_name;
-use akashi_shared::database::models::tag::Tag;
-use akashi_shared::error::AkashiErrors;
-use akashi_shared::{AkashiContext, AkashiResult};
+use akashi_shared::{AkashiContext, AkashiResult, database::models::tag::Tag, error::AkashiErrors};
 
 /// Get a tag information
 ///

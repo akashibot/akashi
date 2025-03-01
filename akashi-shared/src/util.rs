@@ -1,6 +1,7 @@
-use poise::Context;
-use poise::serenity_prelude::{CreateEmbed, CreateEmbedFooter};
-use poise::{CreateReply, serenity_prelude as serenity};
+use poise::{
+	Context, CreateReply, serenity_prelude as serenity,
+	serenity_prelude::{CreateEmbed, CreateEmbedFooter},
+};
 use std::time::Duration;
 use unstorage_rs::TransactionOptions;
 

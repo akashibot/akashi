@@ -1,5 +1,4 @@
-use akashi_shared::error::AkashiErrors;
-use akashi_shared::{AkashiContext, AkashiData, AkashiError, AkashiResult};
+use akashi_shared::{AkashiContext, AkashiData, AkashiError, AkashiResult, error::AkashiErrors};
 
 pub async fn on_error(error: poise::FrameworkError<'_, AkashiData, AkashiError>) {
 	match error {

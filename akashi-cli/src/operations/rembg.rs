@@ -1,8 +1,11 @@
-use crate::cli::ImageOperation;
-use crate::cli::commands::RembgCommand;
-use crate::util::color::most_abundant_color;
-use crate::util::gif::{decode_gif, save_gif};
-use crate::util::media::MediaType;
+use crate::{
+	cli::{ImageOperation, commands::RembgCommand},
+	util::{
+		color::most_abundant_color,
+		gif::{decode_gif, save_gif},
+		media::MediaType,
+	},
+};
 use anyhow::{Result, anyhow};
 use image::{DynamicImage, Frame, Pixel, Rgba, RgbaImage};
 use rayon::prelude::*;

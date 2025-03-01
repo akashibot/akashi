@@ -6,8 +6,7 @@ extern crate tracing;
 #[macro_use]
 extern crate sqlx;
 
-use sqlx::PgPool;
-use sqlx::postgres::PgPoolOptions;
+use sqlx::{PgPool, postgres::PgPoolOptions};
 
 pub struct AkashiDatabase {
 	pub pool: PgPool,

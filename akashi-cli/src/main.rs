@@ -2,8 +2,7 @@ mod cli;
 mod operations;
 mod util;
 
-use crate::cli::ImageOperation;
-use crate::cli::commands::*;
+use crate::cli::{ImageOperation, commands::*};
 use anyhow::Result;
 use argh::FromArgs;
 use std::path::PathBuf;

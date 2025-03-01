@@ -1,8 +1,5 @@
-use akashi_shared::database::models::tag::Tag;
-use akashi_shared::error::AkashiErrors;
-use akashi_shared::{AkashiContext, AkashiResult};
-use poise::builtins::paginate;
-use poise::serenity_prelude::User;
+use akashi_shared::{AkashiContext, AkashiResult, database::models::tag::Tag, error::AkashiErrors};
+use poise::{builtins::paginate, serenity_prelude::User};
 
 /// Get all the tags in the guild (and user's tags)
 ///

@@ -1,3 +1,4 @@
 newline_style = "Unix"
 hard_tabs = true
 reorder_imports = true
+imports_granularity = "Crate"

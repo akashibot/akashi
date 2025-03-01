@@ -1,12 +1,17 @@
-use crate::cli::ImageOperation;
-use crate::cli::commands::SpeechCommand;
-use crate::util::gif::{decode_gif, save_gif};
-use crate::util::images::expand_image_top;
-use crate::util::media::MediaType;
-use crate::util::video::{get_video_resolution, invoke_ffmpeg_command};
+use crate::{
+	cli::{ImageOperation, commands::SpeechCommand},
+	util::{
+		gif::{decode_gif, save_gif},
+		images::expand_image_top,
+		media::MediaType,
+		video::{get_video_resolution, invoke_ffmpeg_command},
+	},
+};
 use anyhow::{Result, anyhow};
-use image::imageops::{FilterType, overlay};
-use image::{DynamicImage, Frame, RgbaImage};
+use image::{
+	DynamicImage, Frame, RgbaImage,
+	imageops::{FilterType, overlay},
+};
 use rayon::prelude::*;
 use std::path::{Path, PathBuf};
 

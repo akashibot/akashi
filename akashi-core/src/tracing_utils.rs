@@ -1,5 +1,4 @@
-use tracing_subscriber::filter::LevelFilter;
-use tracing_subscriber::{EnvFilter, Layer, prelude::*};
+use tracing_subscriber::{EnvFilter, Layer, filter::LevelFilter, prelude::*};
 
 /// Initializes the `tracing` logging framework.
 ///

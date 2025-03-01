@@ -1,6 +1,5 @@
 use anyhow::{Result, anyhow};
-use std::path::PathBuf;
-use std::process::Stdio;
+use std::{path::PathBuf, process::Stdio};
 use tokio::process::Command;
 
 pub(crate) fn invoke_ffmpeg_command() -> Box<Command> {

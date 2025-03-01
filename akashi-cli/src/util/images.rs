@@ -1,5 +1,4 @@
-use image::imageops::overlay;
-use image::{DynamicImage, GenericImageView, RgbaImage};
+use image::{DynamicImage, GenericImageView, RgbaImage, imageops::overlay};
 
 /// Expands the top of an image by a specified number of pixels.
 pub(crate) fn expand_image_top(image: &DynamicImage, expand_pixels: u32) -> DynamicImage {

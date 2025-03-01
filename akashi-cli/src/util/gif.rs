@@ -1,6 +1,8 @@
 use anyhow::Result;
-use image::codecs::gif::Repeat;
-use image::{AnimationDecoder, Frame, codecs::gif::GifDecoder};
+use image::{
+	AnimationDecoder, Frame,
+	codecs::gif::{GifDecoder, Repeat},
+};
 use std::{io::Cursor, path::PathBuf};
 use tokio::{fs::File, io::AsyncReadExt};
 

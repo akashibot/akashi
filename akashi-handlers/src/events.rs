@@ -1,8 +1,9 @@
-use akashi_shared::database::models::guild::Guild;
-use akashi_shared::{AkashiData, AkashiError, AkashiResult};
+use akashi_shared::{AkashiData, AkashiError, AkashiResult, database::models::guild::Guild};
 use chrono::{Duration, Utc};
-use poise::FrameworkContext;
-use poise::serenity_prelude::{FullEvent, Timestamp};
+use poise::{
+	FrameworkContext,
+	serenity_prelude::{FullEvent, Timestamp},
+};
 
 type FrameworkCtx<'a> = FrameworkContext<'a, AkashiData, AkashiError>;
 

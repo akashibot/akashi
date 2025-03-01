@@ -1,8 +1,11 @@
-use crate::cli::ImageOperation;
-use crate::cli::commands::InvertCommand;
-use crate::util::gif::{decode_gif, save_gif};
-use crate::util::media::MediaType;
-use crate::util::video::invoke_ffmpeg_command;
+use crate::{
+	cli::{ImageOperation, commands::InvertCommand},
+	util::{
+		gif::{decode_gif, save_gif},
+		media::MediaType,
+		video::invoke_ffmpeg_command,
+	},
+};
 use anyhow::{Result, anyhow};
 use image::{Frame, Rgba, RgbaImage};
 use rayon::prelude::*;

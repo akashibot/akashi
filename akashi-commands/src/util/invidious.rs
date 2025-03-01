@@ -1,11 +1,13 @@
-use akashi_shared::util::{
-	cache_key, common_transaction_options, paginate, seconds_to_video_duration,
+use akashi_shared::{
+	AkashiContext, AkashiResult,
+	util::{cache_key, common_transaction_options, paginate, seconds_to_video_duration},
 };
-use akashi_shared::{AkashiContext, AkashiResult};
 use akashi_strings::utils::encode::encode;
 use isahc::AsyncReadResponseExt;
-use poise::ChoiceParameter;
-use poise::serenity_prelude::{Color, CreateEmbed};
+use poise::{
+	ChoiceParameter,
+	serenity_prelude::{Color, CreateEmbed},
+};
 
 #[derive(Debug, poise::ChoiceParameter, Clone)]
 pub enum HostChoice {
