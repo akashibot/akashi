@@ -32,7 +32,7 @@ pub async fn paginate<U: Send + Sync + 'static, E>(
 	let components = [serenity::CreateActionRow::buttons(&buttons)];
 	let first_footer = CreateEmbedFooter::new(format!("Page 0 of {}", pages.len()));
 	let reply = CreateReply::default()
-		.embed(CreateEmbed::from(pages.first().unwrap().clone()).footer(first_footer))
+		.embed(pages.first().unwrap().clone().footer(first_footer))
 		.components(&components);
 
 	ctx.send(reply).await?;
@@ -74,7 +74,7 @@ pub async fn paginate<U: Send + Sync + 'static, E>(
 				ctx.http(),
 				serenity::CreateInteractionResponse::UpdateMessage(
 					serenity::CreateInteractionResponseMessage::new()
-						.embed(CreateEmbed::from(pages[current_page].clone()).footer(footer)),
+						.embed(pages[current_page].clone().footer(footer)),
 				),
 			)
 			.await?;

@@ -20,12 +20,7 @@ pub async fn autocomplete_tag_name<'a>(
 	let choices: Vec<_> = tags
 		.into_iter()
 		.filter(move |tag| tag.name.clone().starts_with(partial))
-		.map(|t| {
-			AutocompleteChoice::new(
-				format!("{} — 👁️ {}", t.name.clone(), t.views.to_string()),
-				t.name,
-			)
-		})
+		.map(|t| AutocompleteChoice::new(format!("{} — 👁️ {}", t.name.clone(), t.views), t.name))
 		.collect();
 
 	CreateAutocompleteResponse::new().set_choices(choices)

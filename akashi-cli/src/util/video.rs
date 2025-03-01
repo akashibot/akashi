@@ -24,7 +24,7 @@ pub(crate) async fn get_video_resolution(input: PathBuf) -> Result<(u32, u32)> {
 		.await?;
 
 	let stdout = String::from_utf8_lossy(&output.stdout);
-	let resolution = parse_resolution(&stdout.trim())?;
+	let resolution = parse_resolution(stdout.trim())?;
 
 	Ok(resolution)
 }

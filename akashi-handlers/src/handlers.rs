@@ -54,8 +54,7 @@ pub async fn command_check(ctx: AkashiContext<'_>) -> AkashiResult<bool> {
 
 	let is_command_disabled = disabled_commands
 		.iter()
-		.find(|c| ctx.command().qualified_name == c.to_string())
-		.is_some();
+		.any(|c| ctx.command().qualified_name == *c);
 
 	if is_command_disabled {
 		return Err(AkashiErrors::DisabledCommand.into());

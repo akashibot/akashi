@@ -64,7 +64,7 @@ pub async fn invidious(
 	#[description = "Query to search for"] query: String,
 	#[description = "Host to search from"] host: Option<HostChoice>,
 ) -> AkashiResult {
-	let host = host.unwrap_or_else(|| HostChoice::A);
+	let host = host.unwrap_or(HostChoice::A);
 	let cache = ctx.data().cache.lock().await.clone();
 
 	let query = query.split(" ").collect::<Vec<_>>().join("%20");

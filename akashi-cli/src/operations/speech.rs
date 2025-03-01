@@ -81,7 +81,7 @@ async fn speech_video(input: PathBuf, output: PathBuf) -> Result<()> {
 		.arg("-i")
 		.arg(&input)
 		.arg("-i")
-		.arg(&SPEECH_BALLOON_PATH)
+		.arg(SPEECH_BALLOON_PATH)
 		.arg("-filter_complex")
 		.arg(format!(
 			"[0:v]pad=width={}:height={}:x=0:y={}[padded]; \

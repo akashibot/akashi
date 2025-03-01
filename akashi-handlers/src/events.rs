@@ -17,10 +17,9 @@ pub async fn event_handler(framework: FrameworkCtx<'_>, event: &FullEvent) -> Ak
 			let cache = data.cache.lock().await;
 
 			let env_disabled_commands = std::env::var("DISABLED_COMMANDS").unwrap_or_default();
-			let disabled_commands = env_disabled_commands.split(',').collect::<Vec<_>>();
 
 			cache
-				.set_item("disabled_commands", &disabled_commands.join(","), None)
+				.set_item("disabled_commands", &env_disabled_commands, None)
 				.await?;
 		}
 		FullEvent::GuildCreate { guild, .. } => {

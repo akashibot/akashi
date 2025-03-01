@@ -1,6 +1,7 @@
 use akashi_shared::{AkashiContext, AkashiResult, error::AkashiErrors};
 use base64::{Engine, engine::general_purpose};
 use isahc::AsyncReadResponseExt;
+use poise::CreateReply;
 use regex::Regex;
 
 /// Download emoji(s)
@@ -46,7 +47,7 @@ pub async fn emoji(
 						ctx.http(),
 						emoji_name,
 						&encoded_url,
-						Some(&format!("Added by {:?}", author.user.id)),
+						Some(&format!("Added by {:?}", author.user.id.to_string())),
 					)
 					.await?;
 			}
@@ -57,12 +58,16 @@ pub async fn emoji(
 
 	if emoji_links.is_empty() {
 		// Похуй
-		return Err(AkashiErrors::OnlyGuild.into());
+		return Err(AkashiErrors::Custom("No valid emojis provided".to_string()).into());
 	}
 
 	let response = emoji_links.join("\n");
 
-	ctx.say(format!("{}", response)).await?;
+	ctx.send(
+		CreateReply::default()
+			.content(response)
+			.reply(true)
+	).await?;
 
 	Ok(())
 }

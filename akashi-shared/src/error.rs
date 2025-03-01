@@ -30,7 +30,7 @@ impl fmt::Display for AkashiErrors {
 			AkashiErrors::TargetBot => write!(f, "You cannot target a bot"),
 			AkashiErrors::NoValidEmojis => write!(f, "No valid emojis found"),
 			AkashiErrors::OnlyGuild => write!(f, "This command can only be used in a guild"),
-			AkashiErrors::Custom(msg) => write!(f, "Other error: {}", msg),
+			AkashiErrors::Custom(msg) => write!(f, "{msg}"),
 		}
 	}
 }

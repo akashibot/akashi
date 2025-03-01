@@ -3,6 +3,7 @@ use poise::Command;
 
 mod tag;
 mod util;
+mod debug;
 
 #[macro_use]
 extern crate serde;
@@ -24,5 +25,5 @@ macro_rules! register_all_commands {
 }
 
 pub fn register_all() -> Vec<Command<AkashiData, AkashiError>> {
-	register_all_commands![util::register(), tag::register()]
+	register_all_commands![util::register(), tag::register(), debug::register()]
 }
