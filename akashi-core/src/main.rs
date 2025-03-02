@@ -34,7 +34,6 @@ async fn main() {
 		pre_command: |ctx| Box::pin(pre_command(ctx)),
 		post_command: |ctx| Box::pin(post_command(ctx)),
 		command_check: Some(|ctx| Box::pin(command_check(ctx))),
-		event_handler: |framework, event| Box::pin(event_handler(framework, event)),
 		allowed_mentions: Some(CreateAllowedMentions::new()),
 		initialize_owners: true,
 		..Default::default()
@@ -54,6 +53,7 @@ async fn main() {
 
 	let client = serenity::ClientBuilder::new(discord_token, discord_intents)
 		.framework(poise::Framework::new(framework_options))
+		.event_handler(event_handler)
 		.data(Arc::new(AkashiData::new().await))
 		.cache_settings(cache_settings)
 		.await;
