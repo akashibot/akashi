@@ -6,9 +6,6 @@ mod tag;
 mod util;
 
 #[macro_use]
-extern crate serde;
-
-#[macro_use]
 extern crate tracing;
 
 /// Basic macro to group all commands

@@ -1,6 +1,6 @@
 use akashi_commands::register_all;
 use akashi_handlers::{
-	events::event_handler,
+	events::Handler,
 	handlers::{command_check, on_error, post_command, pre_command},
 };
 use akashi_shared::AkashiData;
@@ -53,7 +53,7 @@ async fn main() {
 
 	let client = serenity::ClientBuilder::new(discord_token, discord_intents)
 		.framework(poise::Framework::new(framework_options))
-		.event_handler(event_handler)
+		.event_handler(Handler)
 		.data(Arc::new(AkashiData::new().await))
 		.cache_settings(cache_settings)
 		.await;

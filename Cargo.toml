@@ -1,13 +1,13 @@
 [workspace]
 resolver = "2"
 members = [
-    "akashi-cli",
-    "akashi-commands",
-    "akashi-core",
-    "akashi-database",
-    "akashi-handlers",
-    "akashi-shared",
-    "akashi-strings"
+  "akashi-cli",
+  "akashi-commands",
+  "akashi-core",
+  "akashi-database",
+  "akashi-handlers",
+  "akashi-shared",
+  "akashi-strings",
 ]
 
 [workspace.dependencies]
@@ -22,14 +22,19 @@ tracing-subscriber = { version = "=0.3.19", features = ["env-filter", "json"] }
 dotenvy = "=0.15.7"
 
 # Discord Libraries
-poise = { git = "https://github.com/serenity-rs/poise", branch = "serenity-next" }
+poise = { git = "https://github.com/mkrasnitski/poise", branch = "serenity-next" }
 
 # Fetching & JSON
 isahc = { version = "1", features = ["json"] }
 serde = { version = "1", features = ["derive"] }
 
 # Database
-sqlx = { version = "0.8.3", features = ["runtime-tokio", "tls-rustls", "postgres", "chrono"] }
+sqlx = { version = "0.8.3", features = [
+  "runtime-tokio",
+  "tls-rustls",
+  "postgres",
+  "chrono",
+] }
 
 # Error Handling & Utilities
 anyhow = { version = "1" }

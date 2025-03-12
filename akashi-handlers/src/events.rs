@@ -1,49 +1,46 @@
-use akashi_shared::{AkashiData, AkashiError, AkashiResult, database::models::guild::Guild};
+use akashi_shared::{AkashiData, database::models::guild::Guild};
 use chrono::{Duration, Utc};
-use poise::{
-	FrameworkContext,
-	serenity_prelude::{FullEvent, Timestamp},
-};
+use poise::serenity_prelude::{Guild as SerenityGuild, *};
 
-type FrameworkCtx<'a> = FrameworkContext<'a, AkashiData, AkashiError>;
+pub struct Handler;
 
-pub async fn event_handler(framework: FrameworkCtx<'_>, event: &FullEvent) -> AkashiResult {
-	let data = framework.user_data().clone();
-
-	match event {
-		FullEvent::Ready { data_about_bot } => {
-			info!("Client {} is now online", data_about_bot.user.name);
-
-			let cache = data.cache.lock().await;
-
-			let env_disabled_commands = std::env::var("DISABLED_COMMANDS").unwrap_or_default();
-
-			cache
-				.set_item("disabled_commands", &env_disabled_commands, None)
-				.await?;
-		}
-		FullEvent::GuildCreate { guild, .. } => {
-			// thanks free
-			let now = Utc::now();
-			let threshold = Timestamp::from(now - Duration::minutes(1));
-
-			let is_new_guild = guild.joined_at > threshold;
-
-			let db = data.database.lock().await;
-			let pool = db.pool.clone();
-
-			if is_new_guild {
-				Guild::create(&pool, guild.id.to_string()).await?;
-			}
-		}
-		FullEvent::GuildDelete { incomplete, .. } => {
-			let db = data.database.lock().await;
-			let pool = db.pool.clone();
-
-			Guild::delete(&pool, incomplete.id.to_string()).await?;
-		}
-		_ => debug!("found event {}", event.snake_case_name()),
+#[async_trait]
+impl EventHandler for Handler {
+	async fn ready(&self, _: Context, ready: Ready) {
+		info!("{} is now online", ready.user.name);
 	}
 
-	Ok(())
+	async fn guild_create(&self, ctx: Context, guild: SerenityGuild, _: Option<bool>) {
+		let now = Utc::now();
+		let threshold = Timestamp::from(now - Duration::minutes(2));
+
+		let data = ctx.data::<AkashiData>();
+		let is_new_guild = guild.joined_at > threshold;
+
+		let db = data.database.lock().await;
+		let pool = db.pool.clone();
+
+		if is_new_guild {
+			match Guild::create(&pool, guild.id.to_string()).await {
+				Ok(g) => debug!("created new guild: {g:#?}"),
+				Err(e) => error!("while trying to create new guild: {e:#?}"),
+			};
+		}
+	}
+
+	async fn guild_delete(
+		&self,
+		ctx: Context,
+		incomplete: UnavailableGuild,
+		_: Option<SerenityGuild>,
+	) {
+		let data = ctx.data::<AkashiData>();
+		let db = data.database.lock().await;
+		let pool = db.pool.clone();
+
+		match Guild::delete(&pool, incomplete.id.to_string()).await {
+			Ok(_) => debug!("deleted guild row Akashi was removed from"),
+			Err(e) => error!("while trying to remove a guild: {e:#?}"),
+		};
+	}
 }

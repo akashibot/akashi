@@ -10,10 +10,7 @@ pub async fn autocomplete_tag_name<'a>(
 	let database = ctx.data().database.lock().await.clone();
 	let pool = database.pool.clone();
 
-	let guild_id = match ctx.guild_id() {
-		Some(id) => id.to_string(),
-		None => return CreateAutocompleteResponse::new(),
-	};
+	let guild_id = ctx.guild_id().unwrap().to_string();
 
 	let tags = Tag::list_guild(&pool, guild_id).await.unwrap_or_default();
 
@@ -29,7 +26,7 @@ pub async fn autocomplete_tag_name<'a>(
 /// Get a tag and view its content
 ///
 /// <prefix>tag get <tag_name> [args]
-#[poise::command(slash_command, prefix_command, category = "tag")]
+#[poise::command(slash_command, prefix_command, guild_only, category = "tag")]
 pub async fn get(
 	ctx: AkashiContext<'_>,
 	#[description = "Tag name"]

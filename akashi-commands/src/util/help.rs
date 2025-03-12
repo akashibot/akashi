@@ -1,6 +1,6 @@
-use dashmap::DashMap;
 use akashi_shared::{AkashiContext, AkashiResult};
 use akashi_strings::discord::{ansi::Ansi, markdown::Markdown, table::generate_table};
+use dashmap::DashMap;
 use poise::serenity_prelude::InstallationContext;
 
 /// Extended information about commands
@@ -23,8 +23,15 @@ pub async fn help(
 		.filter(|c| !c.hide_in_help)
 		.collect::<Vec<_>>();
 
-	let subcommands = commands.iter().flat_map(|c| c.subcommands.iter()).collect::<Vec<_>>();
-	let all_commands = commands.iter().chain(subcommands.iter()).filter(|p| !p.subcommand_required).collect::<Vec<_>>();
+	let subcommands = commands
+		.iter()
+		.flat_map(|c| c.subcommands.iter())
+		.collect::<Vec<_>>();
+	let all_commands = commands
+		.iter()
+		.chain(subcommands.iter())
+		.filter(|p| !p.subcommand_required)
+		.collect::<Vec<_>>();
 	let bot_prefix = prefix.clone().unwrap_or_else(|| ",".into()).to_string();
 
 	match command {
@@ -35,10 +42,12 @@ pub async fn help(
 
 			match command_help {
 				Some(cmd) => {
-					let mut message = format!("Help for: {} command\n\n", cmd.qualified_name.fg_green());
+					let mut message =
+						format!("Help for: {} command\n\n", cmd.qualified_name.fg_green());
 
 					if let Some(description) = &cmd.description {
-						message += &format!("{} {} {}\n\n", ">".fg_black(), description, "<".fg_black());
+						message +=
+							&format!("{} {} {}\n\n", ">".fg_black(), description, "<".fg_black());
 					}
 
 					if let Some(help_text) = &cmd.help_text {
@@ -67,9 +76,18 @@ pub async fn help(
 							.parameters
 							.iter()
 							.map(|p| {
-								let description = p.description.as_deref().unwrap_or("No description");
+								let description =
+									p.description.as_deref().unwrap_or("No description");
 								(
-									format!("{}{}", p.name.fg_blue(), if p.required { "*".fg_red() } else { "".to_string() }),
+									format!(
+										"{}{}",
+										p.name.fg_blue(),
+										if p.required {
+											"*".fg_red()
+										} else {
+											"".to_string()
+										}
+									),
 									description.to_string(),
 								)
 							})

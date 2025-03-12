@@ -8,8 +8,8 @@ use std::fmt::Display;
 
 pub trait Ansi: Sized + Display {
 	fn a_bold(&self) -> String {
-        format!("\x1b[1m{self}\x1b[22m")
-    }
+		format!("\x1b[1m{self}\x1b[22m")
+	}
 
 	fn a_italic(&self) -> String {
 		format!("\x1b[3m{self}\x1b[23m")

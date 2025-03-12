@@ -7,7 +7,7 @@ use poise::{builtins::paginate, serenity_prelude::User};
 ///
 /// <prefix>tag list
 /// <prefix>tag list @user
-#[poise::command(slash_command, prefix_command, category = "tag")]
+#[poise::command(slash_command, prefix_command, guild_only, category = "tag")]
 pub async fn list(
 	ctx: AkashiContext<'_>,
 	#[description = "User to search by"] user: Option<User>,
@@ -15,10 +15,7 @@ pub async fn list(
 	let database = ctx.data().database.lock().await.clone();
 	let pool = database.pool.clone();
 
-	let guild_id = match ctx.guild_id() {
-		Some(id) => id.to_string(),
-		None => return Err(AkashiErrors::OnlyGuild.into()),
-	};
+	let guild_id = ctx.guild_id().unwrap().to_string();
 
 	let tags = match user.clone() {
 		Some(user) => {

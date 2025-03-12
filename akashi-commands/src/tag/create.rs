@@ -1,7 +1,13 @@
 use akashi_shared::{AkashiContext, AkashiResult, database::models::tag::Tag, error::AkashiErrors};
 
 /// Create a new tag in the guild
-#[poise::command(slash_command, prefix_command, aliases("new", "add"), category = "tag")]
+#[poise::command(
+	slash_command,
+	prefix_command,
+	guild_only,
+	aliases("new", "add"),
+	category = "tag"
+)]
 pub async fn create(
 	ctx: AkashiContext<'_>,
 	#[description = "Tag name"] name: String,
@@ -12,10 +18,7 @@ pub async fn create(
 	let database = ctx.data().database.lock().await.clone();
 	let pool = database.pool.clone();
 
-	let guild_id = match ctx.guild_id() {
-		Some(id) => id.to_string(),
-		None => return Err(AkashiErrors::OnlyGuild.into()),
-	};
+	let guild_id = ctx.guild_id().unwrap().to_string();
 
 	let tag = match Tag::create(&pool, guild_id, ctx.author().id.to_string(), name, content).await {
 		Ok(tag) => tag,

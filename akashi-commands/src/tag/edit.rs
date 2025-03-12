@@ -2,7 +2,7 @@ use super::get::autocomplete_tag_name;
 use akashi_shared::{AkashiContext, AkashiResult, database::models::tag::Tag, error::AkashiErrors};
 
 /// Edit a tag in the guild
-#[poise::command(slash_command, prefix_command, category = "tag")]
+#[poise::command(slash_command, prefix_command, guild_only, category = "tag")]
 pub async fn edit(
 	ctx: AkashiContext<'_>,
 	#[description = "Tag name"]
@@ -15,10 +15,7 @@ pub async fn edit(
 	let database = ctx.data().database.lock().await.clone();
 	let pool = database.pool.clone();
 
-	let guild_id = match ctx.guild_id() {
-		Some(id) => id.to_string(),
-		None => return Err(AkashiErrors::OnlyGuild.into()),
-	};
+	let guild_id = ctx.guild_id().unwrap().to_string();
 
 	let tag_owner = match Tag::get(&pool, guild_id.clone(), name.clone()).await? {
 		Some(tag) => tag.user_id,

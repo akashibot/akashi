@@ -15,6 +15,11 @@ pub async fn on_error(error: poise::FrameworkError<'_, AkashiData, AkashiError>)
 			.await
 			.unwrap();
 		}
+		poise::FrameworkError::GuildOnly { ctx, .. } => {
+			ctx.reply(AkashiErrors::OnlyGuild.to_string())
+				.await
+				.unwrap();
+		}
 		error => {
 			if let Err(e) = poise::builtins::on_error(error).await {
 				println!("Error while handling error: {}", e)
@@ -40,25 +45,9 @@ pub async fn post_command(ctx: AkashiContext<'_>) {
 }
 
 pub async fn command_check(ctx: AkashiContext<'_>) -> AkashiResult<bool> {
-	let cache = ctx.data().cache.lock().await.clone();
-	let cache_disabled_commands = cache
-		.get_item("disabled_commands", None)
-		.await?
-		.unwrap_or_default();
-
-	let disabled_commands = cache_disabled_commands.split(',').collect::<Vec<_>>();
-
 	if ctx.author().id == 852970774067544165 {
 		return Err(AkashiErrors::ForbiddenCommand.into());
 	};
-
-	let is_command_disabled = disabled_commands
-		.iter()
-		.any(|c| ctx.command().qualified_name == *c);
-
-	if is_command_disabled {
-		return Err(AkashiErrors::DisabledCommand.into());
-	}
 
 	Ok(true)
 }
