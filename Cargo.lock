@@ -104,9 +104,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "akashi-guild-poster"
+version = "0.1.0"
+dependencies = [
+ "akashi-shared",
+ "isahc",
+ "serde_json",
+]
+
+[[package]]
 name = "akashi-handlers"
 version = "0.1.0"
 dependencies = [
+ "akashi-guild-poster",
  "akashi-shared",
  "chrono",
  "poise",

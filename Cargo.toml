@@ -1,13 +1,14 @@
 [workspace]
 resolver = "2"
 members = [
-  "akashi-cli",
-  "akashi-commands",
-  "akashi-core",
-  "akashi-database",
-  "akashi-handlers",
-  "akashi-shared",
-  "akashi-strings",
+	"akashi-cli",
+	"akashi-commands",
+	"akashi-core",
+	"akashi-database",
+	"akashi-guild-poster",
+	"akashi-handlers",
+	"akashi-shared",
+	"akashi-strings",
 ]
 
 [workspace.dependencies]
@@ -27,6 +28,7 @@ poise = { git = "https://github.com/mkrasnitski/poise", branch = "serenity-next"
 # Fetching & JSON
 isahc = { version = "1", features = ["json"] }
 serde = { version = "1", features = ["derive"] }
+serde_json = { version = "1" }
 
 # Database
 sqlx = { version = "0.8.3", features = [

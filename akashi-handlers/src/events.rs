@@ -6,8 +6,35 @@ pub struct Handler;
 
 #[async_trait]
 impl EventHandler for Handler {
-	async fn ready(&self, _: Context, ready: Ready) {
+	async fn ready(&self, ctx: Context, ready: Ready) {
 		info!("{} is now online", ready.user.name);
+
+        #[cfg(debug_assertions)]
+        drop(ctx); // cuz atm we aint using this
+
+		#[cfg(not(debug_assertions))]
+		{
+			use akashi_guild_poster::AkashiGuildPoster;
+			use std::time::Duration as StdDuration;
+			use tokio::time::sleep;
+
+			let topgg_token = std::env::var("TOPGG_TOKEN").unwrap_or("missing".to_string());
+			let dlistgg_token = std::env::var("DLISTGG_TOKEN").unwrap_or("missing".to_string());
+
+			let guild_poster =
+				AkashiGuildPoster::new(ready.user.id.to_string(), topgg_token, dlistgg_token);
+
+			tokio::spawn(async move {
+				let count = ctx.cache.guild_count() as u64;
+
+				guild_poster.post_dlist(count).await.unwrap();
+				guild_poster.post_topgg(count).await.unwrap();
+
+                info!("Posted guild count, see you in 12h");
+
+				sleep(StdDuration::from_millis(43_20_00_00)).await;
+			});
+		}
 	}
 
 	async fn guild_create(&self, ctx: Context, guild: SerenityGuild, _: Option<bool>) {
@@ -22,7 +49,7 @@ impl EventHandler for Handler {
 
 		if is_new_guild {
 			match Guild::create(&pool, guild.id.to_string()).await {
-				Ok(g) => debug!("created new guild: {g:#?}"),
+				Ok(_) => (),
 				Err(e) => error!("while trying to create new guild: {e:#?}"),
 			};
 		}

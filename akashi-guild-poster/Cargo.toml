@@ -1,0 +1,10 @@
+[package]
+name = "akashi-guild-poster"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+isahc = { workspace = true }
+serde_json = { workspace = true }
+
+akashi-shared = { path = "../akashi-shared" }

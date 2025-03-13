@@ -9,4 +9,5 @@ poise = { workspace = true }
 tracing = { workspace = true }
 chrono = { workspace = true }
 
+akashi-guild-poster = { path = "../akashi-guild-poster" }
 akashi-shared = { path = "../akashi-shared" }
