@@ -9,8 +9,8 @@ impl EventHandler for Handler {
 	async fn ready(&self, ctx: Context, ready: Ready) {
 		info!("{} is now online", ready.user.name);
 
-        #[cfg(debug_assertions)]
-        drop(ctx); // cuz atm we aint using this
+		#[cfg(debug_assertions)]
+		drop(ctx); // cuz atm we aint using this
 
 		#[cfg(not(debug_assertions))]
 		{
@@ -30,7 +30,7 @@ impl EventHandler for Handler {
 				guild_poster.post_dlist(count).await.unwrap();
 				guild_poster.post_topgg(count).await.unwrap();
 
-                info!("Posted guild count, see you in 12h");
+				info!("Posted guild count, see you in 12h");
 
 				sleep(StdDuration::from_millis(43_20_00_00)).await;
 			});
