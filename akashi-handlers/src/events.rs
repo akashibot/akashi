@@ -24,11 +24,13 @@ impl EventHandler for Handler {
 			let guild_poster =
 				AkashiGuildPoster::new(ready.user.id.to_string(), topgg_token, dlistgg_token);
 
-			tokio::spawn(async move {
-				let count = ctx.cache.guild_count() as u64;
+            let guild_count = ready.guilds.len() as u64;
 
-				guild_poster.post_dlist(count).await.unwrap();
-				guild_poster.post_topgg(count).await.unwrap();
+			tokio::spawn(async move {
+                debug!("Posting {guild_count} guilds to botlists");
+
+				guild_poster.post_dlist(guild_count).await.unwrap();
+				guild_poster.post_topgg(guild_count).await.unwrap();
 
 				info!("Posted guild count, see you in 12h");
 
