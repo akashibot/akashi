@@ -5,11 +5,11 @@ use akashi_handlers::{
 };
 use akashi_shared::AkashiData;
 use poise::{
-	EditTracker, FrameworkOptions, PrefixFrameworkOptions, serenity_prelude as serenity,
+	FrameworkOptions, PrefixFrameworkOptions, serenity_prelude as serenity,
 	serenity_prelude::CreateAllowedMentions,
 };
 use serenity::cache::Settings as CacheSettings;
-use std::{sync::Arc, time::Duration};
+use std::sync::Arc;
 
 mod tracing_utils;
 
