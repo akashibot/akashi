@@ -27,7 +27,7 @@ async fn main() {
 		commands: register_all(),
 		prefix_options: PrefixFrameworkOptions {
 			prefix: Some(",".into()),
-			edit_tracker: Some(Arc::new(EditTracker::for_timespan(Duration::from_secs(60)))),
+			edit_tracker: None,
 			..Default::default()
 		},
 		on_error: |error| Box::pin(on_error(error)),

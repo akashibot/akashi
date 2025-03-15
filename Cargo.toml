@@ -11,6 +11,11 @@ members = [
 	"akashi-strings",
 ]
 
+[profile.release]
+lto = true
+strip = true
+codegen-units = 1
+
 [workspace.dependencies]
 # Async Runtime
 tokio = { version = "1", features = ["full"] }

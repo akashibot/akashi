@@ -5,6 +5,7 @@ mod emoji;
 mod help;
 mod stats;
 mod translate;
+mod vote;
 
 pub fn register() -> Vec<Command<AkashiData, AkashiError>> {
 	vec![
@@ -13,5 +14,6 @@ pub fn register() -> Vec<Command<AkashiData, AkashiError>> {
 		translate::context_menu_translate(),
 		emoji::emoji(),
 		help::help(),
+		vote::vote(),
 	]
 }

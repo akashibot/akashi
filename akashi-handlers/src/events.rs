@@ -24,10 +24,10 @@ impl EventHandler for Handler {
 			let guild_poster =
 				AkashiGuildPoster::new(ready.user.id.to_string(), topgg_token, dlistgg_token);
 
-            let guild_count = ready.guilds.len() as u64;
+			let guild_count = ready.guilds.len() as u64;
 
 			tokio::spawn(async move {
-                debug!("Posting {guild_count} guilds to botlists");
+				debug!("Posting {guild_count} guilds to botlists");
 
 				guild_poster.post_dlist(guild_count).await.unwrap();
 				guild_poster.post_topgg(guild_count).await.unwrap();
