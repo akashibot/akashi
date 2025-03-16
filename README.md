@@ -9,7 +9,7 @@
 
 <div align="center">
 
-*Commander, Commander~! You've got a new mission!*
+_Commander, Commander~! You've got a new mission!_
 
 [Homepage](https://github.com/akashibot/akashi)
 | [Discord](https://discord.gg/d86RAeHF6T)
@@ -20,10 +20,10 @@
 
 Discord bot for different purposes, made for fun and learning.
 
-## ⚙️  Contributing
+## ⚙️ Contributing
 
 Ok
 
-## ⚖️  License
+## ⚖️ License
 
-Akashi is licensed under the GNU AFFERO GENERAL PUBLIC License. See the LICENSE file for more information.
+Akashi is licensed under the MIT License. See the LICENSE file for more information.
