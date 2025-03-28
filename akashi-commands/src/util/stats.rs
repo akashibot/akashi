@@ -23,20 +23,23 @@ pub async fn stats(ctx: AkashiContext<'_>) -> AkashiResult {
 	};
 
 	let cpu = match cpu_usage {
-		0.0..=50.0 => format!("{cpu_usage}%").fg_green(),
-		51.0..=80.0 => format!("{cpu_usage}%").fg_yellow(),
-		_ => format!("{cpu_usage}%").fg_red(),
+		0.0..=50.0 => format!("{cpu_usage:.2}%").fg_green(),
+		51.0..=80.0 => format!("{cpu_usage:.2}%").fg_yellow(),
+		_ => format!("{cpu_usage:.2}%").fg_red(),
 	};
+
+	let guild_count = ctx.cache().guild_count();
 
 	ctx.reply(
 		format!(
-			"Uptime: {} days, {} hours, {} minutes, {} seconds\nMemory usage: {} MB\nCPU usage: {}",
+			"Uptime: {} days, {} hours, {} minutes, {} seconds\nMemory usage: {} MB\nCPU usage: {}\nGuilds: {}",
 			days.fg_blue(),
 			hours.fg_blue(),
 			minutes.fg_blue(),
 			seconds.fg_blue(),
 			memory,
-			cpu
+			cpu,
+            guild_count.fg_blue()
 		)
 		.codeblock("ansi"),
 	)

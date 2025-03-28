@@ -1,7 +1,7 @@
 use akashi_shared::{AkashiContext, AkashiResult};
 
 /// Show the available botlists to bot for Akashi
-#[poise::command(slash_command, prefix_command)]
+#[poise::command(slash_command, prefix_command, category = "util")]
 pub async fn vote(ctx: AkashiContext<'_>) -> AkashiResult {
 	ctx.reply(
 		"> You can vote for Akashi in the following botlists: (direct links)

@@ -24,11 +24,17 @@ impl Tag {
 		let tag = query_as!(
 			Self,
 			r#"
+            WITH ensure_guild AS (
+                INSERT INTO guilds (id, created_at)
+                VALUES ($1, $2)
+                ON CONFLICT (id) DO NOTHING
+            )
             INSERT INTO tags (guild_id, user_id, name, content, created_at, views)
-            VALUES ($1, $2, $3, $4, $5, $6)
+            VALUES ($1, $3, $4, $5, $6, $7)
             RETURNING *
             "#,
 			guild_id,
+			Utc::now().naive_utc(),
 			user_id,
 			name,
 			content,

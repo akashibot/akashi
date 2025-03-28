@@ -1,0 +1,15 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "\n            UPDATE tags\n            SET views = views + 1\n            WHERE guild_id = $1 AND name = $2\n            ",
+  "describe": {
+    "columns": [],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": []
+  },
+  "hash": "1ec820c71fdeac5f4d0a146eab1884aabc5c6bdce37c73963584961ac820e8c3"
+}

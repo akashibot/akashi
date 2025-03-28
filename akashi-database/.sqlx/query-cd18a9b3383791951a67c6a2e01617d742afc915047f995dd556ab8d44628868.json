@@ -12,21 +12,6 @@
         "ordinal": 1,
         "name": "created_at",
         "type_info": "Timestamp"
-      },
-      {
-        "ordinal": 2,
-        "name": "board_cid",
-        "type_info": "Text"
-      },
-      {
-        "ordinal": 3,
-        "name": "board_emoji",
-        "type_info": "Text"
-      },
-      {
-        "ordinal": 4,
-        "name": "board_emoji_count",
-        "type_info": "Int2"
       }
     ],
     "parameters": {
@@ -37,9 +22,6 @@
     },
     "nullable": [
       false,
-      true,
-      true,
-      true,
       true
     ]
   },

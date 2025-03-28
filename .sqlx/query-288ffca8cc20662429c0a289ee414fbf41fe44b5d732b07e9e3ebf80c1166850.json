@@ -1,6 +1,6 @@
 {
   "db_name": "PostgreSQL",
-  "query": "\n            INSERT INTO tags (guild_id, user_id, name, content, created_at, views)\n            VALUES ($1, $2, $3, $4, $5, $6)\n            RETURNING *\n            ",
+  "query": "\n            SELECT *\n            FROM tags\n            WHERE guild_id = $1\n            ",
   "describe": {
     "columns": [
       {
@@ -36,12 +36,7 @@
     ],
     "parameters": {
       "Left": [
-        "Text",
-        "Text",
-        "Text",
-        "Text",
-        "Timestamp",
-        "Int4"
+        "Text"
       ]
     },
     "nullable": [
@@ -53,5 +48,5 @@
       false
     ]
   },
-  "hash": "b9d2b00a13d7a6500f1be6b6eea237011903f83edf73a3ae5c3324aca60be9d7"
+  "hash": "288ffca8cc20662429c0a289ee414fbf41fe44b5d732b07e9e3ebf80c1166850"
 }

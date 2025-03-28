@@ -7,9 +7,6 @@ type Snowflake = String;
 pub struct Guild {
 	pub id: Snowflake,
 	pub created_at: Option<NaiveDateTime>,
-	pub board_cid: Option<Snowflake>,
-	pub board_emoji: Option<String>,
-	pub board_emoji_count: Option<i16>,
 }
 impl Guild {
 	/// Create a guild
